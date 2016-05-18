@@ -1,0 +1,1 @@
+<li><img data-profile="{{ $player->user->steamid64 }}" src="{{ $player->user->avatar }}"/></li>
