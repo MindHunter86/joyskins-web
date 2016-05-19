@@ -56,9 +56,9 @@ class GameController extends Controller
     }
     
     public function updatePrice(Request $request){
-        if($request->ip() == '127.0.0.1') {
+        if($request->ip() == \Config::get('app.ipadress')) {
             $response = file_get_contents('https://api.csgofast.com/price/all');
-            file_put_contents('../app/Services/fast2.json',$response);
+            file_put_contents('../app/Services/fast.json',$response);
             return;
         }
         return response('Access Denied')->setStatusCode(403);
