@@ -1,5 +1,6 @@
 <?php
 
+get('/updatePrice',['as' => 'updatePrice', 'uses' => 'SteamController@updatePrice']);
 get('/login', ['as' => 'login', 'uses' => 'SteamController@login']);
 get('/', ['as' => 'index', 'uses' => 'GameController@currentGame']);
 get('/about', ['as' => 'about', 'uses' => 'PagesController@about']);

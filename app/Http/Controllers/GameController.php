@@ -54,7 +54,16 @@ class GameController extends Controller
         $this->lottery = $this->getLastLottery();
         $this->redis->set('current.game', $this->game->id);
     }
-
+    
+    public function updatePrice(Request $request){
+        if($request->ip() == '127.0.0.1') {
+            $response = file_get_contents('https://api.csgofast.com/price/all');
+            file_put_contents('../app/Services/fast2.json',$response);
+            return;
+        }
+        return response('Access Denied')->setStatusCode(403);
+    }
+    
     public function deposit()
     {
         return redirect(self::BOT_TRADE_LINK);
@@ -107,7 +116,7 @@ class GameController extends Controller
         $this->lottery->winner;
         return $this->lottery;
     }
-
+    
     public function getWinners()
     {
         /*if($this->game->price > 700) {
