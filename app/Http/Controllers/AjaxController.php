@@ -76,8 +76,8 @@ class AjaxController extends Controller
                 if ($items['success']) {
                     foreach ($items['rgDescriptions'] as $class_instance => $item) {
                         $info = null;
-                        $info = Item::where('market_hash_name', $item['market_hash_name'])->first();
-                        if ($info === null || $info->price == null) {
+                        //$info = Item::where('market_hash_name', $item['market_hash_name'])->first();
+                        if ($info == null || $info->price == null) {
                             $info = new CsgoFast($item);
                             if ($info->price != null) {
                                 //Item::create((array)$info);
