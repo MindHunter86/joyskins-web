@@ -79,12 +79,6 @@ class AjaxController extends Controller
                         if(is_null($itemInfo)) {
                             $itemInfo = new CsgoFast($item);
                             if($itemInfo->price==null) $itemInfo->price = 0;
-                        } else {
-                            if($itemInfo->updated_at->getTimestamp() < Carbon::now()->subHours(5)->getTimestamp()) {
-                                $si = new CsgoFast($item);
-                                if($si->price!=null) $itemInfo->price = $si->price;
-                                $itemInfo->save();
-                            }
                         }
                         $items['rgDescriptions'][$class_instance]['price'] = $itemInfo->price;
                     }
