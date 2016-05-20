@@ -79,6 +79,7 @@ class AjaxController extends Controller
                         if(is_null($itemInfo)) {
                             $itemInfo = new CsgoFast($item);
                         }
+                        if(empty($itemInfo->price)) $itemInfo->price = 0;
                         $items['rgDescriptions'][$class_instance]['price'] = $itemInfo->price;
                     }
 
