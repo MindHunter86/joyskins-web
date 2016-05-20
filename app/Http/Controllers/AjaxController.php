@@ -78,9 +78,11 @@ class AjaxController extends Controller
                         $itemInfo = Item::where('market_hash_name', $item['market_hash_name'])->first();
                         if(is_null($itemInfo)) {
                             $itemInfo = new CsgoFast($item);
-                            if($itemInfo->price==null) $itemInfo->price = 0;
+                            if($itemInfo['price']==null) $itemInfo['price'] = 0;
+                        } else {
+                            if($itemInfo['price'] == null) $itemInfo = new CsgoFast($item);
                         }
-                        $items['rgDescriptions'][$class_instance]['price'] = $itemInfo->price;
+                        $items['rgDescriptions'][$class_instance]['price'] = $itemInfo['price'];
                     }
 
                 }
