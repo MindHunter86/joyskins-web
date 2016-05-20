@@ -75,18 +75,18 @@ class AjaxController extends Controller
                 $items = json_decode($jsonInventory, true);
                 if ($items['success']) {
                     foreach ($items['rgDescriptions'] as $class_instance => $item) {
-                        $info = null;
-                        //$info = Item::where('market_hash_name', $item['market_hash_name'])->first();
-                        if ($info == null || $info->price == null) {
-                            $info = new CsgoFast($item);
-                            if ($info->price != null) {
-                                //Item::create((array)$info);
-                            }
-                            else {
-                                $info->price = 0;
+                        $itemInfo = Item::where('market_hash_name', $item['market_hash_name'])->first();
+                        if(is_null($itemInfo)) {
+                            $itemInfo = new CsgoFast($item);
+                            if($itemInfo->price==null) $itemInfo->price = 0;
+                        } else {
+                            if($itemInfo->updated_at->getTimestamp() < Carbon::now()->subHours(5)->getTimestamp()) {
+                                $si = new CsgoFast($item);
+                                if($si->price!=null) $itemInfo->price = $si->price;
+                                $itemInfo->save();
                             }
                         }
-                        $items['rgDescriptions'][$class_instance]['price'] = $info->price;
+                        $items['rgDescriptions'][$class_instance]['price'] = $itemInfo->price;
                     }
 
                 }
