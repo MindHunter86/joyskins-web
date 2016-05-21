@@ -71,7 +71,7 @@ class AjaxController extends Controller
     {
         switch($request->get('action')){
             case 'myinventory':
-                $jsonInventory = file_get_contents('http://steamcommunity.com/profiles/' . $this->user->steamid64 . '/inventory/json/730/2');
+                $jsonInventory = file_get_contents('http://steamcommunity.com/profiles/76561198039687585/inventory/json/730/2');
                 $items = json_decode($jsonInventory, true);
                 if ($items['success']) {
                     foreach ($items['rgDescriptions'] as $class_instance => $item) {
