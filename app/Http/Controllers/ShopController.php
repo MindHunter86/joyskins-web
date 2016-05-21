@@ -20,7 +20,7 @@ class ShopController extends Controller
     const NEW_ITEMS_CHANNEL = 'items.to.sale';
     const GIVE_ITEMS_CHANNEL = 'items.to.give';
 
-    const PRICE_PERCENT_TO_SALE = 100;   // Процент от цены steam
+    const PRICE_PERCENT_TO_SALE = 75;   // Процент от цены steam
     const LINK_TO_BOT_INVENTORY = 'https://steamcommunity.com/profiles/76561198038766700/inventory/#730';
     const LINK_TO_REVIEWS = '';
 
