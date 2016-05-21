@@ -76,7 +76,7 @@ class AjaxController extends Controller
                 if ($items['success']) {
                     foreach ($items['rgDescriptions'] as $class_instance => $item) {
                         $itemInfo = new CsgoFast($item);
-                      //  if(empty($itemInfo->price)) $itemInfo->price = 0;
+                      //   if(empty($itemInfo->price)) $itemInfo->price = 0;
                         $items['rgDescriptions'][$class_instance]['price'] = $itemInfo->price;
                     }
 
