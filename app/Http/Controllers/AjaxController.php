@@ -70,7 +70,7 @@ class AjaxController extends Controller
     public function parseAction(Request $request)
     {
         switch($request->get('action')){
-            case 'myinventory':
+            case 'myinventory': 
                 $jsonInventory = file_get_contents('http://steamcommunity.com/profiles/76561198039687585/inventory/json/730/2');
                 $items = json_decode($jsonInventory, true);
                 if ($items['success']) {
