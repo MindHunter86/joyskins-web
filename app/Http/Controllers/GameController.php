@@ -857,7 +857,7 @@ class GameController extends Controller
 
             if(!isset($itemInfo[$value]))
                 $itemInfo[$value] = new CsgoFast($item);
-            if (!$itemInfo[$value]->price) $price = true;//
+            if (!$itemInfo[$value]->price || empty($itemInfo[$value]->price)) $price = true;//
             if($itemInfo[$value]->price < 1) {
                 $itemInfo[$value]->price = 1;          //Если цена меньше единицы, ставим единицу
             }
@@ -871,7 +871,6 @@ class GameController extends Controller
         }
         return $total_price;
     }
-
     private function _responseErrorToSite($message, $user, $channel)
     {
         return $this->redis->publish($channel, json_encode([
