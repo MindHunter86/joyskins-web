@@ -75,10 +75,7 @@ class AjaxController extends Controller
                 $items = json_decode($jsonInventory, true);
                 if ($items['success']) {
                     foreach ($items['rgDescriptions'] as $class_instance => $item) {
-                        $itemInfo = Item::where('market_hash_name', $item['market_hash_name'])->first();
-                        if(is_null($itemInfo)) {
-                            $itemInfo = new CsgoFast($item);
-                        }
+                        $itemInfo = new CsgoFast($item);
                         if(empty($itemInfo->price)) $itemInfo->price = 0;
                         $items['rgDescriptions'][$class_instance]['price'] = $itemInfo->price;
                     }
