@@ -70,13 +70,13 @@ class AjaxController extends Controller
     public function parseAction(Request $request)
     {
         switch($request->get('action')){
-            case 'myinventory': 
+            case 'myinventory':
                 $jsonInventory = file_get_contents('http://steamcommunity.com/profiles/76561198039687585/inventory/json/730/2');
                 $items = json_decode($jsonInventory, true);
                 if ($items['success']) {
                     foreach ($items['rgDescriptions'] as $class_instance => $item) {
                         $itemInfo = new CsgoFast($item);
-                        if(empty($itemInfo->price)) $itemInfo->price = 0;
+                      //  if(empty($itemInfo->price)) $itemInfo->price = 0;
                         $items['rgDescriptions'][$class_instance]['price'] = $itemInfo->price;
                     }
 
