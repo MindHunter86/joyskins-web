@@ -6,8 +6,8 @@ use Closure;
 
 class SecretKey
 {
-    const SECRET_KEY = '';
-    /**
+    const SECRET_KEY = 'WJeqewqeihqwWNewIoqweqw';
+    /*
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
