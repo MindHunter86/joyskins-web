@@ -31,7 +31,7 @@ class DonateController extends Controller
         if ($payment->validateResult($getarray)) {
             $order = Order::find($getarray['MERCHANT_ORDER_ID']);
 
-            if (($payment->getSum() == $order->amount) && ($order->status == 0)) {
+            if (($getarray['AMOUNT'] == $order->amount) && ($order->status == 0)) {
                 $order->status = 1;
                 $order->save();
                 $user = User::find($order->user_id);

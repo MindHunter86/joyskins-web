@@ -20,9 +20,9 @@ class FreeKassa
         $this->merchantId = $merchantId;
         $this->isTestMode = $isTestMode;
     }
-    public function setInvoiceId()
+    public function setInvoiceId($id)
     {
-        $this->data['InvId'] = (int) $id;
+        $this->data['InvId'] = (int)$id;
         return $this;
     }
     public function setSum($summ)
