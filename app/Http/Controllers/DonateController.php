@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Payment;
+use App\FreeKassa;
 use App\Order;
 use App\User;
 use Config;
@@ -16,16 +16,16 @@ class DonateController extends Controller
 {
     public function payment(Request $request)
     {
-        dd($request->all());
-        $payment = new Payment(
-            Config::get('robokassa.login'), Config::get('robokassa.password1'), Config::get('robokassa.password2'), Config::get('robokassa.testmode')
+        $payment = new FreeKassa(
+            Config::get('FreeKassa.merchant_id'), Config::get('FreeKassa.secret1'), Config::get('FreeKassa.secret2'), Config::get('FreeKassa.testmode')
         );
         $getarray = array(
-            'OutSum' => $request->get('OutSum'),
-            'InvId' => $request->get('InvId'),
-            'SignatureValue' => $request->get('SignatureValue'),
-            'PaymentMethod' => $request->get('PaymentMethod'),
-            'IncSum' => $request->get('IncSum')
+            'MERCHANT_ID' => $request->get('MERCHANT_ID'),
+            'AMOUNT' => $request->get('AMOUNT'),
+            'intid' => $request->get('intid'),
+            'MERCHANT_ORDER_ID' => $request->get('MERCHANT_ORDER_ID'),
+            'p_email' => $request->get('P_EMAIL'),
+            'sign' => $request->get('SIGN')
         );
         if ($payment->validateResult($getarray)) {
             $order = Order::find($payment->getInvoiceId());
@@ -43,8 +43,8 @@ class DonateController extends Controller
         return 'Error validate Result';
     }
     public function merchant(Request $request) {
-        $payment = new Payment(
-            Config::get('robokassa.login'), Config::get('robokassa.password1'), Config::get('robokassa.password2'), Config::get('robokassa.testmode')
+        $payment = new FreeKassa(
+            Config::get('FreeKassa.merchant_id'), Config::get('FreeKassa.secret1'), Config::get('FreeKassa.secret2'), Config::get('FreeKassa.testmode')
         );
         $user = $this->user;
         if($request->get('sum') < 1) {
@@ -62,9 +62,9 @@ class DonateController extends Controller
         return response()->json(['url' => $payment->getPaymentUrl(), 'status' => 'success']);
     } 
     public function success() {
-        return redirect(Config::get('robokassa.url'));
+        return redirect(Config::get('FreeKassa.url'));
     }
     public function fail() {
-        return redirect(Config::get('robokassa.url'));
+        return redirect(Config::get('FreeKassa.url'));
     }
 }
