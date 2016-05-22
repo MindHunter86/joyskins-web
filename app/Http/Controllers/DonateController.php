@@ -28,7 +28,7 @@ class DonateController extends Controller
             'sign' => $request->get('SIGN')
         );
         if ($payment->validateResult($getarray)) {
-            $order = Order::find($payment->getInvoiceId());
+            $order = Order::find($getarray['MERCHANT_ORDER_ID']);
 
             if (($payment->getSum() == $order->amount) && ($order->status == 0)) {
                 $order->status = 1;
