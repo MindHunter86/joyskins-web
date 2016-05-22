@@ -48,6 +48,7 @@ class FreeKassa
     public function validateResult($data)
     {
         $hash = md5($data['MERCHANT_ID'].':'.$data['AMOUNT'].':'.$this->secret2.':'.$data['MERCHANT_ORDER_ID']);
+        dd($data.$hash);
         if($hash === strtolower($data['sign'])){
             return true;
         }
@@ -57,7 +58,7 @@ class FreeKassa
     {
         return $this->data['InvId'];
     }
-    
+
     public function getSuccessAnswer() {
         return 'OK' . $this->getInvoiceId() . "\n";
     }

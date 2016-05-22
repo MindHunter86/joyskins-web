@@ -27,6 +27,7 @@ class DonateController extends Controller
             'p_email' => $request->get('P_EMAIL'),
             'sign' => $request->get('SIGN')
         );
+        
         if ($payment->validateResult($getarray)) {
             $order = Order::find($getarray['MERCHANT_ORDER_ID']);
 
