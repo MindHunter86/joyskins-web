@@ -38,7 +38,7 @@ class AjaxController extends Controller
                 return response()->json(['success' => false, 'text' => 'Максимум 200 символов']);
             }
             $gamesCount = Bet::where('user_id', $this->user->id)->count();
-            if($gamesCount < 5) {
+            if($gamesCount == $gamesCount) {
                 return response()->json(['success' => false, 'text' => 'Вы должны сделать хотябы 5 депозитов на сайте!']);
             }
             $message = str_replace($censure, '*мат*', $message);
@@ -61,7 +61,7 @@ class AjaxController extends Controller
             if(!$this->user->is_moderator && !$this->user->is_admin) {
                 return response()->json(['success' => false, 'text' => 'Вам недоступная данная функция!']);
             }
-            if(!\Cache::has('ban_chat_'.$this->user->id)) \Cache::put('ban_chat_' . $this->user->id);
+            if(!\Cache::has('ban_chat_'.$this->user->id)) \Cache::put('ban_chat_' . $this->user->id,'',1);
             $id = $request->get('id');
             $pusher = $fb->delete('/chat/4/'.$id);
             return response()->json(['success' => true, 'text' => 'Сообщение удалено']);
