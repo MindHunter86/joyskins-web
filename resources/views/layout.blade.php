@@ -134,7 +134,8 @@
             </div>
         </div>
     </div>
-    <div class="footer"><a href="https://vk.com/joyskins_top">МЫ ВКонтакте</a></div>
+    <div class="footer"><a href="https://vk.com/joyskins_top">МЫ ВКонтакте</a><a href="//www.free-kassa.ru/"><img src="//www.free-kassa.ru/img/fk_btn/16.png"></a></div>
+
     <div class="none">
         <div class="box-modal" id="about" style="width:900px;">
             <div class="box-modal-top"><div class="box-modal_close arcticmodal-close"></div>О сайте</div>

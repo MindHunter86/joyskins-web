@@ -48,7 +48,7 @@ class DonateController extends Controller
         );
         $user = $this->user;
         if($request->get('sum') < 1) {
-            return response()->json(['msg' =>'сумма не может быть меньше 0', 'status' => 'error']);
+            return response()->json(['msg' =>'Cумма не может быть меньше 0', 'status' => 'error']);
         }
         $order = Order::create([
             'user_id' => $user->id,
