@@ -16,7 +16,7 @@ class DonateController extends Controller
 {
     public function payment(Request $request)
     {
-        dd($request);
+        dd($request->all());
         $payment = new Payment(
             Config::get('robokassa.login'), Config::get('robokassa.password1'), Config::get('robokassa.password2'), Config::get('robokassa.testmode')
         );
