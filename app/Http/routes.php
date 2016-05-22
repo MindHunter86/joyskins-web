@@ -13,7 +13,7 @@ get('/shop', ['as' => 'shop', 'uses' => 'ShopController@index']);
 get('/payment', 'DonateController@payment');  
 
 Route::group(['middleware' => 'auth'], function () {
-    post('/merchant', 'DonateController@merchant'); 
+    post('/merchant', 'DonateController@merchant');
     post('/ajax/chat', 'AjaxController@chat'); 
     get('/pay/success', 'DonateController@success');  
     get('/pay/fail', 'DonateController@fail');  

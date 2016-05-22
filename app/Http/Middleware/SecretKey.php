@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
+use Closure; 
 
 class SecretKey
 {
