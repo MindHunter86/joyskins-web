@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 use App\FreeKassa;
 use App\Order;
@@ -31,7 +30,7 @@ class DonateController extends Controller
         if ($payment->validateResult($getarray)) {
             $order = Order::find($getarray['MERCHANT_ORDER_ID']);
             
-            if (($getarray['AMOUNT'] == $order->amount) && ($order->status == 0)) {
+            if (((int)$getarray['AMOUNT'] == (int)$order->amount) && ($order->status == 0)) {
                 $order->status = 1;
                 $order->save();
                 $user = User::find($order->user_id);
