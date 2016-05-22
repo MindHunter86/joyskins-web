@@ -20,7 +20,7 @@ class FreeKassa
         $this->merchantId = $merchantId;
         $this->isTestMode = $isTestMode;
     }
-    public function setInvoceId()
+    public function setInvoiceId()
     {
         $this->data['InvId'] = (int) $id;
         return $this;
