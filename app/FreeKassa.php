@@ -28,6 +28,7 @@ class FreeKassa
      */
     public function __construct($merchantId,$secret1,$secret2,$isTestMode = false)
     {
+        if ($isTestMode) abort(404);
         $this->secret1 = $secret1;
         $this->secret2 = $secret2;
         $this->merchantId = $merchantId;
