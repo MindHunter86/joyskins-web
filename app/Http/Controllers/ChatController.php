@@ -25,7 +25,7 @@ class ChatController extends Controller
     public function chatMessage(Request $request)
     {
         $message = $this->_validateMessage($request);
-        if(\Cache::has('ban_chat_'.$this->user->id))
+      //  if(\Cache::has('ban_chat_'.$this->user->id))
             return response()->json(['Вы заблокированы в чате!']);
         if(\Cache::has('last_chat_message_' . $this->user->id))
             return response()->json(['Вы слишком часто отправляете сообщения!'], 422);
