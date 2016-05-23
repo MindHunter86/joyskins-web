@@ -63,7 +63,7 @@ class AjaxController extends Controller
             }
 
             $id = $request->get('id');
-            if(!\Cache::has('ban_chat_'.$id)) \Cache::put('ban_chat_' . $id,'',1);
+            \Cache::put('ban_chat_'.$id,'',1);
             $pusher = $fb->delete('/chat/4/'.$id);
             return response()->json(['success' => true, 'text' => 'Сообщение удалено']);
         }
