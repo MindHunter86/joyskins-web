@@ -38,9 +38,9 @@ class AjaxController extends Controller
                 return response()->json(['success' => false, 'text' => 'Максимум 200 символов']);
             }
             $gamesCount = Bet::where('user_id', $this->user->id)->count();
-            if($gamesCount == $gamesCount) {
+          /*  if($gamesCount == $gamesCount) {
                 return response()->json(['success' => false, 'text' => 'Вы должны сделать хотябы 5 депозитов на сайте!']);
-            }
+            }*/
             $message = str_replace($censure, '*мат*', $message);
             $push = array(
                 'username' => $this->user->username,
