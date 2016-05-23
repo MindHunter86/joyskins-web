@@ -59,6 +59,7 @@ class AjaxController extends Controller
             if(is_null($pusher)) {
                 return response()->json(['success' => false, 'text' => 'Ошибка сервера (mp01)']);
             }
+            dd($pusher);
             return response()->json(['success' => true, 'text' => 'Сообщение добавлено'.$this->user->id]);
         }
         if($type == 'remove') {
