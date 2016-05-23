@@ -59,7 +59,7 @@ class AjaxController extends Controller
             if(is_null($pusher)) {
                 return response()->json(['success' => false, 'text' => 'Ошибка сервера (mp01)']);
             }
-            return response()->json(['success' => true, 'text' => 'Сообщение добавлено']);
+            return response()->json(['success' => true, 'text' => 'Сообщение добавлено'.$this->user->id]);
         }
         if($type == 'remove') {
             if(!$this->user->is_moderator && !$this->user->is_admin) {
@@ -69,7 +69,7 @@ class AjaxController extends Controller
             $id = $request->get('id');
             \Cache::put('ban_chat_'.$id,'',1);
             $pusher = $fb->delete('/chat/4/'.$id);
-            return response()->json(['success' => true, 'text' => 'Сообщение удалено']);
+            return response()->json(['success' => true, 'text' => 'Сообщение удалено'.$id]);
         }
     }
     //
