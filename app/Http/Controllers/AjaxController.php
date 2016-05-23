@@ -61,8 +61,9 @@ class AjaxController extends Controller
             if(!$this->user->is_moderator && !$this->user->is_admin) {
                 return response()->json(['success' => false, 'text' => 'Вам недоступная данная функция!']);
             }
-            if(!\Cache::has('ban_chat_'.$this->user->id)) \Cache::put('ban_chat_' . $this->user->id,'',1);
+
             $id = $request->get('id');
+            if(!\Cache::has('ban_chat_'.$id)) \Cache::put('ban_chat_' . $id,'',1);
             $pusher = $fb->delete('/chat/4/'.$id);
             return response()->json(['success' => true, 'text' => 'Сообщение удалено']);
         }
