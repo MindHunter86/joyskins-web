@@ -29,6 +29,7 @@ class AjaxController extends Controller
         }
         $fb = Firebase::initialize(self::$FIREBASE_URL, self::$FIREBASE_SECRET);
         if($type == 'push') {
+            
             if(\Cache::has('ban_chat_'.$this->user->steamid64))
                 return response()->json(['success'=>false,'text'=>'Вы заблокированы в чате, попробуйте завтра!']);
             $censure = array('залупа', '.ru', '.com', '. ru', 'ru', '.in', '. com', 'заходи', 'классный сайт', 'го на');
