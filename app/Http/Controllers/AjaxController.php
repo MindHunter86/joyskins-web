@@ -19,6 +19,9 @@ class AjaxController extends Controller
 {
     static $FIREBASE_URL = 'https://csgo-prod.firebaseio.com/';
     static $FIREBASE_SECRET = 'cUfAEGeYcVJqwl6IrudJNyq6gGeStT1s1bJQ6PTe';
+    private $ban_time = 60; // Время блокировки в чате
+    
+    
     public function chat(Request $request) {
         $type = $request->get('type');
         if(!$request->has('type')) {
@@ -26,8 +29,9 @@ class AjaxController extends Controller
         }
         $fb = Firebase::initialize(self::$FIREBASE_URL, self::$FIREBASE_SECRET);
         if($type == 'push') {
+            
             if(\Cache::has('ban_chat_'.$this->user->steamid64))
-                return response()->json(['success'=>false,'text'=>'Вы заблокированы в чате!']);
+                return response()->json(['success'=>false,'text'=>'Вы заблокированы в чате, попробуйте завтра!']);
             $censure = array('залупа', '.ru', '.com', '. ru', 'ru', '.in', '. com', 'заходи', 'классный сайт', 'го на');
             $message = $request->get('message');
             if(is_null($message)) {
@@ -40,9 +44,9 @@ class AjaxController extends Controller
                 return response()->json(['success' => false, 'text' => 'Максимум 200 символов']);
             }
             $gamesCount = Bet::where('user_id', $this->user->id)->count();
-          /*  if($gamesCount == $gamesCount) {
+            if($gamesCount <= 5) {
                 return response()->json(['success' => false, 'text' => 'Вы должны сделать хотябы 5 депозитов на сайте!']);
-            }*/
+            }
             $message = str_replace($censure, '*мат*', $message);
             $push = array(
                 'username' => $this->user->username,
@@ -57,7 +61,7 @@ class AjaxController extends Controller
             if(is_null($pusher)) {
                 return response()->json(['success' => false, 'text' => 'Ошибка сервера (mp01)']);
             }
-            return response()->json(['success' => true, 'text' => 'Сообщение добавленоdadobavleno']);
+            return response()->json(['success' => true, 'text' => 'Сообщение добавлено']);
         }
         if($type == 'remove') {
             if(!$this->user->is_moderator && !$this->user->is_admin) {
@@ -65,7 +69,8 @@ class AjaxController extends Controller
             }
             $steamid = $request->get('steamid');
             $id = $request->get('id');
-            \Cache::put('ban_chat_'.$steamid,'',1);
+            if(!\Cache::has('ban_chat_'.$steamid))
+                \Cache::put('ban_chat_'.$steamid,'',$this->ban_time);
             $pusher = $fb->delete('/chat/4/'.$id);
             return response()->json(['success' => true, 'text' => 'Сообщение удалено']);
         }
