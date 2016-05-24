@@ -47,7 +47,8 @@ $(document).ready(function() {
 		  type: "POST",
 		  data: { 
 		  	'type': 'remove',
-		  	'id': $(self).attr('data-ids')
+		  	'id': $(self).attr('data-ids'),
+			  'steamid': $(self).attr('data-profile')
 		  },
 		  success: function(data) {
 		  	if(!data.success) {

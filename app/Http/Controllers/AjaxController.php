@@ -26,10 +26,8 @@ class AjaxController extends Controller
         }
         $fb = Firebase::initialize(self::$FIREBASE_URL, self::$FIREBASE_SECRET);
         if($type == 'push') {
-            if(\Cache::has('ban_chat_'.$this->user->id))
+            if(\Cache::has('ban_chat_'.$this->user->steamid64))
                 return response()->json(['success'=>false,'text'=>'Вы заблокированы в чате!']);
-            if(\Cache::has('last_chat_message_' . $this->user->id))
-                return response()->json(['success'=>false,'text'=>'Вы слишком часто отправляете сообщения!']);
             $censure = array('залупа', '.ru', '.com', '. ru', 'ru', '.in', '. com', 'заходи', 'классный сайт', 'го на');
             $message = $request->get('message');
             if(is_null($message)) {
@@ -59,18 +57,17 @@ class AjaxController extends Controller
             if(is_null($pusher)) {
                 return response()->json(['success' => false, 'text' => 'Ошибка сервера (mp01)']);
             }
-            dd($pusher);
-            return response()->json(['success' => true, 'text' => 'Сообщение добавлено'.$this->user->id]);
+            return response()->json(['success' => true, 'text' => 'Сообщение добавлено']);
         }
         if($type == 'remove') {
             if(!$this->user->is_moderator && !$this->user->is_admin) {
                 return response()->json(['success' => false, 'text' => 'Вам недоступная данная функция!']);
             }
-
+            $steamid = $request->get('steamid');
             $id = $request->get('id');
-            \Cache::put('ban_chat_'.$id,'',1);
+            \Cache::put('ban_chat_'.$steamid,'',1);
             $pusher = $fb->delete('/chat/4/'.$id);
-            return response()->json(['success' => true, 'text' => 'Сообщение удалено'.$id]);
+            return response()->json(['success' => true, 'text' => 'Сообщение удалено']);
         }
     }
     //
