@@ -57,8 +57,8 @@ class GameController extends Controller
     
     public function updatePrice(Request $request){
         if($request->ip() == \Config::get('app.ipadress')) {
-              $response = file_get_contents('https://api.csgofast.com/price/all');
-              file_put_contents('../app/Services/fast.json',$response);
+             $response = file_get_contents('https://api.csgofast.com/price/all');
+             file_put_contents('../app/Services/fast.json',$response);
              \DB::table('items')->truncate();
             return;
         }
