@@ -1,1 +1,8 @@
+  #files
+.*
+_ide*
+composer.lock
+config/database.php
+  #folders
 vendor/
+.idea/*

@@ -47,7 +47,8 @@ $(document).ready(function() {
 		  type: "POST",
 		  data: { 
 		  	'type': 'remove',
-		  	'id': $(self).attr('data-ids')
+		  	'id': $(self).attr('data-ids'),
+			  'steamid': $(self).attr('data-steamids')
 		  },
 		  success: function(data) {
 		  	if(!data.success) {
@@ -89,7 +90,7 @@ $(document).ready(function() {
 	    var messageElement = $("<div class='chatMessage clearfix' data-uuid='"+data.uuid+"'>");
 	    var msg = $('<div class="body"></div>');
 	    var nameElement = $("<a href='#' class='login'></a>");
-	    var avatarElement = $("<img class='removeMSG' data-ids='"+data.uuid+"' style='height: 32px; width: 32px;' />");
+	    var avatarElement = $("<img class='removeMSG' data-ids='"+data.uuid+"' data-steamids='"+data.steamid+"' style='height: 32px; width: 32px;' />");
 	    avatarElement.attr('src', avatar);
 	    nameElement.attr('data-profile', steamid);
 	   	if(data.is_vip == "1") {

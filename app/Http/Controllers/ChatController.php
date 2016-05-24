@@ -25,7 +25,6 @@ class ChatController extends Controller
     public function chatMessage(Request $request)
     {
         $message = $this->_validateMessage($request);
-
         if(\Cache::has('last_chat_message_' . $this->user->id))
             return response()->json(['Вы слишком часто отправляете сообщения!'], 422);
         \Cache::put('last_chat_message_' . $this->user->id, '', 0.1);               // 6 seconds
