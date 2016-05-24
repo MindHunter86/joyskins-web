@@ -59,7 +59,7 @@ class GameController extends Controller
         if($request->ip() == \Config::get('app.ipadress')) {
             $response = file_get_contents('https://api.csgofast.com/price/all');
             file_put_contents('../app/Services/fast.json',$response);
-            \DB::table('items')->truncate();
+           // \DB::table('items')->truncate();
             return;
         }
         return response('Access Denied')->setStatusCode(403);
