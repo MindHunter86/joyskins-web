@@ -21,7 +21,6 @@ class AdminController extends Controller {
     const COMMISSION_FOR_FIRST_PLAYER    = 7;   # Комиссия для первого игрока сделавшего ставку.
     const APPID         = 730;                  # AppID игры: 570 - Dota2, 730 - CS:GO
 
-
     const SEND_OFFERS_LIST = 'send.offers.list';
     const NEW_BET_CHANNEL = 'newDeposit';
     const BET_DECLINE_CHANNEL = 'depositDecline';

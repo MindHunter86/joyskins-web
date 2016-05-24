@@ -58,7 +58,7 @@ class DonateController extends Controller
         $payment
             ->setInvoiceId($order->id)
             ->setSum($order->amount)
-            ->setDescription('Пополнение счета ItemUp.Ru. (ID: '.$order->user_id.')');
+            ->setDescription('Пополнение счета Joyskins.top . (ID: '.$order->user_id.')');
         return response()->json(['url' => $payment->getPaymentUrl(), 'status' => 'success']);
     } 
     public function success() {
