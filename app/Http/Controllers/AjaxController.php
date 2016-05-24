@@ -52,12 +52,12 @@ class AjaxController extends Controller
                 'is_moderator' => $this->user->is_moderator,
                 'is_vip'    => $this->user->is_vip,
                 'message' => $message
-            );
+            );      
             $pusher = $fb->push('/chat/4', $push);
             if(is_null($pusher)) {
                 return response()->json(['success' => false, 'text' => 'Ошибка сервера (mp01)']);
             }
-            return response()->json(['success' => true, 'text' => 'Сообщение добавлено']);
+            return response()->json(['success' => true, 'text' => 'Сообщение добавленоdadobavleno']);
         }
         if($type == 'remove') {
             if(!$this->user->is_moderator && !$this->user->is_admin) {
