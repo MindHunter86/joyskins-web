@@ -36,6 +36,21 @@ class ShopController extends Controller
         return view('pages.new_shop');
     }
 
+    public function updateShop()
+    {
+                $data = \App\Shop::where('status',\App\Shop::ITEM_STATUS_FOR_SALE)->get();
+                foreach($data as $item)
+                {
+                    $itemInfo = new CsgoFast($item);
+                    $item->steam_price = $itemInfo->price;
+                    $item->price = round($item->steam_price/100 * self::PRICE_PERCENT_TO_SALE);
+                    if($item->price < 15)
+                        $item->price = 15;
+                    $item->save();
+                }
+                return response()->json(['success'=>true]);
+    }
+
     public function history()
     {
         $items = Shop::where('buyer_id', $this->user->id)->orderBy('buy_at', 'desc')->get();

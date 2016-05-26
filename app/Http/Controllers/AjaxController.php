@@ -76,14 +76,6 @@ class AjaxController extends Controller
         }
     }
     //
-    public function updateShop()
-    {
-                $data = \App\Shop::where('status',\App\Shop::ITEM_STATUS_FOR_SALE)->get();
-                foreach($data as $item)
-                {
-                    echo $item;
-                }
-    }
     public function parseAction(Request $request)
     {
         switch($request->get('action')){
