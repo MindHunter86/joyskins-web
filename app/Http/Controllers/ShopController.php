@@ -41,7 +41,7 @@ class ShopController extends Controller
                 $data = \App\Shop::where('status',\App\Shop::ITEM_STATUS_FOR_SALE)->get();
                 foreach($data as $item)
                 {
-                    $itemInfo = new CsgoFast($item);
+                    $itemInfo = new CsgoFast($item->toArray());
                     $item->steam_price = $itemInfo->price;
                     $item->price = round($item->steam_price/100 * self::PRICE_PERCENT_TO_SALE);
                     if($item->price < 15)
