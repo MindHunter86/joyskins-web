@@ -7,6 +7,24 @@ var initAjaxToken = function() {
 };
 $(document).ready(function() {
 	initAjaxToken();
+    $('.refreshPrice').click(function(){
+            $.ajax({
+                url: '/admin/send/refershPrice',
+                type: 'POST',
+                dataType: 'json',
+                success: function(data) {
+                    if(data.success== true)
+                    {
+                        alert('Цены в магазине успешно обновлены!!');
+                    } else {
+                        alert('Ошибка при обновлении цен в магазине!!');
+                    }
+                },
+                error: function(){
+                    alert('Ошибка AJAX. Попробуйте позже');
+                }
+            });
+    });
 	$('.sendTrade').click(function() {
         $.ajax({
             url: '/admin/send/ajax',
