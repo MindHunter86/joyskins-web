@@ -38,6 +38,7 @@ class ShopController extends Controller
 
     public function updateShop()
     {
+        return file_get_contents('../Services/fast.json');
                 $data = \App\Shop::where('status',\App\Shop::ITEM_STATUS_FOR_SALE)->get();
                 foreach($data as $item)
                 {
