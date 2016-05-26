@@ -10,7 +10,7 @@ get('/game/{game}', ['as' => 'game', 'uses' => 'PagesController@game']);
 post('ajax', ['as' => 'ajax', 'uses' => 'AjaxController@parseAction']);
 get('/history', ['as' => 'history', 'uses' => 'PagesController@history']);
 get('/shop', ['as' => 'shop', 'uses' => 'ShopController@index']);
-get('/payment', 'DonateController@payment');  
+get('/payment', 'DonateController@payment');
 
 Route::group(['middleware' => 'auth'], function () {
     post('/merchant', 'DonateController@merchant');
