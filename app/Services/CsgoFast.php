@@ -18,7 +18,7 @@ class CsgoFast {
     {
         $this->classid = !isset($info['classid']) ? $info['classId'] : $info['classid'];
         $this->name = $info['name'];
-        $this->market_hash_name = !isset($info['market_hash_name']) ? $info['name'].' ('.$info['quality'].')' : $info['market_hash_name'];
+        $this->market_hash_name = !isset($info['market_hash_name']) ? ($info['quality']=='Normal') ? $info['name'] : $info['name'].' ('.$info['quality'].')' : $info['market_hash_name'];
         $this->rarity = isset($info['rarity']) ? $info['rarity'] : $this->getItemRarity($info);
         if ($price = $this->getItemPrice()) {
             if(isset($price))
