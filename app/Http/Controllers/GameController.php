@@ -56,10 +56,10 @@ class GameController extends Controller
     }
     
     public function updatePrice(Request $request){
-        if(1) {
-           //  $response = file_get_contents('https://api.csgofast.com/price/all');
-         //    file_put_contents('../app/Services/fast.json',$response);
-             \App\Item::truncate();
+        if($request->ip() == \Config::get('app.ipadress')) {
+             $response = file_get_contents('https://api.csgofast.com/price/all');
+             file_put_contents('../app/Services/fast.json',$response);
+             \App\Item->truncate();
             return;
         }
         return response('Access Denied')->setStatusCode(403);
@@ -378,7 +378,7 @@ class GameController extends Controller
         $create->rand_number = $rand_number;
         $create->items = json_encode($newBet);
         $create->price = $newBet->price;
-        $create->max = round($newBet->price * 8);
+        $create->max = round($newBet->price * 4);
         $create->save();
 
         $lottery = [
