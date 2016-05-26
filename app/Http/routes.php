@@ -39,14 +39,14 @@ Route::group(['middleware' => 'auth'], function () {
     get('/giveaway', ['as' => 'giveaway', 'uses' => 'PagesController@giveaway']);
 
 });
-get('/send/refershPrice','AdminController@refreshPrice');
+
 Route::group(['prefix' => 'admin','middleware' => 'access' ], function () {
     get('/', ['uses' => 'AdminController@index']);
     get('/shop', ['uses' => 'AdminController@shop']);
     get('/send', ['uses' => 'AdminController@send']);
     post('/send/ajax', 'AdminController@sendAjax');
     post('/send/ajaxShop', 'AdminController@sendshopAjax');
-    
+    post('/send/refershPrice','AdminController@refreshPrice');
     get('/newLottery', 'GameController@newLottery');
 });
 
