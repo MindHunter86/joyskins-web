@@ -38,12 +38,11 @@ class ShopController extends Controller
 
     public function updateShop()
     {
-        return file_get_contents('../app/Services/fast.json');
                 $data = \App\Shop::where('status',\App\Shop::ITEM_STATUS_FOR_SALE)->get();
                 foreach($data as $item)
                 {
                     $itemInfo = new CsgoFast($item->toArray());
-                    echo json_encode($itemInfo).'<br>'.json_encode($item);
+                    echo json_encode($itemInfo).json_encode($item);
                 }
                 return response()->json(['success'=>true]);
     }
