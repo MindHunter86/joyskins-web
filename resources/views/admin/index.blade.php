@@ -115,7 +115,7 @@
               </div>
             </div>
             <div class="box-body chart-responsive">
-              <a class="btn btn-info btn-block refreshPrice"> </a>
+              <a class="btn btn-info btn-block refreshPrice">Обновить</a>
             </div>
             <!-- /.box-body -->
           </div>

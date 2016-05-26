@@ -11,7 +11,6 @@ post('ajax', ['as' => 'ajax', 'uses' => 'AjaxController@parseAction']);
 get('/history', ['as' => 'history', 'uses' => 'PagesController@history']);
 get('/shop', ['as' => 'shop', 'uses' => 'ShopController@index']);
 get('/payment', 'DonateController@payment');
-get('/updateShop', 'ShopController@updateShop');
 
 Route::group(['middleware' => 'auth'], function () {
     post('/merchant', 'DonateController@merchant');
@@ -46,6 +45,7 @@ Route::group(['prefix' => 'admin','middleware' => 'access' ], function () {
     get('/send', ['uses' => 'AdminController@send']);
     post('/send/ajax', 'AdminController@sendAjax');
     post('/send/ajaxShop', 'AdminController@sendshopAjax');
+    post('/send/refershPrice','AdminController@refreshPrice');
     get('/newLottery', 'GameController@newLottery');
 });
 

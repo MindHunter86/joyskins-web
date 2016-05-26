@@ -36,17 +36,6 @@ class ShopController extends Controller
         return view('pages.new_shop');
     }
 
-    public function updateShop()
-    {
-                $data = \App\Shop::where('status',\App\Shop::ITEM_STATUS_FOR_SALE)->get();
-                foreach($data as $item)
-                {
-                    $itemInfo = new CsgoFast($item->toArray());
-                    echo json_encode($itemInfo).json_encode($item);
-                }
-                return response()->json(['success'=>true]);
-    }
-
     public function history()
     {
         $items = Shop::where('buyer_id', $this->user->id)->orderBy('buy_at', 'desc')->get();
