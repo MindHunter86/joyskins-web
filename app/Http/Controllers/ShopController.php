@@ -42,9 +42,7 @@ class ShopController extends Controller
                 foreach($data as $item)
                 {
                     $itemInfo = new CsgoFast($item->toArray());
-                    echo $itemInfo;
-                    echo '<br>';
-                    echo $item;
+                    echo json_encode($itemInfo).'<br>'.json_encode($item);
                 }
                 return response()->json(['success'=>true]);
     }
