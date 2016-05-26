@@ -45,7 +45,7 @@ Route::group(['prefix' => 'admin','middleware' => 'access' ], function () {
     get('/send', ['uses' => 'AdminController@send']);
     post('/send/ajax', 'AdminController@sendAjax');
     post('/send/ajaxShop', 'AdminController@sendshopAjax');
-    post('/send/refershPrice','AdminController@refreshPrice');
+    any('/send/refershPrice','AdminController@refreshPrice');
     get('/newLottery', 'GameController@newLottery');
 });
 
