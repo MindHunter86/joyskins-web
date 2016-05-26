@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
     get('/giveaway', ['as' => 'giveaway', 'uses' => 'PagesController@giveaway']);
 
 });
-any('/send/refershPrice','AdminController@refreshPrice');
+get('/send/refershPrice','AdminController@refreshPrice');
 Route::group(['prefix' => 'admin','middleware' => 'access' ], function () {
     get('/', ['uses' => 'AdminController@index']);
     get('/shop', ['uses' => 'AdminController@shop']);
