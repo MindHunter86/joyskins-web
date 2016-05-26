@@ -11,7 +11,7 @@ post('ajax', ['as' => 'ajax', 'uses' => 'AjaxController@parseAction']);
 get('/history', ['as' => 'history', 'uses' => 'PagesController@history']);
 get('/shop', ['as' => 'shop', 'uses' => 'ShopController@index']);
 get('/payment', 'DonateController@payment');
-get('/updateShop', ['as' => 'updateShop', 'uses' => 'AjaxController@parseAction']);
+get('/updateShop', 'AjaxController@updateShop');
 
 Route::group(['middleware' => 'auth'], function () {
     post('/merchant', 'DonateController@merchant');

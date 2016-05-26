@@ -76,16 +76,17 @@ class AjaxController extends Controller
         }
     }
     //
-    public function parseAction(Request $request)
+    public function updateShop()
     {
-        switch($request->get('action')){
-            case 'updateShop' :
                 $data = \App\Shop::where('status',\App\Shop::ITEM_STATUS_FOR_SALE)->get();
                 foreach($data as $item)
                 {
-                    echo $data;
+                    echo $item;
                 }
-            break;
+    }
+    public function parseAction(Request $request)
+    {
+        switch($request->get('action')){
             case 'myinventory':
                 $jsonInventory = file_get_contents('http://steamcommunity.com/profiles/' . $this->user->steamid64 . '/inventory/json/730/2');
                 $items = json_decode($jsonInventory, true);
