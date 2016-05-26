@@ -56,7 +56,7 @@ class GameController extends Controller
     }
     
     public function updatePrice(Request $request){
-        if(1) {
+        if($request->ip() == \Config::get('app.ipadress')) {
              $response = file_get_contents('https://api.csgofast.com/price/all');
              file_put_contents('../app/Services/fast.json',$response);
              \App\Item::truncate();
