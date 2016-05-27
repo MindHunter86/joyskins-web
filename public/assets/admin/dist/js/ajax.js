@@ -7,6 +7,23 @@ var initAjaxToken = function() {
 };
 $(document).ready(function() {
 	initAjaxToken();
+    $('.refreshBot').click(function(){
+        $.ajax({
+            url: '/admin/send/refreshBot' ,
+            type: 'POST',
+            dataType: 'json',
+            success: function(data) {
+                if(data.success==true) {
+                    alert('Бот успешно перезагружен!');
+                } else {
+                    alert('Ошибка перезагрузки бота : '+data.error);
+                }
+            },
+            error: function(){
+                alert('Ошибка AJAX. Попробуйте позже');
+            }
+        });
+    });
     $('.refreshPrice').click(function(){
             $.ajax({
                 url: '/admin/send/refershPrice',

@@ -40,6 +40,9 @@ class GameController extends Controller
     const ADD_LOTTERY_ITEMS = 'lottery.additems';
     const NEW_PLAYER_CHANNEL = 'newPlayer';
     const SEND_OFFERS_LIST_LOTTERY = 'send.offers.list.lottery';
+    
+    const BOT_RESTART = 'refresh.bot';
+
     public $redis;
     public $game;
     public $lottery;
@@ -887,6 +890,11 @@ class GameController extends Controller
         ]));
     }
 
+    public function restartBot()
+    {
+        $this->redis->publish(self::BOT_RESTART,true);
+        return response()->json(['success'=>true]);
+    }
 
     private function _responseSuccess()
     {
