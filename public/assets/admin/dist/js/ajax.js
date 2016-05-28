@@ -6,10 +6,10 @@ var initAjaxToken = function() {
     });
 };
 $(document).ready(function() {
-	initAjaxToken();
+    initAjaxToken();
     $('.refreshBot').click(function(){
         $.ajax({
-            url: '/admin/send/refreshBot' ,
+            url: '/admin/send/restartBot' ,
             type: 'POST',
             dataType: 'json',
             success: function(data) {
