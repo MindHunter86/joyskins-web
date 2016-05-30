@@ -10,7 +10,7 @@ get('/game/{game}', ['as' => 'game', 'uses' => 'PagesController@game']);
 post('ajax', ['as' => 'ajax', 'uses' => 'AjaxController@parseAction']);
 get('/history', ['as' => 'history', 'uses' => 'PagesController@history']);
 get('/shop', ['as' => 'shop', 'uses' => 'ShopController@index']);
-get('/payment', 'DonateController@payment');  
+get('/payment', 'DonateController@payment');
 
 Route::group(['middleware' => 'auth'], function () {
     post('/merchant', 'DonateController@merchant');
@@ -39,12 +39,15 @@ Route::group(['middleware' => 'auth'], function () {
     get('/giveaway', ['as' => 'giveaway', 'uses' => 'PagesController@giveaway']);
 
 });
+
 Route::group(['prefix' => 'admin','middleware' => 'access' ], function () {
     get('/', ['uses' => 'AdminController@index']);
     get('/shop', ['uses' => 'AdminController@shop']);
     get('/send', ['uses' => 'AdminController@send']);
     post('/send/ajax', 'AdminController@sendAjax');
     post('/send/ajaxShop', 'AdminController@sendshopAjax');
+    post('/send/refershPrice','AdminController@refreshPrice');
+    post('/send/restartBot','GameController@restartBot');
     get('/newLottery', 'GameController@newLottery');
 });
 

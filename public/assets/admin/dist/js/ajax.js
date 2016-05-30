@@ -6,7 +6,42 @@ var initAjaxToken = function() {
     });
 };
 $(document).ready(function() {
-	initAjaxToken();
+    initAjaxToken();
+    $('.refreshBot').click(function(){
+        $.ajax({
+            url: '/admin/send/restartBot' ,
+            type: 'POST',
+            dataType: 'json',
+            success: function(data) {
+                if(data.success==true) {
+                    alert('Бот успешно перезагружен!');
+                } else {
+                    alert('Ошибка перезагрузки бота : '+data.error);
+                }
+            },
+            error: function(){
+                alert('Ошибка AJAX. Попробуйте позже');
+            }
+        });
+    });
+    $('.refreshPrice').click(function(){
+            $.ajax({
+                url: '/admin/send/refershPrice',
+                type: 'POST',
+                dataType: 'json',
+                success: function(data) {
+                    if(data.success== true)
+                    {
+                        alert('Цены в магазине успешно обновлены!!');
+                    } else {
+                        alert('Ошибка при обновлении цен в магазине!!');
+                    }
+                },
+                error: function(){
+                    alert('Ошибка AJAX. Попробуйте позже');
+                }
+            });
+    });
 	$('.sendTrade').click(function() {
         $.ajax({
             url: '/admin/send/ajax',

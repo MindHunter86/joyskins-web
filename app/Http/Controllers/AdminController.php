@@ -75,7 +75,22 @@ class AdminController extends Controller {
     public function send() {
     	return view('admin.send');
     }
-
+    
+    public function refreshPrice()
+    {
+                $data = \App\Shop::where('status',\App\Shop::ITEM_STATUS_FOR_SALE)->get();
+                foreach($data as $item)
+                {
+                    $itemInfo = new CsgoFast($item->toArray());
+                    $item->steam_price = $itemInfo->price;
+                    $item->price = round($item->steam_price/100 * \App\Http\Controllers\ShopController::PRICE_PERCENT_TO_SALE);
+                    if($item->price < 15)
+                        $item->price = 15;
+                    $item->save();
+                }
+                return response()->json(['success'=>true]);
+    }
+    
     public function shop() {
         $shop = DB::table('shop')
             ->select('shop.*', 'users.username', 'users.trade_link')

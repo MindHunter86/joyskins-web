@@ -2,7 +2,7 @@
 .*
 _ide*
 composer.lock
-config/database.php
-  #folders
+app/Services/fast.json
+#folders
 vendor/
 .idea/*

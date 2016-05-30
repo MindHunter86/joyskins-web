@@ -40,6 +40,9 @@ class GameController extends Controller
     const ADD_LOTTERY_ITEMS = 'lottery.additems';
     const NEW_PLAYER_CHANNEL = 'newPlayer';
     const SEND_OFFERS_LIST_LOTTERY = 'send.offers.list.lottery';
+    
+    const BOT_RESTART = 'refresh.bot';
+
     public $redis;
     public $game;
     public $lottery;
@@ -59,7 +62,7 @@ class GameController extends Controller
         if($request->ip() == \Config::get('app.ipadress')) {
              $response = file_get_contents('https://api.csgofast.com/price/all');
              file_put_contents('../app/Services/fast.json',$response);
-             \DB::table('items')->truncate();
+             \App\Item::truncate();
             return;
         }
         return response('Access Denied')->setStatusCode(403);
@@ -378,7 +381,7 @@ class GameController extends Controller
         $create->rand_number = $rand_number;
         $create->items = json_encode($newBet);
         $create->price = $newBet->price;
-        $create->max = round($newBet->price * 8);
+        $create->max = round($newBet->price * 4);
         $create->save();
 
         $lottery = [
@@ -887,6 +890,11 @@ class GameController extends Controller
         ]));
     }
 
+    public function restartBot()
+    {
+        $this->redis->publish(self::BOT_RESTART,true);
+        return response()->json(['success'=>true]);
+    }
 
     private function _responseSuccess()
     {

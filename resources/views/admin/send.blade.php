@@ -47,6 +47,20 @@
       <!-- general form elements disabled -->
       <!-- /.box -->
     </div>
+     <div class="col-md-6">
+      <!-- Horizontal Form -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Перезагрузка бота: </h3>
+        </div><!-- /.box-header -->
+        <!-- form start -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-info pull-right refreshBot">Перезагрузить</button>
+          </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+      <!-- general form elements disabled -->
+      <!-- /.box -->
+    </div>
 </div>
 </section>
 @endsection
