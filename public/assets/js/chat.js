@@ -62,7 +62,7 @@ $(document).ready(function() {
     });
 	$('#clearChat').on('click',function(){
 		var lastCount = 10;
-		$('.removeMSG').reverse().each(function(){
+		$.each($('.removeMSG').get().reverse(),function(){
 			lastCount--;
 			if(lastCount<0)
 				return false;
