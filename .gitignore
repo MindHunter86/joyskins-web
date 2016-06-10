@@ -1,8 +1,7 @@
-  #files
 .*
+  #files
 _ide*
 composer.lock
 app/Services/fast.json
-#folders
+  #folders
 vendor/
-.idea/*
