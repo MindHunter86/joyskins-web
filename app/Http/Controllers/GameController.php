@@ -76,8 +76,6 @@ class GameController extends Controller
     public function currentGame()
     {
         Referer::referer();
-        //$lottery = Lottery::orderBy('id', 'desc')->first();
-        //$lottery->items = json_decode($lottery->items);
         $lottery = Lottery::where('status', 0)->orderBy('id', 'desc')->first();
         if(!is_null($lottery)) {
             $lottery->items = json_decode($lottery->items);

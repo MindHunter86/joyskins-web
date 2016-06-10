@@ -87,6 +87,9 @@
     <div id="chatContainer">
         <div id="chatHeader">
             <span class="chat-text">Чат</span>
+            @if($u->is_moderator || $u->is_admin)
+             <button id="clearChat" style="position: fixed; top: 20px;">Очистить чат</button>
+            @endif
             <div class="closeChat">
                 <a href="#" class="chatHide"><img class="closeImg" src="{{ asset('new/images/chathide.png') }}" /></a>
             </div>

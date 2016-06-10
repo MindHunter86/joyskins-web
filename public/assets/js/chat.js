@@ -48,7 +48,8 @@ $(document).ready(function() {
 		  data: { 
 		  	'type': 'remove',
 		  	'id': $(self).attr('data-ids'),
-			  'steamid': $(self).attr('data-steamids')
+			  'steamid': $(self).attr('data-steamids'),
+			  'ban': true
 		  },
 		  success: function(data) {
 		  	if(!data.success) {
@@ -59,6 +60,31 @@ $(document).ready(function() {
 		});
         return false;
     });
+	$('#clearChat').on('click',function(){
+		var lastCount = 10;
+		$.each($('.removeMSG').get().reverse(),function(){
+			lastCount--;
+			if(lastCount<0)
+				return false;
+			self = this;
+			$.ajax({
+				url: '/ajax/chat',
+				type: "POST",
+				data: {
+					'type': 'remove',
+					'id': $(self).attr('data-ids'),
+					'steamid': $(self).attr('data-steamids'),
+					'ban': false
+				},
+				success: function(data) {
+					if(!data.success) {
+						$.notify(data.text);
+						return;
+					}
+				}
+			});
+		});
+	});
 	messageField.keypress(function (e) {
 	    if (e.keyCode == 13) {
 	    	sendMessage();
@@ -66,9 +92,10 @@ $(document).ready(function() {
 	    }
 	});
 	var msgs = chat.limitToLast(50);
+	var removedCount = 0;
 	msgs.on('child_removed', function (snapshot) {
 	    var data = snapshot.val();
-
+		removedCount++;
 	    $('.chatMessage[data-uuid='+snapshot.key()+']').remove();
 	    $("#chatScroll").perfectScrollbar('update');
 	});
@@ -104,7 +131,10 @@ $(document).ready(function() {
 	    messageElement.html(msg).prepend(nameElement).prepend(avatarElement);
 
 	    //ADD MESSAGE
-	    messageList.append(messageElement);
+		if(removedCount)
+			removedCount--;
+		else
+	     messageList.append(messageElement);
 	    if (isScrollDown) a.scrollTop = a.scrollHeight;
 	    $("#chatScroll").perfectScrollbar('update');
   	});
