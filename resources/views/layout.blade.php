@@ -87,7 +87,7 @@
     <div id="chatContainer">
         <div id="chatHeader">
             <span class="chat-text">Чат</span>
-            @if(\Auth::user()->is_moderator || \Auth::user()->is_admin)
+            @if($u->is_moderator || $u->is_admin)
              <button id="clearChat" style="position: fixed; top: 20px;">Очистить чат</button>
             @endif
             <div class="closeChat">
