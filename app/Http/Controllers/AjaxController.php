@@ -19,7 +19,7 @@ class AjaxController extends Controller
 {
     static $FIREBASE_URL = 'https://csgo-prod.firebaseio.com/';
     static $FIREBASE_SECRET = 'cUfAEGeYcVJqwl6IrudJNyq6gGeStT1s1bJQ6PTe';
-    private $ban_time = 60; // Время блокировки в чате
+    private $ban_time = 60*24; // Время блокировки в чате
     
     
     public function chat(Request $request) {
@@ -69,7 +69,7 @@ class AjaxController extends Controller
             }
             $steamid = $request->get('steamid');
             $id = $request->get('id');
-            if(!\Cache::has('ban_chat_'.$steamid))
+            if(!\Cache::has('ban_chat_'.$steamid) && $request->get('ban'))
                 \Cache::put('ban_chat_'.$steamid,'',$this->ban_time);
             $pusher = $fb->delete('/chat/4/'.$id);
             return response()->json(['success' => true, 'text' => 'Сообщение удалено']);

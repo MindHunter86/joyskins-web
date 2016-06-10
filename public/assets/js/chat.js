@@ -48,7 +48,8 @@ $(document).ready(function() {
 		  data: { 
 		  	'type': 'remove',
 		  	'id': $(self).attr('data-ids'),
-			  'steamid': $(self).attr('data-steamids')
+			  'steamid': $(self).attr('data-steamids'),
+			  'ban': true
 		  },
 		  success: function(data) {
 		  	if(!data.success) {
@@ -59,6 +60,27 @@ $(document).ready(function() {
 		});
         return false;
     });
+	$('#clearChat').on('click',function(){
+		$('.removeMSG').each(function(){
+			self = this;
+			$.ajax({
+				url: '/ajax/chat',
+				type: "POST",
+				data: {
+					'type': 'remove',
+					'id': $(self).attr('data-ids'),
+					'steamid': $(self).attr('data-steamids'),
+					'ban': false
+				},
+				success: function (data) {
+					if (!data.success) {
+						$.notify(data.text);
+						return;
+					}
+				}
+			});
+		});
+	});
 	messageField.keypress(function (e) {
 	    if (e.keyCode == 13) {
 	    	sendMessage();
