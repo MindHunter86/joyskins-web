@@ -61,7 +61,11 @@ $(document).ready(function() {
         return false;
     });
 	$('#clearChat').on('click',function(){
-		$('.removeMSG').each(function(){
+		var lastCount = 10;
+		$('.removeMSG').reverse().each(function(){
+			lastCount--;
+			if(lastCount<0)
+				return false;
 			self = this;
 			$.ajax({
 				url: '/ajax/chat',
@@ -72,8 +76,8 @@ $(document).ready(function() {
 					'steamid': $(self).attr('data-steamids'),
 					'ban': false
 				},
-				success: function (data) {
-					if (!data.success) {
+				success: function(data) {
+					if(!data.success) {
 						$.notify(data.text);
 						return;
 					}

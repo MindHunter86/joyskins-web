@@ -20,7 +20,8 @@ class AjaxController extends Controller
     static $FIREBASE_URL = 'https://csgo-prod.firebaseio.com/';
     static $FIREBASE_SECRET = 'cUfAEGeYcVJqwl6IrudJNyq6gGeStT1s1bJQ6PTe';
     private $ban_time = 60*24; // Время блокировки в чате
-    
+
+    const DELAY_BEFORE_NEW_MSG = 0.09; // Время делая в минутах
     
     public function chat(Request $request) {
         $type = $request->get('type');
@@ -29,9 +30,11 @@ class AjaxController extends Controller
         }
         $fb = Firebase::initialize(self::$FIREBASE_URL, self::$FIREBASE_SECRET);
         if($type == 'push') {
-            
             if(\Cache::has('ban_chat_'.$this->user->steamid64))
                 return response()->json(['success'=>false,'text'=>'Вы заблокированы в чате, попробуйте завтра!']);
+            if(\Cache::has('chat_'.$this->user->steamid64))
+                return response()->json(['success'=>false,'text'=>'Вы пишите слишком часто!']);
+            \Cache::put('chat_'.$this->user->steamid64,'',self::DELAY_BEFORE_NEW_MSG);
             $censure = array('залупа', '.ru', '.com', '. ru', 'ru', '.in', '. com', 'заходи', 'классный сайт', 'го на');
             $message = $request->get('message');
             if(is_null($message)) {
@@ -73,6 +76,13 @@ class AjaxController extends Controller
                 \Cache::put('ban_chat_'.$steamid,'',$this->ban_time);
             $pusher = $fb->delete('/chat/4/'.$id);
             return response()->json(['success' => true, 'text' => 'Сообщение удалено']);
+        }
+        if($type == 'clear') {
+            if(!$this->user->is_moderator&&!$this->user->is_admin)
+                return response()->json(['success'=>false,'text'=>'Вам недоступна данная функция!']);
+            $steamid = 0;
+
+            //сделать очистку визуальную
         }
     }
     //
