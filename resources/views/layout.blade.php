@@ -90,7 +90,6 @@
             @if(\Auth::check() && ($u->is_moderator || $u->is_admin))
              <button id="clearChat" style="position: fixed; top: 20px;">Очистить чат</button>
             @endif
-            @endif
             <div class="closeChat">
                 <a href="#" class="chatHide"><img class="closeImg" src="{{ asset('new/images/chathide.png') }}" /></a>
             </div>
