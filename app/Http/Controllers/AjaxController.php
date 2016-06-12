@@ -72,7 +72,8 @@ class AjaxController extends Controller
             }
             $steamid = $request->get('steamid');
             $id = $request->get('id');
-            if(!\Cache::has('ban_chat_'.$steamid) && (!$request->has('ban') || $request->get('ban')== true))
+            $ban = $request->get('ban');
+            if(!\Cache::has('ban_chat_'.$steamid) && $ban == true)
                 \Cache::put('ban_chat_'.$steamid,'',$this->ban_time);
             $pusher = $fb->delete('/chat/4/'.$id);
             return response()->json(['success' => true, 'text' => 'Сообщение удалено']);
