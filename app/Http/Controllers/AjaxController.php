@@ -72,17 +72,10 @@ class AjaxController extends Controller
             }
             $steamid = $request->get('steamid');
             $id = $request->get('id');
-            if(!\Cache::has('ban_chat_'.$steamid) && $request->get('ban'))
+            if(!\Cache::has('ban_chat_'.$steamid) && (!$request->has('ban') || $request->get('ban')== true))
                 \Cache::put('ban_chat_'.$steamid,'',$this->ban_time);
             $pusher = $fb->delete('/chat/4/'.$id);
             return response()->json(['success' => true, 'text' => 'Сообщение удалено']);
-        }
-        if($type == 'clear') {
-            if(!$this->user->is_moderator&&!$this->user->is_admin)
-                return response()->json(['success'=>false,'text'=>'Вам недоступна данная функция!']);
-            $steamid = 0;
-
-            //сделать очистку визуальную
         }
     }
     //
