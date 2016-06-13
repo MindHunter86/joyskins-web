@@ -78,8 +78,7 @@ $(document).ready(function() {
 				data: {
 					'type': 'remove',
 					'id': $(self).attr('data-ids'),
-					'steamid': $(self).attr('data-steamids'),
-					'ban': false
+					'steamid': $(self).attr('data-steamids')
 				},
 				success: function(data) {
 					if(!data.success) {
@@ -136,7 +135,7 @@ $(document).ready(function() {
 	    messageElement.html(msg).prepend(nameElement).prepend(avatarElement);
 
 	    //ADD MESSAGE
-		if(removedCount)
+		if(removedCount>0)
 			removedCount--;
 		else
 	     messageList.append(messageElement);
