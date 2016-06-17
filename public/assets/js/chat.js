@@ -53,42 +53,38 @@ $(document).ready(function() {
 		  data: { 
 		  	'type': 'remove',
 		  	'id': $(self).attr('data-ids'),
-			  'steamid': $(self).attr('data-steamids'),
-			  'ban': true
+			  'steamid': $(self).attr('data-steamids')
 		  },
 		  success: function(data) {
 		  	if(!data.success) {
 		  		$.notify(data.text);
 		  		return;
-		  	} 
+		  	}
+			  var steamId = $(self).attr('data-steamids');
+			  $.each($('.removeMSG').get().reverse(),function(){
+				  self = this;
+				  if ($(self).attr('data-steamids') == steamId)
+					  $.ajax({
+						  url: '/ajax/chat',
+						  type: "POST",
+						  data: {
+							  'type': 'remove',
+							  'id': $(self).attr('data-ids'),
+							  'steamid': $(self).attr('data-steamids')
+						  },
+						  success: function(data) {
+							  if(!data.success) {
+								  $.notify(data.text);
+								  return;
+							  }
+						  }
+					  });
+			  });
 		  }
 		});
         return false;
     });
-	$('#clearChat').on('click',function(){
-		var lastCount = 10;
-		$.each($('.removeMSG').get().reverse(),function(){
-			lastCount--;
-			if(lastCount<0)
-				return false;
-			self = this;
-			$.ajax({
-				url: '/ajax/chat',
-				type: "POST",
-				data: {
-					'type': 'remove',
-					'id': $(self).attr('data-ids'),
-					'steamid': $(self).attr('data-steamids')
-				},
-				success: function(data) {
-					if(!data.success) {
-						$.notify(data.text);
-						return;
-					}
-				}
-			});
-		});
-	});
+
 	messageField.keypress(function (e) {
 	    if (e.keyCode == 13) {
 	    	sendMessage();
@@ -96,10 +92,9 @@ $(document).ready(function() {
 	    }
 	});
 	var msgs = chat.limitToLast(50);
-	var removedCount = 0;
+
 	msgs.on('child_removed', function (snapshot) {
 	    var data = snapshot.val();
-		removedCount++;
 	    $('.chatMessage[data-uuid='+snapshot.key()+']').remove();
 	    $("#chatScroll").perfectScrollbar('update');
 	});
@@ -134,11 +129,8 @@ $(document).ready(function() {
 	    nameElement.text(username);
 	    messageElement.html(msg).prepend(nameElement).prepend(avatarElement);
 
-	    //ADD MESSAGE
-		if(removedCount>0)
-			removedCount--;
-		else
-	     messageList.append(messageElement);
+
+		messageList.append(messageElement);
 	    if (isScrollDown) a.scrollTop = a.scrollHeight;
 	    $("#chatScroll").perfectScrollbar('update');
   	});
