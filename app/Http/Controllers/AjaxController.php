@@ -19,7 +19,7 @@ class AjaxController extends Controller
 {
     static $FIREBASE_URL = 'https://csgo-prod.firebaseio.com/';
     static $FIREBASE_SECRET = 'cUfAEGeYcVJqwl6IrudJNyq6gGeStT1s1bJQ6PTe';
-    private $ban_time = 60*24; // Время блокировки в чате
+    private $ban_time = 120; // Время блокировки в чате
 
     const DELAY_BEFORE_NEW_MSG = 0.09; // Время делая в минутах
     
@@ -72,17 +72,10 @@ class AjaxController extends Controller
             }
             $steamid = $request->get('steamid');
             $id = $request->get('id');
-            if(!\Cache::has('ban_chat_'.$steamid) && $request->get('ban'))
+            if(!\Cache::has('ban_chat_'.$steamid))
                 \Cache::put('ban_chat_'.$steamid,'',$this->ban_time);
             $pusher = $fb->delete('/chat/4/'.$id);
             return response()->json(['success' => true, 'text' => 'Сообщение удалено']);
-        }
-        if($type == 'clear') {
-            if(!$this->user->is_moderator&&!$this->user->is_admin)
-                return response()->json(['success'=>false,'text'=>'Вам недоступна данная функция!']);
-            $steamid = 0;
-
-            //сделать очистку визуальную
         }
     }
     //
