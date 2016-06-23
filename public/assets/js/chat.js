@@ -92,16 +92,12 @@ $(document).ready(function() {
 	    }
 	});
 	var msgs = chat.limitToLast(50);
-	var deletedMsg = 0;
 	msgs.on('child_removed', function (snapshot) {
-		deletedMsg++;
 	    var data = snapshot.val();
 	    $('.chatMessage[data-uuid='+snapshot.key()+']').remove();
 	    $("#chatScroll").perfectScrollbar('update');
 	});
 	msgs.on('child_added', function (snapshot) {
-		if(deletedMsg > 0)
-			return deletedMsg--;
 		var a = $("#chatScroll")[0];
 		var isScrollDown = Math.abs((a.offsetHeight + a.scrollTop) - a.scrollHeight) < 5;
 	    //GET DATA
