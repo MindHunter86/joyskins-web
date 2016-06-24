@@ -36,6 +36,8 @@ class GameController extends Controller
     const INFO_CHANNEL = 'msgChannel';
     const SHOW_WINNERS = 'show.winners';
 
+    const SEND_BOT_COMISSION = 'sendAdmin.items'; # Отправка комиссии админу
+
     const SHOW_LOTTERY_WINNERS = 'show.lottery.winners';
     const ADD_LOTTERY_ITEMS = 'lottery.additems';
     const NEW_PLAYER_CHANNEL = 'newPlayer';
@@ -894,9 +896,56 @@ class GameController extends Controller
         return response()->json(['success'=>true]);
     }
 
+    public function sendComission()
+    {
+        $items = [];
+        if($this->game->status == Game::STATUS_PLAYING)
+        {
+            return response()->json(['success'=>false,'text'=>'В данный момент идет игра, вывести комиссию нельзя!']);
+        }
+        $lastBonus = bonus::orderBy('id','DESC')->first();
+        $items[] = ['classid'=>$lastBonus->classid,'market_hash_name'=>$lastBonus->market_hash_name];
+        if($this->lottery->status == Game::STATUS_NOT_STARTED)
+        {
+            $lItems = json_decode($this->lottery->items);
+            foreach ($lItems as $item) {
+                $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
+            }
+        }
+        $tradeoffer = \Request::get('tradeoffer');
+        if($tradeoffer)
+        {
+            $accessToken = $this->_parseTradeLinkToken($tradeoffer);
+            $partner = $this->_parseTradeLinkPartner($tradeoffer);
+            if(!$accessToken || !$partner) {
+                return response()->json(['text'=>'Ошибка парсинга tradeoffer link','success'=>false]);
+            }
+        } else
+            return response()->json(['text'=>'Ошибка парсинга tradeoffer link','success'=>false]);
+
+        $value = [
+            'appId' => self::APPID,
+            'partner' => $partner,
+            'accessToken' => $accessToken,
+            'items' => $items
+        ];
+        $this->redis->rpush(self::SEND_BOT_COMISSION, json_encode($value));
+    }
+
     private function _responseSuccess()
     {
         return response()->json(['success' => true]);
     }
-
+    private function _parseTradeLinkToken($tradeLink)
+    {
+        $query_str = parse_url($tradeLink, PHP_URL_QUERY);
+        parse_str($query_str, $query_params);
+        return isset($query_params['token']) ? $query_params['token'] : false;
+    }
+    private function _parseTradeLinkPartner($tradeLink)
+    {
+        $query_str = parse_url($tradeLink, PHP_URL_QUERY);
+        parse_str($query_str, $query_params);
+        return isset($query_params['partner']) ? $query_params['partner'] : false;
+    }
 }
