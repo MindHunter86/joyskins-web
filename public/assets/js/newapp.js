@@ -294,7 +294,7 @@ function replaceLogin(login) {
 }
 
 if (START) {
-    var socket = io.connect('51.254.222.131', { secure: true });
+    var socket = io.connect('51.254.222.131:5000', { secure: true });
     socket
         .on('connect', function () {
             $('#loader').hide();
