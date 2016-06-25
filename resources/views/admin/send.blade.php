@@ -61,6 +61,28 @@
       <!-- general form elements disabled -->
       <!-- /.box -->
     </div>
+    <div class="col-md-6">
+        <!-- Horizontal Form -->
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Отправить комиссию с бота</h3>
+            </div><!-- /.box-header -->
+            <!-- form start -->
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="sendidshop" class="col-sm-2 control-label">Tradeoffer:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="tradeoffer" placeholder="Tradeoffer LINK">
+                    </div>
+                </div>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" class="btn btn-info pull-right sendComissionItems">Отправить</button>
+            </div><!-- /.box-footer -->
+        </div><!-- /.box -->
+        <!-- general form elements disabled -->
+        <!-- /.box -->
+    </div>
 </div>
 </section>
 @endsection

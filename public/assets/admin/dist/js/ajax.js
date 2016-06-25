@@ -42,6 +42,26 @@ $(document).ready(function() {
                 }
             });
     });
+    $('.sendComissionItems').click(function(){
+        $.ajax({
+            url: '/admin/send/comission',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                tradeoffer: $('#tradeoffer').val()
+            },
+            success: function (data) {
+                if(data.type  == 'success') {
+                    alert('Запрошенная комиссия успешно отправленна');
+                } else {
+                    if(data.text) alert(data.text);
+                }
+            },
+            error: function () {
+                alert("Произошла ошибка попробуйте позже.")
+            }
+        });
+    });
 	$('.sendTrade').click(function() {
         $.ajax({
             url: '/admin/send/ajax',
