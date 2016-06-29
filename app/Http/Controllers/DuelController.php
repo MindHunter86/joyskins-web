@@ -8,6 +8,10 @@ use App\Http\Requests;
 use App\Referer;
 use App\Lottery;
 use App\Http\Controllers\Controller;
+use Invisnik\LaravelSteamAuth\SteamAuth;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\duel;
 
 class DuelController extends Controller
 {
