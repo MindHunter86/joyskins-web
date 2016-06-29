@@ -11,20 +11,22 @@ use App\Http\Controllers\Controller;
 
 class DuelController extends Controller
 {
+
+
+    private $steamAuth;
+
+    public function __construct(SteamAuth $auth)
+    {
+        parent::__construct();
+        $this->steamAuth = $auth;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function currentDuels()
     {
-        Referer::referer();
-        $lottery = Lottery::where('status', 0)->orderBy('id', 'desc')->first();
-        if(!is_null($lottery)) {
-            $lottery->items = json_decode($lottery->items);
-            $players = $lottery->players()->with(['user','lottery'])->get()->sortByDesc('created_at');
-        }
-        return view('pages.duels', compact('lottery', 'players'));
+        return view('pages.duels');
     }
 }
