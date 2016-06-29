@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Referer;
 use App\Http\Controllers\Controller;
 
 class DuelController extends Controller
@@ -16,7 +17,6 @@ class DuelController extends Controller
      */
     public function currentDuels()
     {
-
         Referer::referer();
         $lottery = Lottery::where('status', 0)->orderBy('id', 'desc')->first();
         if(!is_null($lottery)) {
