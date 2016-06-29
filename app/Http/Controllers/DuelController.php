@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Referer;
+use App\Lottery;
 use App\Http\Controllers\Controller;
 
 class DuelController extends Controller
@@ -15,6 +16,7 @@ class DuelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function currentDuels()
     {
         Referer::referer();
