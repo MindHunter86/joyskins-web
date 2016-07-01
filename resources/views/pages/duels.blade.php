@@ -83,6 +83,13 @@
             text-decoration: none;
             cursor:pointer;
         }
+        .fifth .circle strong {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
     </style>
     <div class="content_bg">
         <div class="full">
