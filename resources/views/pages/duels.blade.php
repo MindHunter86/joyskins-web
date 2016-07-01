@@ -28,6 +28,7 @@
                 <h2 style="display:inline-block; float: left;">Ваш инвентарь:</h2>
                 <a class="btnCreateRoom">Создать комнату</a>
             </div>
+            <div style="clear: both;" ></div>
             <div class="inv_table_duel">
 
             </div>
