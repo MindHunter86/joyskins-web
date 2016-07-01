@@ -32,7 +32,22 @@
             padding: 15px;
             cursor:pointer;
         }
-        .cf_items img{
+        .cf-items img{
+            width: 45px;
+            height: 45px;
+        }
+        .coinflip-pots {
+            border-top: 3px solid #3faa5d;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .coinflip-pots .cf-players {
+            width: 150px;
+            text-align: center;
+            padding: 8px;
+            line-height: 1.42857143;
+        }
+        .coinflip-pots .cf-players img{
             width: 45px;
             height: 45px;
         }
