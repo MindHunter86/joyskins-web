@@ -583,16 +583,17 @@ function loadMyDuelInventory() {
                     item.price = item.price;
                     item.image = 'https://steamcommunity-a.akamaihd.net/economy/image/class/730/'+item.classid+'/200fx200f';
                     item.market_name = item.market_name || '';
-                    text += ''
+                    text += '<div class="inv_d_item"><img src="'+item.image+'"></div>';
+                   /* text += ''
                         +'<div class="inv_table_info fadeInDown animated ' + getRarity(item.type) + '">'
                         +'<div class="type1"><div><img src="'+item.image+'" alt="" /></div>'+item.name+'</div>'
                         +'<div class="type2">'+(item.market_name.replace(item.name,'').replace('(','').replace(')','') || "Не определено")+'</div>'
                         +'<div class="type3">'+(item.price || '0.00')+'руб.</div>'
-                        +'</div>'
+                        +'</div>'*/
                 });
             }
 
-            $('.inv_table').append(text);
+            $('.inv_table_duel').append(text);
         },
         error: function (data) {
             console.log(data);

@@ -6,12 +6,8 @@
             <div class="content_title"><div>Ваш <b>ИНВЕНТАРЬ</b></div></div>
             <div class="clear"></div>
             <div class="inv_cash">Загрузка инвентаря...</div>
-            <div class="inv_table">
-                <div class="inv_table_panel">
-                    <div class="type1">Название</div>
-                    <div class="type2">Качество</div>
-                    <div class="type3">Цена</div>
-                </div>
+            <div class="inv_table_duel">
+
             </div>
         </div>
     </div>
