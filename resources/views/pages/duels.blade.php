@@ -1,11 +1,21 @@
 @extends('layout')
 
 @section('content')
+    <style>
+        .inv_d_item {
+            display: inline-block;
+            margin: 2px;
+        }
+        .inv_choosen {
+            background-color: greenyellow;
+        }
+    </style>
     <div class="content_bg">
         <div class="full">
             <div class="content_title"><div>Ваш <b>ИНВЕНТАРЬ</b></div></div>
             <div class="clear"></div>
             <div class="inv_cash">Загрузка инвентаря...</div>
+            <h2>Ваш инвентарь:</h2>
             <div class="inv_table_duel">
 
             </div>

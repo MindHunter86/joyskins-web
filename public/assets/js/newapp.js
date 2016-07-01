@@ -634,6 +634,14 @@ function mulAndShuffle(arr, k) {
     }
     return res;
 }
+$(document).on('click','.inv_d_item:not(.inv_choosen)',function () {
+   $(this)
+       .addClass('inv_choosen');
+});
+$(document).on('click','.inv_choosen',function () {
+    $(this)
+        .removeClass('inv_choosen');
+});
 $('.tabs_button').on('click', 'li:not(.active)', function() {
     $(this)
     .addClass('active').siblings().removeClass('active')
