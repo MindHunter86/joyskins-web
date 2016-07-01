@@ -176,6 +176,118 @@
                             <a class="cfRoundJoin">Войти</a>
                             <a class="cfRoundView">Смотреть</a>
                         </td>
+                    </tr><tr style="display: table-row;">
+                        <td class="cf-players">
+                            <img src="{{asset('assets/img/coin-t.png')}}" class="coin">
+                            <a href="http://steamcommunity.com/profiles/76561197986291877" target="_blank"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/62/62636d37d5e62f58d22fbe4e187c635c7be385a1_medium.jpg" alt="Profile" title="pdr =DD"></a>
+                        </td>
+                        <td class="cf-items">
+                            <h3>1 предмет</h3>
+                            <div>
+                                <img src=" https://steamcommunity-a.akamaihd.net/economy/image/class/730/310776630/120fx100f" class="img-responsive" title="SSG 08 | Blood in the Water (Minimal Wear) - $20.72">
+
+                            </div>
+                        </td>
+                        <td class="cf-total">
+                            <i class="fa fa-dollar"></i> 300 руб.<br><span class="small">Надо: 200 - 500 руб.</span>
+                        </td>
+                        <td class="cf-timer">
+                            <div class="fifth circle" data-value="0.9" data-size="60" data-fill="{
+            &quot;color&quot;: &quot;red&quot;
+        }" >
+                                <strong></strong>
+                            </div>
+                        </td>
+                        <td class="cf-action" data-id="5776dea8ec1914830cb7a1c4" data-team="0" data-steamid="76561197986291877">
+                            <a class="btn btn-primary cfRoundJoin">Войти</a>
+                            <a class="btn btn-info cfRoundView">Смотреть</a>
+                        </td>
+                    </tr><tr data-amount="2.85" data-id="5776e133ec1914830cb7a4e0" style="display: table-row;">
+                        <td class="cf-players">
+                            <img src="{{asset('assets/img/coin-ct.png')}}" class="coin">
+                            <a href="http://steamcommunity.com/profiles/76561198073444442" target="_blank"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/16/167406a1ba12afe633900dfa910461dff72cafd4_medium.jpg" alt="Profile" title="{SFY} BreZz CSGOCasino.net"></a>
+                        </td>
+                        <td class="cf-items">
+                            <h3>15 items</h3>
+                            <div>
+                                <img src=" https://steamcommunity-a.akamaihd.net/economy/image/class/730/1440515303/120fx100f" class="img-responsive" title="Negev | Power Loader (Field-Tested) - $0.4">
+                                <img src=" https://steamcommunity-a.akamaihd.net/economy/image/class/730/1560432555/120fx100f" class="img-responsive" title="Glock-18 | Royal Legion (Field-Tested) - $0.35">
+                                <img src=" https://steamcommunity-a.akamaihd.net/economy/image/class/730/1310007376/120fx100f" class="img-responsive" title="M249 | Nebula Crusader (Field-Tested) - $0.33">
+                                <img src=" https://steamcommunity-a.akamaihd.net/economy/image/class/730/520028714/120fx100f" class="img-responsive" title="PP-Bizon | Osiris (Minimal Wear) - $0.26">
+                                <img src=" https://steamcommunity-a.akamaihd.net/economy/image/class/730/1011934811/120fx100f" class="img-responsive" title="MP9 | Ruby Poison Dart (Field-Tested) - $0.22">
+                                <span>+ еще 10</span>
+                            </div>
+                        </td>
+                        <td class="cf-total">
+                            <i class="fa fa-dollar"></i> 200 руб.<br><span class="small">Надо: 100 - 300 руб.</span>
+                        </td>
+                        <td class="cf-timer">
+                            <div class="fifth circle" data-value="0.9" data-size="60" data-fill="{
+            &quot;color&quot;: &quot;greenyellow&quot;
+        }" >
+                                <strong></strong>
+                            </div>
+                        </td>
+                        <td class="cf-action" data-id="5776e133ec1914830cb7a4e0" data-team="1" data-steamid="76561198073444442">
+                            <a class="cfRoundJoin">Войти</a>
+                            <a class="cfRoundView">Смотреть</a>
+                        </td>
+                    </tr><tr style="display: table-row;">
+                        <td class="cf-players">
+                            <img src="{{asset('assets/img/coin-t.png')}}" class="coin">
+                            <a href="http://steamcommunity.com/profiles/76561197986291877" target="_blank"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/62/62636d37d5e62f58d22fbe4e187c635c7be385a1_medium.jpg" alt="Profile" title="pdr =DD"></a>
+                        </td>
+                        <td class="cf-items">
+                            <h3>1 предмет</h3>
+                            <div>
+                                <img src=" https://steamcommunity-a.akamaihd.net/economy/image/class/730/310776630/120fx100f" class="img-responsive" title="SSG 08 | Blood in the Water (Minimal Wear) - $20.72">
+
+                            </div>
+                        </td>
+                        <td class="cf-total">
+                            <i class="fa fa-dollar"></i> 300 руб.<br><span class="small">Надо: 200 - 500 руб.</span>
+                        </td>
+                        <td class="cf-timer">
+                            <div class="fifth circle" data-value="0.9" data-size="60" data-fill="{
+            &quot;color&quot;: &quot;red&quot;
+        }" >
+                                <strong></strong>
+                            </div>
+                        </td>
+                        <td class="cf-action" data-id="5776dea8ec1914830cb7a1c4" data-team="0" data-steamid="76561197986291877">
+                            <a class="btn btn-primary cfRoundJoin">Войти</a>
+                            <a class="btn btn-info cfRoundView">Смотреть</a>
+                        </td>
+                    </tr><tr data-amount="2.85" data-id="5776e133ec1914830cb7a4e0" style="display: table-row;">
+                        <td class="cf-players">
+                            <img src="{{asset('assets/img/coin-ct.png')}}" class="coin">
+                            <a href="http://steamcommunity.com/profiles/76561198073444442" target="_blank"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/16/167406a1ba12afe633900dfa910461dff72cafd4_medium.jpg" alt="Profile" title="{SFY} BreZz CSGOCasino.net"></a>
+                        </td>
+                        <td class="cf-items">
+                            <h3>15 items</h3>
+                            <div>
+                                <img src=" https://steamcommunity-a.akamaihd.net/economy/image/class/730/1440515303/120fx100f" class="img-responsive" title="Negev | Power Loader (Field-Tested) - $0.4">
+                                <img src=" https://steamcommunity-a.akamaihd.net/economy/image/class/730/1560432555/120fx100f" class="img-responsive" title="Glock-18 | Royal Legion (Field-Tested) - $0.35">
+                                <img src=" https://steamcommunity-a.akamaihd.net/economy/image/class/730/1310007376/120fx100f" class="img-responsive" title="M249 | Nebula Crusader (Field-Tested) - $0.33">
+                                <img src=" https://steamcommunity-a.akamaihd.net/economy/image/class/730/520028714/120fx100f" class="img-responsive" title="PP-Bizon | Osiris (Minimal Wear) - $0.26">
+                                <img src=" https://steamcommunity-a.akamaihd.net/economy/image/class/730/1011934811/120fx100f" class="img-responsive" title="MP9 | Ruby Poison Dart (Field-Tested) - $0.22">
+                                <span>+ еще 10</span>
+                            </div>
+                        </td>
+                        <td class="cf-total">
+                            <i class="fa fa-dollar"></i> 200 руб.<br><span class="small">Надо: 100 - 300 руб.</span>
+                        </td>
+                        <td class="cf-timer">
+                            <div class="fifth circle" data-value="0.9" data-size="60" data-fill="{
+            &quot;color&quot;: &quot;greenyellow&quot;
+        }" >
+                                <strong></strong>
+                            </div>
+                        </td>
+                        <td class="cf-action" data-id="5776e133ec1914830cb7a4e0" data-team="1" data-steamid="76561198073444442">
+                            <a class="cfRoundJoin">Войти</a>
+                            <a class="cfRoundView">Смотреть</a>
+                        </td>
                     </tr></tbody>
                 </table>
             </div>
