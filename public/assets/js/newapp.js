@@ -583,7 +583,7 @@ function loadMyDuelInventory() {
                     item.price = item.price;
                     item.image = 'https://steamcommunity-a.akamaihd.net/economy/image/class/730/'+item.classid+'/200fx200f';
                     item.market_name = item.market_name || '';
-                    text += '<div class="inv_d_item"><img src="'+item.image+'"></div>';
+                    text += '<div class="inv_d_item"><img width="50" height="50" src="'+item.image+'"></div>';
                    /* text += ''
                         +'<div class="inv_table_info fadeInDown animated ' + getRarity(item.type) + '">'
                         +'<div class="type1"><div><img src="'+item.image+'" alt="" /></div>'+item.name+'</div>'
