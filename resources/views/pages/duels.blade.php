@@ -12,10 +12,10 @@
     </style>
     <div class="content_bg">
         <div class="full">
-            <div class="content_title"><div>Ваш <b>ИНВЕНТАРЬ</b></div></div>
+            <div class="content_title"><div>Ваш <b>ИНВЕНТАРЬ.</b>Выберите ставку.</div></div>
             <div class="clear"></div>
             <div class="inv_cash">Загрузка инвентаря...</div>
-            <div class="inv_info">Предметов выбрано: <span class="inv_count">0</span>, Сумма предметов: <span class="inv_price"></span></div>
+            <div class="inv_info">Предметов выбрано: <span class="inv_count">0</span>, Сумма предметов: <span class="inv_price">0</span></div>
             <h2>Ваш инвентарь:</h2>
             <div class="inv_table_duel">
 

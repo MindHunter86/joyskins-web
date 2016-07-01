@@ -562,14 +562,14 @@ function loadMyInventory() {
 }
 $(document).on('click','.inv_d_item:not(.inv_choosen)',function () {
     var that = $(that)
-    var count = parseInt($('inv_count').html())+1;
+    var count = parseInt($('.inv_count').html())+1;
     if (count > 15){
         that.notify('Вы выбрали 15 предметов, больше нельзя!!', {position: 'bottom middle', className :"error"});
         return;
     }
-    var price = parseFloat(that.data('price'))+parseFloat($('inv_price').html());
-    $('inv_count').html(parseInt($('inv_count').html())+1);
-    $('inv_price').html(price);
+    var price = parseFloat(that.data('price'))+parseFloat($('.inv_price').html());
+    $('.inv_count').html(parseInt($('.inv_count').html())+1);
+    $('.inv_price').html(price);
     $(this)
         .addClass('inv_choosen');
 });
