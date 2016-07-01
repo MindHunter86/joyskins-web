@@ -32,6 +32,10 @@
             padding: 15px;
             cursor:pointer;
         }
+        .cf_items img{
+            width: 45px;
+            height: 45px;
+        }
     </style>
     <div class="content_bg">
         <div class="full">
