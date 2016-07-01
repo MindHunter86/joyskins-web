@@ -562,20 +562,25 @@ function loadMyInventory() {
 }
 $(document).on('click','.inv_d_item:not(.inv_choosen)',function () {
     var that = $(this)
-    var count = parseInt($('.inv_count').html())+1;
+    var count = $('.inv_choosen').length + 1;
     if (count > 15){
         that.notify('Вы выбрали 15 предметов, больше нельзя!!', {position: 'bottom middle', className :"error"});
         return;
     }
     var price = parseFloat(that.data('price'))+parseFloat($('.inv_price').html());
-    $('.inv_count').html(parseInt($('.inv_count').html())+1);
+    $('.inv_count').html(count);
     $('.inv_price').html(price.toFixed(2));
     $(this)
         .addClass('inv_choosen');
 });
 $(document).on('click','.inv_choosen',function () {
+    var that = $(this);
     $(this)
         .removeClass('inv_choosen');
+    var price = parseFloat($('.inv_price').html())-parseFloat(that.data('price'));
+    $('.inv_price').html(price.toFixed(2));
+    var count = $('.inv_choosen').length;
+    $('.inv_count').html(count);
 });
 function loadMyDuelInventory() {
     $.ajax({
