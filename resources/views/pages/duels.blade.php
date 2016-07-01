@@ -50,6 +50,7 @@
             </div>
             <div class="duel_games_list">
                 <div class="second circle"></div>
+                <strong></strong>
             </div>
         </div>
     </div>
@@ -62,9 +63,9 @@
             });
             loadMyDuelInventory();
             $('.second.circle').circleProgress({
-                value: 0.6
+                value: 1
             }).on('circle-animation-progress', function(event, progress) {
-                $(this).find('strong').html(parseInt(100 * progress));
+                $(this).find('strong').html(parseInt(50 * progress) + ' с.');
             });
         });
     </script>
