@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('content')
+    <script type="text/javascript" src="{{ asset('assets/js/circle-progress.js') }}"></script>
     <style>
         .inv_d_item {
             display: inline-block;
@@ -48,7 +49,7 @@
 
             </div>
             <div class="duel_games_list">
-
+                <div class="second circle"></div>
             </div>
         </div>
     </div>
@@ -60,6 +61,11 @@
                 }
             });
             loadMyDuelInventory();
+            $('.second.circle').circleProgress({
+                value: 0.6
+            }).on('circle-animation-progress', function(event, progress) {
+                $(this).find('strong').html(parseInt(100 * progress));
+            });
         });
     </script>
 @endsection
