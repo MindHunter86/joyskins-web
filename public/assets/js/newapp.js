@@ -575,11 +575,11 @@ function loadMyDuelInventory() {
             if (data.success && data.rgInventory && data.rgDescriptions) {
                 text = '';
                 var items = mergeWithDescriptions(data.rgInventory, data.rgDescriptions);
-                console.table(items);
+                //console.table(items);
                 //items.sort(function(a, b) { return parseFloat(b.price) - parseFloat(a.price) });
                 _.each(items, function(item) {
                     item.price = parseFloat(item.price);
-                    if(item.price < 5 || !item.tradable) return;
+                    if(item.price < 5 || !parseInt(item.tradable)) return;
                     item.image = 'https://steamcommunity-a.akamaihd.net/economy/image/class/730/'+item.classid+'/200fx200f';
                     item.market_name = item.market_name || '';
                     text += '<div class="inv_d_item"><img width="50" height="50" src="'+item.image+'"></div>';
