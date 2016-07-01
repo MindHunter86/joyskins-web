@@ -57,6 +57,9 @@
         }
         .coinflip-pots thead{
             border-bottom: 1px solid #3faa5d;
+
+        }
+        .coinflip-pots thead tr{
             padding-top: 10px;
             padding-bottom: 10px;
         }
