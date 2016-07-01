@@ -27,6 +27,9 @@
             background-color: green;
             width: 100%;
             text-align: center;
+            margin-top: 10px;
+            padding: 15px;
+            cursor:pointer;
         }
     </style>
     <div class="content_bg">
@@ -44,7 +47,9 @@
             <div class="inv_table_duel">
 
             </div>
+            <div class="duel_games_list">
 
+            </div>
         </div>
     </div>
     <script>
