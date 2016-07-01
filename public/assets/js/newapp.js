@@ -587,7 +587,7 @@ $(document).on('click','.btnCreateRoom',function () {
     var items = [];
     $('.inv_choosen').each(function(){
         totalPrice += parseFloat($(this).data('price'));
-        items.push(this.data('id'));
+        items.push($(this).data('id'));
     });
     if(totalPrice < 5)
     {
