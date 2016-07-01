@@ -83,7 +83,7 @@
             text-decoration: none;
             cursor:pointer;
         }
-        .fifth .circle strong {
+        .circle strong {
             position: absolute;
             top: 30px;
             left: 0;
