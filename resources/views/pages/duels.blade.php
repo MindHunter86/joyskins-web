@@ -85,9 +85,8 @@
         }
         .circle strong {
             position: absolute;
-            top: 30px;
-            left: 0;
-            width: 100%;
+            margin-top: 22px;
+            margin-left: -40px;
             text-align: center;
         }
     </style>
