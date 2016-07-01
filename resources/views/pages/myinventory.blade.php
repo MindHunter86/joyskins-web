@@ -3,7 +3,7 @@
 @section('content')
 <div class="content_bg">
     <div class="full">
-        <div class="content_title"><div>Ваш <b>ИНВЕНТАРЬ</b></div></div>
+        <div class="content_title"><div>Ваш <b>ИНВЕНТАРЬ.</b>Выберите ставку.</div></div>
         <div class="clear"></div>
         <div class="inv_cash">Загрузка инвентаря...</div>
         <div class="inv_table">
