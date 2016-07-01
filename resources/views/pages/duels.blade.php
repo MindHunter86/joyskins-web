@@ -126,8 +126,9 @@
                             <i class="fa fa-dollar"></i> 300 руб.<br><span class="small">Надо: 200 - 500 руб.</span>
                         </td>
                         <td class="cf-timer">
-                            <div class="second circle"><canvas width="55" height="55"></canvas>
-                                <strong>100<i>%</i></strong>
+                            <div class="fifth circle" data-value="0.9" data-size="60"  data-animation-start-value="1.0" data-fill="{
+            &quot;color&quot;: &quot;rgba(0, 0, 0, .3)&quot;
+        }" data-reverse="true">
                             </div>
                         </td>
                         <td class="cf-action" data-id="5776dea8ec1914830cb7a1c4" data-team="0" data-steamid="76561197986291877">
@@ -154,8 +155,9 @@
                             <i class="fa fa-dollar"></i> 200 руб.<br><span class="small">Надо: 100 - 300 руб.</span>
                         </td>
                         <td class="cf-timer">
-                            <div class="second circle"><canvas width="55" height="55"></canvas>
-                                <strong>100<i>%</i></strong>
+                            <div class="fifth circle" data-value="0.9" data-size="60"  data-animation-start-value="1.0" data-fill="{
+            &quot;color&quot;: &quot;rgba(0, 0, 0, .3)&quot;
+        }" data-reverse="true">
                             </div>
                         </td>
                         <td class="cf-action" data-id="5776e133ec1914830cb7a4e0" data-team="1" data-steamid="76561198073444442">
@@ -175,10 +177,12 @@
                 }
             });
             loadMyDuelInventory();
-            $('.second.circle').circleProgress({
-                value: 1
-            }).on('circle-animation-progress', function(event, progress) {
-                $(this).find('strong').html(parseInt(50 * progress) + ' с.');
+            $('.fifth.circle').circleProgress({
+                value: 0.7
+                // all other config options were taken from "data-" attributes
+                // options passed in config object have higher priority than "data-" attributes
+                // "data-" attributes are taken into account only on init (not on update/redraw)
+                // "data-fill" (and other object options) should be in valid JSON format
             });
         });
     </script>
