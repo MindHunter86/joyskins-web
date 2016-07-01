@@ -582,6 +582,25 @@ $(document).on('click','.inv_choosen',function () {
     var count = $('.inv_choosen').length;
     $('.inv_count').html(count);
 });
+$(document).on('click','.btnCreateRoom',function () {
+    var totalPrice = 0;
+    var items = [];
+    $('.inv_choosen').each(function(){
+        totalPrice += parseFloat(this.data('price'));
+        items.push(this.data('id'));
+    });
+    if(totalPrice < 5)
+    {
+        $(this).notify('Минимальная сумма ставки: 5 рублей', {position: 'bottom middle', className :"error"});
+        return;
+    }
+    if(items.length>15) {
+        $(this).notify('Максимальное кол-во предметов: 15', {position: 'bottom middle', className :"error"});
+        return;
+    }
+    alert('Комната успешно создана из: '+items);
+   //$.ajax({});
+});
 function loadMyDuelInventory() {
     $.ajax({
         url: '/ajax',
