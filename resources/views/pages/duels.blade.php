@@ -16,8 +16,10 @@
             padding: 15px;
             background-color: yellowgreen;
             text-decoration: none;
-            text-underline: none;
             cursor:pointer;
+        }
+        .btnCreateRoom:hover{
+            text-decoration: none;;
         }
     </style>
     <div class="content_bg">
