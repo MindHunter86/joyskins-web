@@ -12,7 +12,7 @@
         .btnCreateRoom {
             display: inline-block;
             text-align: right;
-            float: right;
+            float: left;
             padding: 15px;
             background-color: yellowgreen;
             text-decoration: none;
