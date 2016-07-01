@@ -560,6 +560,23 @@ function loadMyInventory() {
         }
     });
 }
+$(document).on('click','.inv_d_item:not(.inv_choosen)',function () {
+    var that = $(that)
+    var count = parseInt($('inv_count').html())+1;
+    if (count > 15){
+        that.notify('Вы выбрали 15 предметов, больше нельзя!!', {position: 'bottom middle', className :"error"});
+        return;
+    }
+    var price = parseFloat(that.data('price'))+parseFloat($('inv_price').html());
+    $('inv_count').html(parseInt($('inv_count').html())+1);
+    $('inv_price').html(price);
+    $(this)
+        .addClass('inv_choosen');
+});
+$(document).on('click','.inv_choosen',function () {
+    $(this)
+        .removeClass('inv_choosen');
+});
 function loadMyDuelInventory() {
     $.ajax({
         url: '/ajax',
@@ -582,7 +599,7 @@ function loadMyDuelInventory() {
                     if(item.price < 1 || !parseInt(item.tradable)) return;
                     item.image = 'https://steamcommunity-a.akamaihd.net/economy/image/class/730/'+item.classid+'/200fx200f';
                     item.market_name = item.market_name || '';
-                    text += '<div class="inv_d_item"><img width="50" height="50" src="'+item.image+'"></div>';
+                    text += '<div data-id="'+item.id+'" data-price="'+item.price+'" class="inv_d_item"><img width="50" height="50" src="'+item.image+'"></div>';
                    /* text += ''
                         +'<div class="inv_table_info fadeInDown animated ' + getRarity(item.type) + '">'
                         +'<div class="type1"><div><img src="'+item.image+'" alt="" /></div>'+item.name+'</div>'
@@ -591,7 +608,7 @@ function loadMyDuelInventory() {
                         +'</div>'*/
                 });
             }
-
+            $('.inv_cash').hide();
             $('.inv_table_duel').append(text);
         },
         error: function (data) {
@@ -634,14 +651,7 @@ function mulAndShuffle(arr, k) {
     }
     return res;
 }
-$(document).on('click','.inv_d_item:not(.inv_choosen)',function () {
-   $(this)
-       .addClass('inv_choosen');
-});
-$(document).on('click','.inv_choosen',function () {
-    $(this)
-        .removeClass('inv_choosen');
-});
+
 $('.tabs_button').on('click', 'li:not(.active)', function() {
     $(this)
     .addClass('active').siblings().removeClass('active')
