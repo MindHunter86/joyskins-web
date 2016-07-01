@@ -16,6 +16,8 @@
             padding: 15px;
             background-color: yellowgreen;
             text-decoration: none;
+            text-underline: none;
+            cursor:pointer;
         }
     </style>
     <div class="content_bg">
