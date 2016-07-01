@@ -40,6 +40,7 @@
             height: 45px;
         }
         .coinflip-pots {
+            margin-top: 10px;
             border-top: 3px solid #3faa5d;
             border-collapse: collapse;
             width: 100%;
@@ -56,6 +57,8 @@
         }
         .coinflip-pots thead{
             border-bottom: 1px solid #3faa5d;
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
     </style>
     <div class="content_bg">
