@@ -561,7 +561,7 @@ function loadMyInventory() {
     });
 }
 $(document).on('click','.inv_d_item:not(.inv_choosen)',function () {
-    var that = $(that)
+    var that = $(this)
     var count = parseInt($('.inv_count').html())+1;
     if (count > 15){
         that.notify('Вы выбрали 15 предметов, больше нельзя!!', {position: 'bottom middle', className :"error"});
