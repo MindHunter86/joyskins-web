@@ -156,7 +156,7 @@
                         </td>
                         <td class="cf-timer">
                             <div class="fifth circle" data-value="0.9" data-size="60"  data-animation-start-value="1.0" data-fill="{
-            &quot;color&quot;: &quot;rgba(0, 0, 0, .3)&quot;
+            &quot;color&quot;: &quot;greenyellow&quot;
         }" data-reverse="true">
                             </div>
                         </td>
