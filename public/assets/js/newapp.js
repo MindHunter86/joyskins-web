@@ -569,7 +569,7 @@ $(document).on('click','.inv_d_item:not(.inv_choosen)',function () {
     }
     var price = parseFloat(that.data('price'))+parseFloat($('.inv_price').html());
     $('.inv_count').html(parseInt($('.inv_count').html())+1);
-    $('.inv_price').html(price);
+    $('.inv_price').html(price.toFixed(2));
     $(this)
         .addClass('inv_choosen');
 });
