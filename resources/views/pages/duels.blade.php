@@ -125,7 +125,11 @@
                         <td class="cf-total">
                             <i class="fa fa-dollar"></i> 300 руб.<br><span class="small">Надо: 200 - 500 руб.</span>
                         </td>
-                        <td class="cf-timer"></td>
+                        <td class="cf-timer">
+                            <div class="second circle"><canvas width="55" height="55"></canvas>
+                                <strong>100<i>%</i></strong>
+                            </div>
+                        </td>
                         <td class="cf-action" data-id="5776dea8ec1914830cb7a1c4" data-team="0" data-steamid="76561197986291877">
                             <a class="btn btn-primary cfRoundJoin">Войти</a>
                             <a class="btn btn-info cfRoundView">Смотреть</a>
@@ -149,7 +153,11 @@
                         <td class="cf-total">
                             <i class="fa fa-dollar"></i> 200 руб.<br><span class="small">Надо: 100 - 300 руб.</span>
                         </td>
-                        <td class="cf-timer"></td>
+                        <td class="cf-timer">
+                            <div class="second circle"><canvas width="55" height="55"></canvas>
+                                <strong>100<i>%</i></strong>
+                            </div>
+                        </td>
                         <td class="cf-action" data-id="5776e133ec1914830cb7a4e0" data-team="1" data-steamid="76561198073444442">
                             <a class="cfRoundJoin">Войти</a>
                             <a class="cfRoundView">Смотреть</a>
