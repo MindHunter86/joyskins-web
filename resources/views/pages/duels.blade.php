@@ -24,8 +24,7 @@
             <div class="clear"></div>
             <div class="inv_cash">Загрузка инвентаря...</div>
             <div style="display: block;">
-                <div class="inv_info content_title">Предметов выбрано: <span class="inv_count">0</span>, Сумма предметов: <span class="inv_price">0</span></div>
-                <h2 style="display:inline-block; float: left;">Ваш инвентарь:</h2>
+                <div class="inv_info content_title"><div>Предметов выбрано: <b class="inv_count">0</b>, Сумма предметов: <b class="inv_price">0</b></div></div>
                 <a class="btnCreateRoom">Создать комнату</a>
             </div>
             <div style="clear: both;" ></div>
