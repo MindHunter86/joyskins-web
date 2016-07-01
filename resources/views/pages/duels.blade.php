@@ -92,7 +92,7 @@
                     </thead>
                     <tbody><tr style="display: table-row;">
                         <td class="cf-players">
-                            <img src="/assets/images/coinflip/coin-ct.png" class="coin">
+                            <img src="{{asset('assets/img/coin-t.png')}}" class="coin">
                             <a href="http://steamcommunity.com/profiles/76561197986291877" target="_blank"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/62/62636d37d5e62f58d22fbe4e187c635c7be385a1_medium.jpg" alt="Profile" title="pdr =DD"></a>
                         </td>
                         <td class="cf-items">
@@ -112,7 +112,7 @@
                         </td>
                     </tr><tr data-amount="2.85" data-id="5776e133ec1914830cb7a4e0" style="display: table-row;">
                         <td class="cf-players">
-                            <img src="/assets/images/coinflip/coin-t.png" class="coin">
+                            <img src="{{asset('assets/img/coin-ct.png')}}" class="coin">
                             <a href="http://steamcommunity.com/profiles/76561198073444442" target="_blank"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/16/167406a1ba12afe633900dfa910461dff72cafd4_medium.jpg" alt="Profile" title="{SFY} BreZz CSGOCasino.net"></a>
                         </td>
                         <td class="cf-items">
