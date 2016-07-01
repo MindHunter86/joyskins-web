@@ -560,7 +560,46 @@ function loadMyInventory() {
         }
     });
 }
+function loadMyDuelInventory() {
+    $.ajax({
+        url: '/ajax',
+        type: 'POST',
+        dataType: 'json',
+        data: { action: 'myinventory' },
+        success: function (data) {
+            console.log(data);
+            $('.inv_cash').html('Загрузка инвентаря...');
+            var totalPrice = 0;
 
+            if (!data.success && data.Error) $('.inv_cash').html('Произошла ошибка. Попробуйте еще раз');
+
+            if (data.success && data.rgInventory && data.rgDescriptions) {
+                text = '';
+                var items = mergeWithDescriptions(data.rgInventory, data.rgDescriptions);
+                //console.table(items);
+                //items.sort(function(a, b) { return parseFloat(b.price) - parseFloat(a.price) });
+                _.each(items, function(item) {
+                    totalPrice += parseFloat(item.price);
+                    item.price = item.price;
+                    item.image = 'https://steamcommunity-a.akamaihd.net/economy/image/class/730/'+item.classid+'/200fx200f';
+                    item.market_name = item.market_name || '';
+                    text += ''
+                        +'<div class="inv_table_info fadeInDown animated ' + getRarity(item.type) + '">'
+                        +'<div class="type1"><div><img src="'+item.image+'" alt="" /></div>'+item.name+'</div>'
+                        +'<div class="type2">'+(item.market_name.replace(item.name,'').replace('(','').replace(')','') || "Не определено")+'</div>'
+                        +'<div class="type3">'+(item.price || '0.00')+'руб.</div>'
+                        +'</div>'
+                });
+            }
+
+            $('.inv_table').append(text);
+        },
+        error: function (data) {
+            console.log(data);
+            $('.inv_cash').html('Произошла ошибка. Попробуйте еще раз');
+        }
+    });
+}
 function mergeWithDescriptions(items, descriptions) {
     return Object.keys(items).map(function(id) {
         var item = items[id];
