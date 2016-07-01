@@ -23,6 +23,11 @@
         .inv_info{
             float: left;
         }
+        .show_inv{
+            background-color: green;
+            width: 100%;
+            text-align: center;
+        }
     </style>
     <div class="content_bg">
         <div class="full">
@@ -34,7 +39,8 @@
                 <div class="content_title inv_info"><div>Предметов выбрано: <b class="inv_count">0</b>, Сумма предметов: <b class="inv_price">0</b></div></div>
 
             </div>
-            <div style="clear: both;" ></div>
+            <div style="clear: both; content: ' '; display: table;" ></div>
+            <div class="show_inv">Показать/скрыть инвентарь</div>
             <div class="inv_table_duel">
 
             </div>

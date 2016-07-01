@@ -573,6 +573,9 @@ $(document).on('click','.inv_d_item:not(.inv_choosen)',function () {
     $(this)
         .addClass('inv_choosen');
 });
+$(document).on('click','.show_inv',function(){
+    $('.inv_table_duel').slideToggle();
+});
 $(document).on('click','.inv_choosen',function () {
     var that = $(this);
     $(this)
