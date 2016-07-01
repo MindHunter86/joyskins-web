@@ -63,6 +63,22 @@
             padding: 8px;
 
         }
+        .cfRoundJoin{
+            display: inline-block;
+            float: left;
+            padding: 15px;
+            background-color: #45b0cd;
+            text-decoration: none;
+            cursor:pointer;
+        }
+        .cfRoundView{
+            display: inline-block;
+            float: left;
+            padding: 15px;
+            background-color: #b550cd;
+            text-decoration: none;
+            cursor:pointer;
+        }
     </style>
     <div class="content_bg">
         <div class="full">
@@ -107,8 +123,8 @@
                         </td>
                         <td class="cf-timer"></td>
                         <td class="cf-action" data-id="5776dea8ec1914830cb7a1c4" data-team="0" data-steamid="76561197986291877">
-                            <button class="btn btn-primary cfRoundJoin">Войти</button>
-                            <button class="btn btn-info cfRoundView">Смотреть</button>
+                            <a class="btn btn-primary cfRoundJoin">Войти</a>
+                            <a class="btn btn-info cfRoundView">Смотреть</a>
                         </td>
                     </tr><tr data-amount="2.85" data-id="5776e133ec1914830cb7a4e0" style="display: table-row;">
                         <td class="cf-players">
@@ -131,8 +147,8 @@
                         </td>
                         <td class="cf-timer"></td>
                         <td class="cf-action" data-id="5776e133ec1914830cb7a4e0" data-team="1" data-steamid="76561198073444442">
-                            <button class="cfRoundJoin">Войти</button>
-                            <button class="cfRoundView">Смотреть</button>
+                            <a class="cfRoundJoin">Войти</a>
+                            <a class="cfRoundView">Смотреть</a>
                         </td>
                     </tr></tbody>
                 </table>
