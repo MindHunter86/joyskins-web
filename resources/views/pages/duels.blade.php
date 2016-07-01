@@ -55,6 +55,10 @@
             width: 45px;
             height: 45px;
         }
+        .coinflip-pots tbody tr:nth-child(2n)
+        {
+            background-color: #002f17;
+        }
         .coinflip-pots thead{
             border-bottom: 1px solid #3faa5d;
 
