@@ -165,7 +165,7 @@
 
                 </div>
             </div>
-            <a href="#modalInv">Внести</a>
+            <a class="btnShowInv" href="#modalInv">Создать комнату</a>
 
             <div class="duel_games_list">
                 <table class="coinflip-pots table">
