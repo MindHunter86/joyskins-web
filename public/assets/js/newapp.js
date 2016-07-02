@@ -576,6 +576,11 @@ $(document).on('click','.inv_d_item:not(.inv_choosen)',function () {
 $(document).on('click','.show_inv',function(){
     $('.inv_table_duel').slideToggle();
 });
+$(document).on('click','btnShowInv',function () {
+    loadMyDuelInventory();
+    $('.inv_count').html(0);
+    $('.inv_price').html(0);
+});
 $(document).on('click','.inv_choosen',function () {
     var that = $(this);
     $(this)
@@ -612,6 +617,7 @@ function loadMyDuelInventory() {
         data: { action: 'myinventory' },
         success: function (data) {
             console.log(data);
+            $('.inv_table_duel').html('');
             $('.inv_cash').html('Загрузка инвентаря...');
 
             if (!data.success && data.Error) $('.inv_cash').html('Произошла ошибка. Попробуйте еще раз');
@@ -636,7 +642,7 @@ function loadMyDuelInventory() {
                 });
             }
             $('.inv_cash').hide();
-            $('.inv_table_duel').append(text);
+            $('.inv_table_duel').html(text);
         },
         error: function (data) {
             console.log(data);
