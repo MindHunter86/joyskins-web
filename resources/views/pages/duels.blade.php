@@ -95,7 +95,6 @@
         }
         .window {
             position: fixed;
-            font-family: Arial, Helvetica, sans-serif;
             top: 0;
             right: 0;
             bottom: 0;
@@ -114,15 +113,6 @@
             pointer-events: auto;
         }
 
-        .window > div {
-            width: 460px;
-            position: relative;
-            margin: 10% auto;
-            padding: 30px 10px 10px;
-            border-radius: 10px;
-            background: #fff;
-            box-shadow: 0px 0px 20px 2px;
-        }
 
         .close {
             background: #cc3300;
