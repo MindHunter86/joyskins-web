@@ -601,6 +601,10 @@ $(document).on('click','.inv_choosen',function () {
     var count = $('.inv_choosen').length;
     $('.inv_count').html(count);
 });
+$(document).on('click','.coin',function () {
+   $('.coin.choosen').removeClass('choosen');
+    $(this).addClass('choosen');
+});
 $(document).on('click','.btnCreateRoom',function () {
     var totalPrice = 0;
     var items = [];
