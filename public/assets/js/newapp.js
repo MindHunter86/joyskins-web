@@ -577,16 +577,18 @@ $(document).on('click','.show_inv',function(){
     $('.inv_table_duel').slideToggle();
 });
 $(document).on('click','.btnShowInv',function () {
+    $('#joinRoom').hide();
+    $('#createRoom').show();
     loadMyDuelInventory();
-    $('.joinRoom').hide();
-    $('.createRoom').show();
+
     $('.inv_count').html(0);
     $('.inv_price').html(0);
 });
 $(document).on('click','.cfRoundJoin',function () {
+    $('#joinRoom').show();
+    $('#createRoom').hide();
     loadMyDuelInventory();
-    $('.joinRoom').show();
-    $('.createRoom').hide();
+
     $('.inv_count').html(0);
     $('.inv_price').html(0);
 });

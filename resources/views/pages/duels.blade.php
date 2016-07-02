@@ -171,12 +171,12 @@
                 <div class="clear"></div>
                 <div class="inv_cash">Загрузка инвентаря...</div>
                 <div style="display: block;">
-                    <div style="display:none;" id="createRoom">
+                    <div id="createRoom">
                         <a class="btnCreateRoom">Создать комнату</a>
                         <img src="{{asset('assets/img/coin-t.png')}}" class="coin">
                         <img src="{{asset('assets/img/coin-сt.png')}}" class="coin">
                     </div>
-                    <div style="display:none;" id="joinRoom">
+                    <div  id="joinRoom">
                         <a class="btnJoinRoom">Войти в комнату</a>
                     </div>
                     <div class="content_title inv_info"><div>Предметов выбрано: <b class="inv_count">0</b>, Сумма предметов: <b class="inv_price">0</b></div></div>
