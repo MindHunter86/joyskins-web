@@ -119,9 +119,9 @@
             color: #FFFFFF;
             line-height: 25px;
             position: absolute;
-            right: -12px;
+            right: 10px;
             text-align: center;
-            top: -10px;
+            top: 22px;
             width: 24px;
             text-decoration: none;
             font-weight: bold;
