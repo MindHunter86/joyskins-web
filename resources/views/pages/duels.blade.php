@@ -185,10 +185,11 @@
                     </div>
                     <div  id="joinRoom">
                         <a class="btnJoinRoom" style="width:auto;">Войти в комнату</a>
+
                         <div class="content_title"><div>Нужно: <b id="room_start">500</b>-<b class="room_end">600</b> руб.</div></div>
 
-                        <div class="clear"></div>
                     </div>
+
                     <div class="content_title inv_info"><div>Предметов выбрано: <b class="inv_count">0</b>, Сумма предметов: <b class="inv_price">0</b></div></div>
                 </div>
                 <div style="clear: both; content: ' '; display: table;" ></div>
