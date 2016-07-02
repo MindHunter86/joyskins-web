@@ -93,19 +93,71 @@
             margin-left: -40px;
             text-align: center;
         }
+        .window {
+            position: fixed;
+            font-family: Arial, Helvetica, sans-serif;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 99999;
+            -webkit-transition: opacity 400ms ease-in;
+            -moz-transition: opacity 400ms ease-in;
+            transition: opacity 400ms ease-in;
+            display: none;
+            pointer-events: none;
+        }
+
+        .window:target {
+            display: block;
+            pointer-events: auto;
+        }
+
+        .window > div {
+            width: 460px;
+            position: relative;
+            margin: 10% auto;
+            padding: 30px 10px 10px;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0px 0px 20px 2px;
+        }
+
+        .close {
+            background: #cc3300;
+            color: #FFFFFF;
+            line-height: 25px;
+            position: absolute;
+            right: -12px;
+            text-align: center;
+            top: -10px;
+            width: 24px;
+            text-decoration: none;
+            font-weight: bold;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
+            border-radius: 12px;
+            -moz-box-shadow: 1px 1px 3px #000;
+            -webkit-box-shadow: 1px 1px 3px #000;
+            box-shadow: 1px 1px 3px #000;
+        }
+
+        .close:hover { background: #990000; }
     </style>
     <div class="content_bg">
         <div class="full">
-            <div class="content_title"><div>Ваш <b>ИНВЕНТАРЬ.</b>Выберите ставку.</div></div>
-            <div class="clear"></div>
-            <div class="inv_cash">Загрузка инвентаря...</div>
-            <div style="display: block;">
-                <a class="btnCreateRoom">Создать комнату</a>
-                <div class="content_title inv_info"><div>Предметов выбрано: <b class="inv_count">0</b>, Сумма предметов: <b class="inv_price">0</b></div></div>
-
+            <div id="modalInv" class="window">
+                <div class="content_title"><div>Ваш <b>ИНВЕНТАРЬ.</b>Выберите ставку.</div></div>
+                <div class="clear"></div>
+                <div class="inv_cash">Загрузка инвентаря...</div>
+                <div style="display: block;">
+                    <a class="btnCreateRoom">Создать комнату</a>
+                    <div class="content_title inv_info"><div>Предметов выбрано: <b class="inv_count">0</b>, Сумма предметов: <b class="inv_price">0</b></div></div>
+                </div>
             </div>
+            <a href="#modalInv">Внести</a>
             <div style="clear: both; content: ' '; display: table;" ></div>
-            <div class="show_inv">Показать/скрыть инвентарь</div>
             <div class="inv_table_duel">
 
             </div>
