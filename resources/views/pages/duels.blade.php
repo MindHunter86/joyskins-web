@@ -145,6 +145,18 @@
         .btnShowInv:hover{
             text-decoration: none;;
         }
+        .btnJoinRoom{
+            display: inline-block;
+            float: left;
+            padding: 15px;
+            background-color: yellowgreen;
+            text-decoration: none;
+            cursor:pointer;
+            width:100%;
+        }
+        .btnJoinRoom:hover{
+            text-decoration: none;;
+        }
         .inv_table_duel {
             overflow: auto;
             height: 100%;
@@ -154,13 +166,19 @@
         <div class="full">
             <div class="content_title"><div>Coin<b>flip</b>. Создавайте или вступайте в игру.</div></div>
             <div class="clear"></div>
-            <div id="modalCreateRoom" class="window">
+            <div id="modalShowAction" class="window">
                 <a href="#close" title="Закрыть" class="close">X</a>
-
                 <div class="clear"></div>
                 <div class="inv_cash">Загрузка инвентаря...</div>
                 <div style="display: block;">
-                    <a class="btnCreateRoom">Создать комнату</a>
+                    <div style="display:none;" id="createRoom">
+                        <a class="btnCreateRoom">Создать комнату</a>
+                        <img src="{{asset('assets/img/coin-t.png')}}" class="coin">
+                        <img src="{{asset('assets/img/coin-сt.png')}}" class="coin">
+                    </div>
+                    <div style="display:none;" id="joinRoom">
+                        <a class="btnJoinRoom">Войти в комнату</a>
+                    </div>
                     <div class="content_title inv_info"><div>Предметов выбрано: <b class="inv_count">0</b>, Сумма предметов: <b class="inv_price">0</b></div></div>
                 </div>
                 <div style="clear: both; content: ' '; display: table;" ></div>
@@ -168,21 +186,7 @@
 
                 </div>
             </div>
-            <div id="modalJoinRoom" class="window">
-                <a href="#close" title="Закрыть" class="close">X</a>
-
-                <div class="clear"></div>
-                <div class="inv_cash">Загрузка инвентаря...</div>
-                <div style="display: block;">
-                    <a class="btnCreateRoom">Создать комнату</a>
-                    <div class="content_title inv_info"><div>Предметов выбрано: <b class="inv_count">0</b>, Сумма предметов: <b class="inv_price">0</b></div></div>
-                </div>
-                <div style="clear: both; content: ' '; display: table;" ></div>
-                <div class="inv_table_duel">
-
-                </div>
-            </div>
-            <a class="btnShowInv" href="#modalCreateRoom">Создать комнату</a>
+            <a class="btnShowInv" href="#modalShowAction">Создать комнату</a>
             <div class="duel_games_list">
                 <table class="coinflip-pots table">
                     <thead>
