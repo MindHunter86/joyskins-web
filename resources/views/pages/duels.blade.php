@@ -10,7 +10,7 @@
         .inv_choosen {
             background-color: greenyellow;
         }
-        .coin .choosen {
+        .coin.choosen {
             background-color: darkseagreen;
         }
         .coin {
