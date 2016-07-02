@@ -174,7 +174,7 @@
                     <div id="createRoom">
                         <a class="btnCreateRoom">Создать комнату</a>
                         <img src="{{asset('assets/img/coin-t.png')}}" class="coin">
-                        <img src="{{asset('assets/img/coin-сt.png')}}" class="coin">
+                        <img src="{{asset('assets/img/coin-ct.png')}}" class="coin">
                     </div>
                     <div  id="joinRoom">
                         <a class="btnJoinRoom">Войти в комнату</a>
