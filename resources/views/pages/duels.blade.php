@@ -137,8 +137,10 @@
     </style>
     <div class="content_bg">
         <div class="full">
+            <div class="content_title"><div>Coin<b>flip</b>. Создавайте или вступайте в игру.</div></div>
             <div id="modalInv" class="window">
-                <div class="content_title"><div>Ваш <b>ИНВЕНТАРЬ.</b>Выберите ставку.</div></div>
+                <a href="#close" title="Закрыть" class="close">X</a>
+
                 <div class="clear"></div>
                 <div class="inv_cash">Загрузка инвентаря...</div>
                 <div style="display: block;">
