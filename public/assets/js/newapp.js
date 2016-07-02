@@ -576,7 +576,7 @@ $(document).on('click','.inv_d_item:not(.inv_choosen)',function () {
 $(document).on('click','.show_inv',function(){
     $('.inv_table_duel').slideToggle();
 });
-$(document).on('click','btnShowInv',function () {
+$(document).on('click','.btnShowInv',function () {
     loadMyDuelInventory();
     $('.inv_count').html(0);
     $('.inv_price').html(0);
