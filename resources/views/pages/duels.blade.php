@@ -145,12 +145,13 @@
                     <a class="btnCreateRoom">Создать комнату</a>
                     <div class="content_title inv_info"><div>Предметов выбрано: <b class="inv_count">0</b>, Сумма предметов: <b class="inv_price">0</b></div></div>
                 </div>
+                <div style="clear: both; content: ' '; display: table;" ></div>
+                <div class="inv_table_duel">
+
+                </div>
             </div>
             <a href="#modalInv">Внести</a>
-            <div style="clear: both; content: ' '; display: table;" ></div>
-            <div class="inv_table_duel">
 
-            </div>
             <div class="duel_games_list">
                 <table class="coinflip-pots table">
                     <thead>
