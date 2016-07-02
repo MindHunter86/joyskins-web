@@ -146,6 +146,10 @@
         .btnShowInv:hover{
             text-decoration: none;;
         }
+        .inv_table_duel {
+            overflow: auto;
+            height: 100%;
+        }
     </style>
     <div class="content_bg">
         <div class="full">
