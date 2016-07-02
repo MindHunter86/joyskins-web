@@ -221,7 +221,7 @@
                             </div>
                         </td>
                         <td class="cf-action" data-id="5776dea8ec1914830cb7a1c4" data-team="0" data-steamid="76561197986291877">
-                            <a class="btn btn-primary cfRoundJoin">Войти</a>
+                            <a class="btn btn-primary cfRoundJoin"  href="#modalShowAction">Войти</a>
                             <a class="btn btn-info cfRoundView">Смотреть</a>
                         </td>
                     </tr><tr data-amount="2.85" data-id="5776e133ec1914830cb7a4e0" style="display: table-row;">
@@ -251,7 +251,7 @@
                             </div>
                         </td>
                         <td class="cf-action" data-id="5776e133ec1914830cb7a4e0" data-team="1" data-steamid="76561198073444442">
-                            <a class="cfRoundJoin">Войти</a>
+                            <a class="cfRoundJoin" href="#modalShowAction">Войти</a>
                             <a class="cfRoundView">Смотреть</a>
                         </td>
                     </tr><tr style="display: table-row;">
@@ -277,7 +277,7 @@
                             </div>
                         </td>
                         <td class="cf-action" data-id="5776dea8ec1914830cb7a1c4" data-team="0" data-steamid="76561197986291877">
-                            <a class="btn btn-primary cfRoundJoin">Войти</a>
+                            <a class="btn btn-primary cfRoundJoin" href="#modalShowAction">Войти</a>
                             <a class="btn btn-info cfRoundView">Смотреть</a>
                         </td>
                     </tr><tr data-amount="2.85" data-id="5776e133ec1914830cb7a4e0" style="display: table-row;">
@@ -307,7 +307,7 @@
                             </div>
                         </td>
                         <td class="cf-action" data-id="5776e133ec1914830cb7a4e0" data-team="1" data-steamid="76561198073444442">
-                            <a class="cfRoundJoin">Войти</a>
+                            <a class="cfRoundJoin" href="#modalShowAction">Войти</a>
                             <a class="cfRoundView">Смотреть</a>
                         </td>
                     </tr><tr style="display: table-row;">
@@ -333,7 +333,7 @@
                             </div>
                         </td>
                         <td class="cf-action" data-id="5776dea8ec1914830cb7a1c4" data-team="0" data-steamid="76561197986291877">
-                            <a class="btn btn-primary cfRoundJoin">Войти</a>
+                            <a class="btn btn-primary cfRoundJoin" href="#modalShowAction">Войти</a>
                             <a class="btn btn-info cfRoundView">Смотреть</a>
                         </td>
                     </tr><tr data-amount="2.85" data-id="5776e133ec1914830cb7a4e0" style="display: table-row;">
@@ -363,7 +363,7 @@
                             </div>
                         </td>
                         <td class="cf-action" data-id="5776e133ec1914830cb7a4e0" data-team="1" data-steamid="76561198073444442">
-                            <a class="cfRoundJoin">Войти</a>
+                            <a class="cfRoundJoin" href="#modalShowAction">Войти</a>
                             <a class="cfRoundView">Смотреть</a>
                         </td>
                     </tr></tbody>
