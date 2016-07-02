@@ -134,10 +134,23 @@
         }
 
         .close:hover { background: #990000; }
+        .btnShowInv{
+            display: inline-block;
+            float: left;
+            padding: 15px;
+            background-color: yellowgreen;
+            text-decoration: none;
+            cursor:pointer;
+            width:100%;
+        }
+        .btnShowInv:hover{
+            text-decoration: none;;
+        }
     </style>
     <div class="content_bg">
         <div class="full">
             <div class="content_title"><div>Coin<b>flip</b>. Создавайте или вступайте в игру.</div></div>
+            <div class="clear"></div>
             <div id="modalInv" class="window">
                 <a href="#close" title="Закрыть" class="close">X</a>
 
