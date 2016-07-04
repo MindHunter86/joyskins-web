@@ -66,7 +66,6 @@ class DuelController extends Controller
         $total_price = 0;
         $d_items = [];
         foreach ($items as $item) {
-            $sItem['id'] = $item;
             if(!isset($userInv['rgInventory'][$item]) || !$userInv['rgDescriptions'][$userInv['rgInventory'][$item]['classid'].'_'.$userInv['rgInventory'][$item]['instanceid']]
             )
                 return response()->json(['success'=>false,'error'=>'У вас нету таких предметов!']);
@@ -75,6 +74,7 @@ class DuelController extends Controller
             $d_item['price'] = $itemInfo->price;
             $s_item['price'] = $d_item['price'];
             $s_item['market_hash_name'] = $d_item['market_hash_name'];
+            $s_item['id'] = $item;
             if(!$d_item['price'])
                 return response()->json(['success'=>false,'error'=>'Извините, данный предмет запрещен: '.$item['market_hash_name']]);
             $total_price += $d_item['price'];
