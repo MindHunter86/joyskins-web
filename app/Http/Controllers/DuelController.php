@@ -58,7 +58,7 @@ class DuelController extends Controller
             return response()->json(['success'=>false,'error'=>'Ошибка предметов.']);
         $userInv = file_get_contents('https://steamcommunity.com/profiles/76561198297166864/inventory/json/730/2');
         $userInv = json_decode($userInv);
-        if(!$userInv['success'])
+        if(!$userInv->success)
             return response()->json(['success'=>false,'error'=>'Ошибка загрузки инвентаря.']);
         if(count($items) > self::DUEL_MAX_ITEMS_COUNT)
             return response()->json(['success'=>false,'error'=>'Вы выбрали слишком много предметов.']);
