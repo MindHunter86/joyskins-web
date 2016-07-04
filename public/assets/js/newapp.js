@@ -605,6 +605,25 @@ $(document).on('click','.coin',function () {
    $('.coin.choosen').removeClass('choosen');
     $(this).addClass('choosen');
 });
+$(document).on('click','.btnCheckBet',function () {
+    var id = $(this).data('id');
+    $.ajax({
+        url: '/duel/checkOffer',
+        type: 'POST',
+        dataType: 'json',
+        data: { id: id },
+        success:function (data) {
+            if(data.success) {
+                console.log(data.text);
+            }else{
+                console.log(data.error)
+            }
+        },
+        error:function () {
+            console.log('Ошибка AJAX. Попробуйте позже.');
+        }
+    });
+});
 $(document).on('click','.btnCreateRoom',function () {
     var totalPrice = 0;
     var items = [];

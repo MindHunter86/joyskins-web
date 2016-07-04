@@ -168,16 +168,30 @@
             overflow: auto;
             height: 100%;
         }
+        .btnCheckBet{
+            display: inline-block;
+            float: left;
+            padding: 15px;
+            text-align: center;
+            background-color: #00bdcd;
+            text-decoration: none;
+            cursor:pointer;
+            width:100%;
+        }
+        .btnCheckBet:hover{
+            text-decoration: none;;
+        }
     </style>
     <div class="content_bg">
         <div class="full">
-            @foreach(\App\duel_bet::where('status',\App\duel_bet::STATUS_WAIT_TO_ACCEPT)->where('user_id',\Auth::user()->id)->get() as $bet)
+            @foreach(\App\duel_bet::where('status',\App\duel_bet::STATUS_WAIT_TO_ACCEPT)->where('user_id',\Auth::user()->id)->get()  as $bet)
                 <h3>Вы вступили в игру, у вас есть: 60 сек для подтверждения</h3>
                 <h3>Ваша ставка:</h3>
                 <?php $items = json_decode($bet->items);?>
                 @foreach($items as $item)
-                    <img src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" alt="">
+                    <img width="45" height="45" src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" alt="">
                 @endforeach
+                <a class="btnCheckBet" data-id="{{$bet->id}}">Проверить ставку</a>
                 <br>
             @endforeach
             <div class="content_title"><div>Coin<b>flip</b>. Создавайте или вступайте в игру.</div></div>
