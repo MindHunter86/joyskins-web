@@ -64,17 +64,18 @@ class DuelController extends Controller
         if(count($items) > self::DUEL_MAX_ITEMS_COUNT)
             return response()->json(['success'=>false,'error'=>'Вы выбрали слишком много предметов.']);
         $total_price = 0;
+        $d_items = [];
         foreach ($items as $item) {
             if(!isset($userInv['rgInventory'][$item]) || !$userInv['rgDescriptions'][$userInv['rgInventory'][$item]['classid'].'_'.$userInv['rgInventory'][$item]['instanceid']]
             )
                 return response()->json(['success'=>false,'error'=>'У вас нету таких предметов!']);
             $d_item = $userInv['rgDescriptions'][$userInv['rgInventory'][$item]['classid'].'_'.$userInv['rgInventory'][$item]['instanceid']];
             $itemInfo = new CsgoFast($d_item);
-            $item['price'] = $itemInfo->price;
-            $item['name'] = $d_item['market_hash_name'];
-            if(!$item['price'])
+            $d_item['price'] = $itemInfo->price;
+            if(!$d_item['price'])
                 return response()->json(['success'=>false,'error'=>'Извините, данный предмет запрещен: '.$item['market_hash_name']]);
-            $total_price += $item['price'];
+            $total_price += $d_item['price'];
+            $d_items[] = $d_item;
         }
         if($type == 'createRoom') {
             if($total_price<self::DUEL_MIN_PRICE)
@@ -88,8 +89,8 @@ class DuelController extends Controller
             $duel_bet = new duel_bet;
             $duel_bet->user_id = \Auth::user()->id;
             $duel_bet->game_id = $game->id;
-            $duel_bet->items = json_decode($items);
-            $duel_bet->itemsCount = count($items);
+            $duel_bet->items = json_decode($d_items);
+            $duel_bet->itemsCount = count($d_items);
             $duel_bet->coin = $coin;
             $duel_bet->price = $total_price;
             $duel_bet->status = duel_bet::STATUS_WAIT_TO_SENT;
