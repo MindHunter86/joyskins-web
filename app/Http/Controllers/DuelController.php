@@ -57,14 +57,14 @@ class DuelController extends Controller
         if (!$items)
             return response()->json(['success'=>false,'error'=>'Ошибка предметов.']);
         $userInv = file_get_contents('https://steamcommunity.com/profiles/76561198297166864/inventory/json/730/2');
-        $userInv = json_decode($userInv);
-        if(!$userInv->success)
+        $userInv = json_decode($userInv,true);
+        if(!$userInv['success'])
             return response()->json(['success'=>false,'error'=>'Ошибка загрузки инвентаря.']);
         if(count($items) > self::DUEL_MAX_ITEMS_COUNT)
             return response()->json(['success'=>false,'error'=>'Вы выбрали слишком много предметов.']);
         $total_price = 0;
         foreach ($items as $item) {
-            if(!$userInv->rgInventory[$item]||!$userInv->rgDescriptions[$userInv->rgInventory[$item]->classid.'_'.$userInv->rgInventory[$item]->instanceid])
+            if(!$userInv['rgInventory'][$item]||!$userInv['rgDescriptions'][$userInv['rgInventory'][$item]['classid'].'_'.$userInv['rgInventory'][$item]['instanceid']])
                 return response()->json(['success'=>false,'error'=>'У вас нету таких предметов!']);
             $d_item = $userInv['rgDescriptions'][$userInv['rgInventory'][$item]['classid'].'_'.$userInv['rgInventory'][$item]['instanceid']];
             $itemInfo = new CsgoFast($d_item);
