@@ -72,4 +72,6 @@ Route::group(['prefix' => 'api', 'middleware' => 'secretKey'], function () {
 
     post('/newLottery', 'GameController@newLottery');
     post('/getWinnersLottery', 'GameController@getWinnersLottery');
+
+    post('/duel/setReceiveStatus','DuelController@setReceiveStatus');
 });

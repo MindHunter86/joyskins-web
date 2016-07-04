@@ -39,6 +39,12 @@ class DuelController extends Controller
     {
         return view('pages.duels');
     }
+    public function setReceiveStatus()
+    {
+        $id = \Request::get('id');
+        $status = \Request::get('status');
+        duel_bet::where('id',$id)->update(['status'=>$status]);
+    }
     public function receiveOffer()
     {
         $type = \Request::get('type');
@@ -75,6 +81,7 @@ class DuelController extends Controller
             $s_item['price'] = $d_item['price'];
             $s_item['market_hash_name'] = $d_item['market_hash_name'];
             $s_item['id'] = $item;
+            $s_item['classId'] = $d_item['classid'];
             if(!$d_item['price'])
                 return response()->json(['success'=>false,'error'=>'Извините, данный предмет запрещен: '.$item['market_hash_name']]);
             $total_price += $d_item['price'];
@@ -99,6 +106,7 @@ class DuelController extends Controller
             $duel_bet->status = duel_bet::STATUS_WAIT_TO_SENT;
             $duel_bet->save();
             $value = [
+                'id' => $duel_bet->id,
                 'items' => $d_items,
                 'partnerSteamId' => $this->user->steamid64,
                 'accessToken' => $this->user->accessToken
