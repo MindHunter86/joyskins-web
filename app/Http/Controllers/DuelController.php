@@ -54,7 +54,7 @@ class DuelController extends Controller
         } else
             return response()->json(['success'=>false,'error'=>'Ошибка типа запроса!']);
         $items = \Request::get('items');
-        $items = json_decode($items);
+        $items = json_decode($items,true);
         if (!$items)
             return response()->json(['success'=>false,'error'=>'Ошибка предметов.']);
         $userInv = file_get_contents('https://steamcommunity.com/profiles/'.\Auth::user()->steamid64.'/inventory/json/730/2');
