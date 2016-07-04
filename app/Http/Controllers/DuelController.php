@@ -89,7 +89,7 @@ class DuelController extends Controller
             $duel_bet = new duel_bet;
             $duel_bet->user_id = \Auth::user()->id;
             $duel_bet->game_id = $game->id;
-            $duel_bet->items = json_decode($d_items);
+            $duel_bet->items = json_encode($d_items);
             $duel_bet->itemsCount = count($d_items);
             $duel_bet->coin = $coin;
             $duel_bet->price = $total_price;
