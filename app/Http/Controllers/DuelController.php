@@ -66,16 +66,19 @@ class DuelController extends Controller
         $total_price = 0;
         $d_items = [];
         foreach ($items as $item) {
+            $sItem['id'] = $item;
             if(!isset($userInv['rgInventory'][$item]) || !$userInv['rgDescriptions'][$userInv['rgInventory'][$item]['classid'].'_'.$userInv['rgInventory'][$item]['instanceid']]
             )
                 return response()->json(['success'=>false,'error'=>'У вас нету таких предметов!']);
             $d_item = $userInv['rgDescriptions'][$userInv['rgInventory'][$item]['classid'].'_'.$userInv['rgInventory'][$item]['instanceid']];
             $itemInfo = new CsgoFast($d_item);
             $d_item['price'] = $itemInfo->price;
+            $s_item['price'] = $d_item['price'];
+            $s_item['market_hash_name'] = $d_item['market_hash_name'];
             if(!$d_item['price'])
                 return response()->json(['success'=>false,'error'=>'Извините, данный предмет запрещен: '.$item['market_hash_name']]);
             $total_price += $d_item['price'];
-            $d_items[] = $d_item;
+            $d_items[] = $s_item;
         }
         if($type == 'createRoom') {
             if($total_price<self::DUEL_MIN_PRICE)

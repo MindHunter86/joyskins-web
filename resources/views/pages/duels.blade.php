@@ -180,8 +180,8 @@
                 <div style="display: block;">
                     <div id="createRoom">
                         <a class="btnCreateRoom">Создать комнату</a>
-                        <img src="{{asset('assets/img/coin-t.png')}}" class="coin choosen">
-                        <img src="{{asset('assets/img/coin-ct.png')}}" class="coin">
+                        <img src="{{asset('assets/img/coin-t.png')}}" data-coin="0" class="coin choosen">
+                        <img src="{{asset('assets/img/coin-ct.png')}}" data-coin="1" class="coin">
                     </div>
                     <div  id="joinRoom">
                         <a class="btnJoinRoom" style="width:auto;">Войти в комнату</a>

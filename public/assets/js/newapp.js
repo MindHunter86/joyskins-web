@@ -621,11 +621,12 @@ $(document).on('click','.btnCreateRoom',function () {
         $(this).notify('Максимальное кол-во предметов: 15', {position: 'bottom middle', className :"error"});
         return;
     }
+    var coin = $('.coin.choosen').data('coin');
     $.ajax({
         url: '/duel/receiveOffer',
         type: 'POST',
         dataType: 'json',
-        data: { type: 'createRoom', items: JSON.stringify(items) },
+        data: { type: 'createRoom', items: JSON.stringify(items), coin: coin },
         success:function (data) {
             if(data.success) {
                 $(this).notify('Комната успешно создана!',{position: 'bottom middle', className :"success"});
