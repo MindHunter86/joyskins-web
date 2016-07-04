@@ -621,8 +621,22 @@ $(document).on('click','.btnCreateRoom',function () {
         $(this).notify('Максимальное кол-во предметов: 15', {position: 'bottom middle', className :"error"});
         return;
     }
-    alert('Комната успешно создана из: '+items);
-   //$.ajax({});
+    $.ajax({
+        url: '/duel/receiveOffer',
+        type: 'POST',
+        dataType: 'json',
+        data: { type: 'createRoom', items: JSON.stringify(items) },
+        success:function (data) {
+            if(data.success) {
+                $(this).notify('Комната успешно создана!',{position: 'bottom middle', className :"success"});
+            }else{
+                $(this).notify(data.error,{position: 'bottom middle', className :"error"});
+            }
+        },
+        error:function () {
+            $(this).notify('Ошибка AJAX. Попробуйте позже.',{position: 'bottom middle', className :"error"});
+        }
+    });
 });
 function loadMyDuelInventory() {
     $.ajax({
