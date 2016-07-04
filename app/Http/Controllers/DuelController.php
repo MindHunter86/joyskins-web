@@ -56,7 +56,7 @@ class DuelController extends Controller
         $items = json_decode($items);
         if (!$items)
             return response()->json(['success'=>false,'error'=>'Ошибка предметов.']);
-        $userInv = file_get_contents('https://steamcommunity.com/profiles/76561198297166864/inventory/json/730/2');
+        $userInv = file_get_contents('https://steamcommunity.com/profiles/'.\Auth::user()->steamid64.'/inventory/json/730/2');
         $userInv = json_decode($userInv,true);
         if(!$userInv['success'])
             return response()->json(['success'=>false,'error'=>'Ошибка загрузки инвентаря.']);
@@ -64,9 +64,7 @@ class DuelController extends Controller
             return response()->json(['success'=>false,'error'=>'Вы выбрали слишком много предметов.']);
         $total_price = 0;
         foreach ($items as $item) {
-            if(!$userInv['rgInventory'][$item]
-                ||
-                !$userInv['rgDescriptions'][$userInv['rgInventory'][$item]['classid'].'_'.$userInv['rgInventory'][$item]['instanceid']]
+            if(!isset($userInv['rgInventory'][$item]) || !$userInv['rgDescriptions'][$userInv['rgInventory'][$item]['classid'].'_'.$userInv['rgInventory'][$item]['instanceid']]
             )
                 return response()->json(['success'=>false,'error'=>'У вас нету таких предметов!']);
             $d_item = $userInv['rgDescriptions'][$userInv['rgInventory'][$item]['classid'].'_'.$userInv['rgInventory'][$item]['instanceid']];
