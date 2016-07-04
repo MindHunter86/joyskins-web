@@ -64,7 +64,10 @@ class DuelController extends Controller
             return response()->json(['success'=>false,'error'=>'Вы выбрали слишком много предметов.']);
         $total_price = 0;
         foreach ($items as $item) {
-            if(!$userInv['rgInventory'][$item]||!$userInv['rgDescriptions'][$userInv['rgInventory'][$item]['classid'].'_'.$userInv['rgInventory'][$item]['instanceid']])
+            if(!$userInv['rgInventory'][$item]
+                ||
+                !$userInv['rgDescriptions'][$userInv['rgInventory'][$item]['classid'].'_'.$userInv['rgInventory'][$item]['instanceid']]
+            )
                 return response()->json(['success'=>false,'error'=>'У вас нету таких предметов!']);
             $d_item = $userInv['rgDescriptions'][$userInv['rgInventory'][$item]['classid'].'_'.$userInv['rgInventory'][$item]['instanceid']];
             $itemInfo = new CsgoFast($d_item);
