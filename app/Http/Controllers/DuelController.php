@@ -98,7 +98,12 @@ class DuelController extends Controller
             $duel_bet->price = $total_price;
             $duel_bet->status = duel_bet::STATUS_WAIT_TO_SENT;
             $duel_bet->save();
-            
+            $value = [
+                'items' => d_items,
+                'partnerSteamId' => $this->user->steamid64,
+                'accessToken' => $this->user->accessToken
+            ];
+            $this->redis->rpush(self::RECEIVE_ITEMS_CHANNEL, json_encode($value));
         } else {
             //joinRoom
         }
