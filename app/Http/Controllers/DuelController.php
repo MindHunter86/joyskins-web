@@ -12,6 +12,7 @@ use Invisnik\LaravelSteamAuth\SteamAuth;
 use Carbon\Carbon;
 use App\duel;
 use App\duel_bet;
+use App\Services\CsgoFast;
 
 class DuelController extends Controller
 {
