@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
     get('/giveaway', ['as' => 'giveaway', 'uses' => 'PagesController@giveaway']);
 
     post('/duel/receiveOffer','DuelController@receiveOffer');
+    post('/duel/checkOffer','DuelController@checkOffer');
 
 });
 
