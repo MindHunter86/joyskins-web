@@ -237,6 +237,7 @@
                         <?php
                             $duel_bet = \App\duel_bet::where('game_id',$duel->id)->where('status',\App\duel_bet::STATUS_ACCEPTED)->first();
                             $items = json_decode($duel_bet->items);
+                                $user = \App\User::where('id',$duel_bet->user_id)->first();
                         ?>
 
                         <tr data-amount="2.85" data-id="5776e133ec1914830cb7a4e0" style="display: table-row;">
@@ -246,7 +247,7 @@
                                 @else
                                     <img src="{{asset('assets/img/coin-t.png')}}">
                                 @endif
-                                <a href="http://steamcommunity.com/profiles/76561198073444442" target="_blank"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/16/167406a1ba12afe633900dfa910461dff72cafd4_medium.jpg" alt="Profile" title="{SFY} BreZz CSGOCasino.net"></a>
+                                <a href="http://steamcommunity.com/profiles/{{$user->steamid64}}" target="_blank"><img src="{{$user->avatar}}" alt="Profile" title="{{$user->username}}"></a>
                             </td>
                             <td class="cf-items">
                                 <h3>{{count($items)}} предметов:</h3>
@@ -257,7 +258,7 @@
                                 </div>
                             </td>
                             <td class="cf-total">
-                                <i class="fa fa-dollar"></i> {{$duel_bet->price}} руб.<br><span class="small">Надо: {{$duel_bet->price-$duel_bet->price*0.1}} - {{$duel_bet->price+$duel_bet->price*0.1}} руб.</span>
+                                {{$duel_bet->price}} руб.<br><span class="small">Надо: {{$duel_bet->price-$duel_bet->price*0.1}} - {{$duel_bet->price+$duel_bet->price*0.1}} руб.</span>
                             </td>
                             <td class="cf-timer">
                                 <div class="fifth circle" data-value="0.9" data-size="60" data-fill="{
