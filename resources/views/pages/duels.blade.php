@@ -236,6 +236,7 @@
                     @foreach(\App\duel::where('status',\App\duel::STATUS_PLAYING)->get() as $duel)
                         <?php
                             $duel_bet = \App\duel_bet::where('game_id',$duel->id)->where('status',\App\duel_bet::STATUS_ACCEPTED)->first();
+                                if(is_null($duel_bet)) return;
                             $items = json_decode($duel_bet->items);
                         ?>
 
