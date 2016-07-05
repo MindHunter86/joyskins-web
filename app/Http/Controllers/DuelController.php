@@ -52,7 +52,11 @@ class DuelController extends Controller
         $bet->save();
         $bets = duel_bet::where('game_id',$bet->game_id)->count();
         if($bets == 1) {
-            duel::where('id',$bet->game_id)->update(['status'=>duel::STATUS_PLAYING]);
+            if($status == duel_bet::STATUS_ACCEPTED)
+             duel::where('id',$bet->game_id)->update(['status'=>duel::STATUS_PLAYING]);
+            elseif ($status == duel_bet::STATUS_DECLINED || $status == duel_bet::STATUS_SENT_ERROR) {
+                duel::where('id',$bet->game_id)->update(['status'=>duel::STATUS_ERROR]);
+            }
         } else {
             duel::where('id',$bet->game_id)->update(['status'=>duel::STATUS_PRE_FINISH]);
         }
