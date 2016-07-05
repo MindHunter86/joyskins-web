@@ -236,8 +236,8 @@
                     <?php $duels = \App\duel::where('status',\App\duel::STATUS_PLAYING)->get();?>
                     @foreach($duels as $duel)
                         <?php
-                     //   $duel_bet = \App\duel_bet::where('game_id',$duel->id)->where('status',\App\duel_bet::STATUS_ACCEPTED)->first();
-                        $items = json_decode("privet");
+                         $duel_bet = \App\duel_bet::where('game_id',$duel['id'])->where('status',\App\duel_bet::STATUS_ACCEPTED)->first();
+                        //$items = json_decode($duel_bet->items);
                         ?>
 
                     @endforeach
