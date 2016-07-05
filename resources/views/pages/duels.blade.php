@@ -236,41 +236,10 @@
                     <?php $duels = \App\duel::where('status',\App\duel::STATUS_PLAYING)->get();?>
                     @foreach($duels as $duel)
                         <?php
-                        $duel_bet = \App\duel_bet::where('game_id',$duel['id'])->where('status',\App\duel_bet::STATUS_ACCEPTED)->first();
-                        //$items = json_decode($duel_bet->items);
+                        $duel_bet = \App\duel_bet::where('game_id',$duel->id)->where('status',\App\duel_bet::STATUS_ACCEPTED)->first();
+                        $items = json_decode($duel_bet->items);
                         ?>
-                        <tr data-amount="2.85" data-id="5776e133ec1914830cb7a4e0" style="display: table-row;">
-                            <td class="cf-players">
-                                @if($duel_bet->coin == 1)
-                                    <img src="{{asset('assets/img/coin-ct.png')}}">
-                                @else
-                                    <img src="{{asset('assets/img/coin-t.png')}}">
-                                @endif
-                                <a href="http://steamcommunity.com/profiles/76561198073444442" target="_blank"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/16/167406a1ba12afe633900dfa910461dff72cafd4_medium.jpg" alt="Profile" title="{SFY} BreZz CSGOCasino.net"></a>
-                            </td>
-                            <td class="cf-items">
-                                <h3>{{count($items)}} предметов:</h3>
-                                <div>
-                                    @foreach($items as $item)
-                                        <img src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" class="img-responsive" title="{{$item->market_hash_name}} - {{$item->price}} руб.">
-                                    @endforeach
-                                </div>
-                            </td>
-                            <td class="cf-total">
-                                <i class="fa fa-dollar"></i> {{$duel_bet->price}} руб.<br><span class="small">Надо: {{$duel_bet->price-$duel_bet->price*0.1}} - {{$duel_bet->price+$duel_bet->price*0.1}} руб.</span>
-                            </td>
-                            <td class="cf-timer">
-                                <div class="fifth circle" data-value="0.9" data-size="60" data-fill="{
-            &quot;color&quot;: &quot;greenyellow&quot;
-        }" >
-                                    <strong></strong>
-                                </div>
-                            </td>
-                            <td class="cf-action" data-id="5776e133ec1914830cb7a4e0" data-team="1" data-steamid="76561198073444442">
-                                <a class="cfRoundJoin" data-id="{{$duel->id}}" href="#modalShowAction">Войти</a>
-                                <a class="cfRoundView">Смотреть</a>
-                            </td>
-                        </tr>
+
                     @endforeach
                     </tbody>
                 </table>
