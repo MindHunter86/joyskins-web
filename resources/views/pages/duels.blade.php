@@ -233,8 +233,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach(\App\duel::where('status',\App\duel::STATUS_PLAYING)->get() as $duel)
-                        <?php $duel_bet = \App\duel_bet::where('game_id',$duel->id)->where('status',\App\duel_bet::STATUS_ACCEPTED)->first();
+                    <?php foreach(\App\duel::where('status',\App\duel::STATUS_PLAYING)->get() as $duel){
+
+                            $duel_bet = \App\duel_bet::where('game_id',$duel->id)->where('status',\App\duel_bet::STATUS_ACCEPTED)->first();
                             $items = json_decode($duel_bet->items);
                         ?>
                     <tr data-amount="2.85" data-id="5776e133ec1914830cb7a4e0" style="display: table-row;">
@@ -269,7 +270,7 @@
                             <a class="cfRoundView">Смотреть</a>
                         </td>
                     </tr>
-                    @endforeach
+                    <?php}?>
                     </tbody>
                 </table>
             </div>
