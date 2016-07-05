@@ -17,7 +17,7 @@ class CreateDuelBetsTable extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('game_id')->unsigned()->nullable();
-            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
+            $table->foreign('game_id')->references('id')->on('duels')->onDelete('cascade');
             $table->json('items');
             $table->float('price');
             $table->integer('itemsCount');
