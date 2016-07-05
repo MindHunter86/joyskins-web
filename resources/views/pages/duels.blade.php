@@ -242,7 +242,7 @@
 
                         <tr data-amount="2.85" data-id="5776e133ec1914830cb7a4e0" style="display: table-row;">
                             <td class="cf-players">
-                                @if($duel_bet->coin == 1)
+                                @if($duel_bet['coin'] == 1)
                                     <img src="{{asset('assets/img/coin-ct.png')}}">
                                 @else
                                     <img src="{{asset('assets/img/coin-t.png')}}">
