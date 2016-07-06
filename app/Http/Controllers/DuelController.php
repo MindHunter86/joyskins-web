@@ -75,7 +75,7 @@ class DuelController extends Controller
                 }
                 $duel->won_items = json_encode(array_merge(json_decode($bets[0]->items),json_decode($bets[1]->items)));
                 $duel->save();
-                $user = User::where('id',$duel->winnerid)->first();
+                $user = User::where('id',$duel->winner_id)->first();
                 $value = [
                     'id' => $duel->id,
                     'items' => $duel->won_items,
