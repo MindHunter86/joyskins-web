@@ -235,14 +235,17 @@
                     <tbody>
                     @foreach(\App\duel::where('status',\App\duel::STATUS_PLAYING)->get() as $duel)
                         <?php
-                            $duel_bet = \App\duel_bet::where('game_id',$duel->id)->where('status',\App\duel_bet::STATUS_ACCEPTED)->first();
-                            $items = json_decode($duel_bet->items);
-                                $user = \App\User::where('id',$duel_bet->user_id)->first();
+                            $duel_bets = \App\duel_bet::where('game_id',$duel->id)->where('status',\App\duel_bet::STATUS_ACCEPTED)->get();
+
+                            $items = json_decode($duel_bets[0]->items);
+                                $user = \App\User::where('id',$duel_bets[0]->user_id)->first();
+                                if(!is_null($duel_bets[1]))
+                                    $user_joined = \App\User::where('id',$duel_bets[1]->user_id)->first();
                         ?>
 
                         <tr data-amount="2.85" data-id="5776e133ec1914830cb7a4e0" style="display: table-row;">
                             <td class="cf-players">
-                                @if($duel_bet->coin == 1)
+                                @if($duel_bets[0]->coin == 1)
                                     <img src="{{asset('assets/img/coin-ct.png')}}">
                                 @else
                                     <img src="{{asset('assets/img/coin-t.png')}}">

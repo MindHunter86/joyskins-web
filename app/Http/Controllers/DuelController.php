@@ -58,7 +58,18 @@ class DuelController extends Controller
                 duel::where('id',$bet->game_id)->update(['status'=>duel::STATUS_ERROR]);
             }
         } else {
-            duel::where('id',$bet->game_id)->update(['status'=>duel::STATUS_PRE_FINISH]);
+            $bets = duel_bet::where('game_id',$bet->game_id)->where('status',duel_bet::STATUS_ACCEPTED)->get();
+            if(count($bets)==2) {
+                $duel = duel::where('id', $bet->game_id)->first();
+                $duel->status = duel::STATUS_PRE_FINISH;
+                if($bet[0]->coin > $duel->rand_number) {
+                    $duel->winner_id = $bet[0]->user_id;
+                } else {
+                    $duel->winner_id = $bet[1]->user_id;
+                }
+                $duel->won_items = json_encode(array_merge(json_decode($bet[0]->items),json_decode($bet[1]->items)));
+                $duel->save();
+            }
         }
     }
     public function receiveOffer()
@@ -71,6 +82,9 @@ class DuelController extends Controller
             $game = duel::where('id',$round_id)->where('status',duel::STATUS_PLAYING)->first();
             if(is_null($game))
                 return response()->json(['success'=>false,'error'=>'Комната не существует, или уже занята или завершена!']);
+            $count = duel_bet::where('game_id',$round_id)->where('status',duel_bet::STATUS_ACCEPTED)->orWhere('status',duel_bet::STATUS_WAIT_TO_ACCEPT)->orWhere('status',duel_bet::STATUS_WAIT_TO_SENT)->count();
+            if($count != 1)
+                return response()->json(['success'=>false,'error'=>'Данная комната уже занята!']);
         } else if($type == 'createRoom') {
 
         } else
@@ -128,8 +142,33 @@ class DuelController extends Controller
                 'accessToken' => $this->user->accessToken
             ];
             $this->redis->rpush(self::RECEIVE_ITEMS_CHANNEL, json_encode($value));
+            return response()->json(['success'=>true,'error'=>'Вы успешно создали комнату, примите стимоффер!']);
         } else {
-            //joinRoom
+            $count = duel_bet::where('game_id',$round_id)->where('status',duel_bet::STATUS_ACCEPTED)->orWhere('status',duel_bet::STATUS_WAIT_TO_ACCEPT)->orWhere('status',duel_bet::STATUS_WAIT_TO_SENT)->count();
+            if($count != 1)
+                return response()->json(['success'=>false,'error'=>'Данная комната уже занята!']);
+            $host_bet = duel_bet::where('game_id',$round_id)->where('status',duel_bet::STATUS_ACCEPTED)->first();
+            if($total_price>$host_bet->price*0.9 && $total_price < $host_bet->price*1.1){
+                $duel_bet = new duel_bet;
+                $duel_bet->user_id = \Auth::user()->id;
+                $duel_bet->game_id = $round_id;
+                $duel_bet->items = json_encode($d_items);
+                $duel_bet->itemsCount = count($d_items);
+                $duel_bet->coin = !$host_bet->coin;
+                $duel_bet->price = $total_price;
+                $duel_bet->status = duel_bet::STATUS_WAIT_TO_SENT;
+                $duel_bet->save();
+                $value = [
+                    'id' => $duel_bet->id,
+                    'items' => $d_items,
+                    'partnerSteamId' => $this->user->steamid64,
+                    'accessToken' => $this->user->accessToken
+                ];
+                $this->redis->rpush(self::RECEIVE_ITEMS_CHANNEL, json_encode($value));
+                return response()->json(['success'=>true,'error'=>'Вы успешно вошли в комнату, примите стимоффер!']);
+            }else{
+                return response()->json(['success'=>false,'error'=>'Вам не хватает или вы выбрали слишком много предметов']);
+            }
         }
     }
 }

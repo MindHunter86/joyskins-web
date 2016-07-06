@@ -586,6 +586,7 @@ $(document).on('click','.btnShowInv',function () {
 });
 $(document).on('click','.cfRoundJoin',function () {
     $('#joinRoom').show();
+    $('#joinRoom').data('roomId',$(this).data(id));
     $('#createRoom').hide();
     loadMyDuelInventory();
 
@@ -621,6 +622,40 @@ $(document).on('click','.btnCheckBet',function () {
         },
         error:function () {
             console.log('Ошибка AJAX. Попробуйте позже.');
+        }
+    });
+});
+$(document).on('click','.btnJoinRoom',function(){
+    var id = $('#joinRoom').data('roomId');
+    var totalPrice = 0;
+    var items = [];
+    $('.inv_choosen').each(function(){
+        totalPrice += parseFloat($(this).data('price'));
+        items.push($(this).data('id'));
+    });
+    if(totalPrice < 5)
+    {
+        $(this).notify('Минимальная сумма ставки: 5 рублей', {position: 'bottom middle', className :"error"});
+        return;
+    }
+    if(items.length>15) {
+        $(this).notify('Максимальное кол-во предметов: 15', {position: 'bottom middle', className :"error"});
+        return;
+    }
+    $.ajax({
+        url: '/duel/receiveOffer',
+        type: 'POST',
+        dataType: 'json',
+        data: { type: 'joinRoom', items: JSON.stringify(items), id: id },
+        success:function (data) {
+            if(data.success) {
+                $(this).notify(data.error,{position: 'bottom middle', className :"success"});
+            }else{
+                $(this).notify(data.error,{position: 'bottom middle', className :"error"});
+            }
+        },
+        error:function () {
+            $(this).notify('Ошибка AJAX. Попробуйте позже.',{position: 'bottom middle', className :"error"});
         }
     });
 });
