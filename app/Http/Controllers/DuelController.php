@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -74,11 +75,12 @@ class DuelController extends Controller
                 }
                 $duel->won_items = json_encode(array_merge(json_decode($bets[0]->items),json_decode($bets[1]->items)));
                 $duel->save();
+                $user = User::where('id',$duel->winnerid)->first();
                 $value = [
                     'id' => $duel->id,
                     'items' => $duel->won_items,
-                    'partnerSteamId' => $this->user->steamid64,
-                    'accessToken' => $this->user->accessToken
+                    'partnerSteamId' => $user->steamid64,
+                    'accessToken' => $user->accessToken
                 ];
                 $this->redis->rpush(self::WINNER_ITEMS_CHANNEL, json_encode($value));
             }
