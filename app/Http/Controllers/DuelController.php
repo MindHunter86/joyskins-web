@@ -67,7 +67,7 @@ class DuelController extends Controller
                 } else {
                     $duel->winner_id = $bets[1]->user_id;
                 }
-                $duel->won_items = json_encode(array_merge(json_decode($bet[0]->items),json_decode($bet[1]->items)));
+                $duel->won_items = json_encode(array_merge(json_decode($bets[0]->items),json_decode($bets[1]->items)));
                 $duel->save();
             }
         }
