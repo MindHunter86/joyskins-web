@@ -78,7 +78,7 @@ class DuelController extends Controller
                 $user = User::where('id',$duel->winner_id)->first();
                 $value = [
                     'id' => $duel->id,
-                    'items' => $duel->won_items,
+                    'items' => json_decode($duel->won_items),
                     'partnerSteamId' => $user->steamid64,
                     'accessToken' => $user->accessToken
                 ];
