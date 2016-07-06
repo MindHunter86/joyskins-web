@@ -62,10 +62,10 @@ class DuelController extends Controller
             if(count($bets)==2) {
                 $duel = duel::where('id', $bet->game_id)->first();
                 $duel->status = duel::STATUS_PRE_FINISH;
-                if($bet[0]->coin > $duel->rand_number) {
-                    $duel->winner_id = $bet[0]->user_id;
+                if($bets[0]->coin > $duel->rand_number) {
+                    $duel->winner_id = $bets[0]->user_id;
                 } else {
-                    $duel->winner_id = $bet[1]->user_id;
+                    $duel->winner_id = $bets[1]->user_id;
                 }
                 $duel->won_items = json_encode(array_merge(json_decode($bet[0]->items),json_decode($bet[1]->items)));
                 $duel->save();
