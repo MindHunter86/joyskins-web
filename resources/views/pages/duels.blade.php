@@ -239,7 +239,7 @@
 
                             $items = json_decode($duel_bets[0]->items);
                                 $user = \App\User::where('id',$duel_bets[0]->user_id)->first();
-                                if(!is_null($duel_bets[1]))
+                                if(count($duel_bets)>1)
                                     $user_joined = \App\User::where('id',$duel_bets[1]->user_id)->first();
                         ?>
 
