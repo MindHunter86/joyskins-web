@@ -586,7 +586,7 @@ $(document).on('click','.btnShowInv',function () {
 });
 $(document).on('click','.cfRoundJoin',function () {
     $('#joinRoom').show();
-    $('#joinRoom').data('roomId',$(this).data(id));
+    $('#joinRoom').data('roomId',$(this).data('id'));
     $('#createRoom').hide();
     loadMyDuelInventory();
 
