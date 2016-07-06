@@ -43,6 +43,11 @@ class DuelController extends Controller
         $id = \Request::get('id');
         
     }
+    public function setPrizeStatus(){
+        $id = \Request::get('id');
+        $status = \Request::get('status');
+        duel::where('id',$id)->update(['status_prize'=>$status]);
+    }
     public function setReceiveStatus()
     {
         $id = \Request::get('id');
@@ -69,6 +74,13 @@ class DuelController extends Controller
                 }
                 $duel->won_items = json_encode(array_merge(json_decode($bets[0]->items),json_decode($bets[1]->items)));
                 $duel->save();
+                $value = [
+                    'id' => $duel->id,
+                    'items' => $duel->won_items,
+                    'partnerSteamId' => $this->user->steamid64,
+                    'accessToken' => $this->user->accessToken
+                ];
+                $this->redis->rpush(self::WINNER_ITEMS_CHANNEL, json_encode($value));
             }
         }
     }
