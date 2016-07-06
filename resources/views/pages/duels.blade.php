@@ -261,7 +261,7 @@
                                 </div>
                             </td>
                             <td class="cf-total">
-                                {{$duel_bet->price}} руб.<br><span class="small">Надо: {{$duel_bet->price-$duel_bet->price*0.1}} - {{$duel_bet->price+$duel_bet->price*0.1}} руб.</span>
+                                {{$duel_bets[0]->price}} руб.<br><span class="small">Надо: {{$duel_bets[0]->price-$duel_bets[0]->price*0.1}} - {{$duel_bets[0]->price+$duel_bets[0]->price*0.1}} руб.</span>
                             </td>
                             <td class="cf-timer">
                                 <div class="fifth circle" data-value="0.9" data-size="60" data-fill="{
