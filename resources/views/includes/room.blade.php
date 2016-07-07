@@ -46,7 +46,7 @@ if(count($duel_bets)>1)
                 var time = {{$diff}}
                 var timeout = setTimeout(function () {
                     time--;
-                    timer.radialProgress("to", {'perc': time*100/90 , 'time': 1});
+                    timer.radialProgress("to", {'perc': time*100/90 , 'time': 1000});
                     if(time <= 0)
                             return;
                             timeout();
