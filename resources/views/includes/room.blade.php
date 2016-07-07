@@ -41,6 +41,7 @@ if(count($duel_bets)>1)
                 var timer = jQuery("#timer{{$duel->id}}").radialProgress("init", {
                     'size': 45,
                     'fill': 5,
+                    'color': '#FF0000',
                     'font-size': 14,
                     'perc': parseInt({{$diff*100/90}})
                 });
