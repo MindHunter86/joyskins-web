@@ -615,9 +615,9 @@ $(document).on('click','.btnCheckBet',function () {
         data: { id: id },
         success:function (data) {
             if(data.success) {
-                console.log(data.text);
+                alert(data.text);
             }else{
-                console.log(data.error)
+                alert(data.error)
             }
         },
         error:function () {
@@ -649,9 +649,9 @@ $(document).on('click','.btnJoinRoom',function(){
         data: { type: 'joinRoom', items: JSON.stringify(items), id: id },
         success:function (data) {
             if(data.success) {
-                console.log(data.text);
+                alert(data.text);
             }else{
-                console.log(data.error);
+                alert(data.error);
             }
         },
         error:function () {
