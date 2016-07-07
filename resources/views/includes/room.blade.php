@@ -29,6 +29,12 @@ if(count($duel_bets)>1)
     </td>
     <td class="cf-timer">
         @if(isset($user_joined))
+
+        <div class="fifth circle" id="timer{{$duel->id}}" data-value="0.9" data-size="60" data-fill="{
+            &quot;color&quot;: &quot;greenyellow&quot;
+        }" >
+            <strong></strong>
+        </div>
             <script>  $('#timer{{$duel->id}}').circleProgress({
                     <?php
                             $date = new Carbon\Carbon($duel_bets[1]->updated_at);
@@ -43,11 +49,6 @@ if(count($duel_bets)>1)
                 }).on('circle-animation-progress', function(event, progress) {
                     $(this).find('strong').html(parseInt({{$diff}} * progress) + 'с');
                 }); </script>
-        <div class="fifth circle" id="timer{{$duel->id}}" data-value="0.9" data-size="60" data-fill="{
-            &quot;color&quot;: &quot;greenyellow&quot;
-        }" >
-            <strong></strong>
-        </div>
         @endif
     </td>
     <td class="cf-action" data-id="5776e133ec1914830cb7a4e0" data-team="1" data-steamid="76561198073444442">
