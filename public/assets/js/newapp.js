@@ -587,18 +587,18 @@ $(document).on('click','.btnShowInv',function () {
     $('#joinRoom').hide();
     $('#createRoom').show();
     loadMyDuelInventory();
-
     $('.inv_count').html(0);
     $('.inv_price').html(0);
+    $('.window').show();
 });
 $(document).on('click','.cfRoundJoin',function () {
     $('#joinRoom').show();
     $('#joinRoom').data('roomId',$(this).data('id'));
     $('#createRoom').hide();
     loadMyDuelInventory();
-
     $('.inv_count').html(0);
     $('.inv_price').html(0);
+    $('.window').show();
 });
 $(document).on('click','.inv_choosen',function () {
     var that = $(this);
@@ -630,6 +630,7 @@ $(document).on('click','.btnJoinRoom',function(){
         $(this).notify('Максимальное кол-во предметов: 15', {position: 'bottom middle', className :"error"});
         return;
     }
+    $('.window').hide();
     $.ajax({
         url: '/duel/receiveOffer',
         type: 'POST',
@@ -663,6 +664,7 @@ $(document).on('click','.btnCreateRoom',function () {
         $(this).notify('Максимальное кол-во предметов: 15', {position: 'bottom middle', className :"error"});
         return;
     }
+    $('.window').hide();
     var coin = $('.coin.choosen').data('coin');
     $.ajax({
         url: '/duel/receiveOffer',

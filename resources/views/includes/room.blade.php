@@ -35,7 +35,7 @@ if(count($duel_bets)>1)
         </div>
     </td>
     <td class="cf-action" data-id="5776e133ec1914830cb7a4e0" data-team="1" data-steamid="76561198073444442">
-        <a class="cfRoundJoin" data-id="{{$duel->id}}" href="#modalShowAction">Войти</a>
+        <a class="cfRoundJoin" data-id="{{$duel->id}}">Войти</a>
         <a class="cfRoundView">Смотреть</a>
     </td>
 </tr>
