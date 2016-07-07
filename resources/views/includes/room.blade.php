@@ -39,19 +39,16 @@ if(count($duel_bets)>1)
             ?>
             <script>
                 var timer = jQuery("#timer{{$duel->id}}").radialProgress("init", {
-                    'size': 100,
+                    'size': 45,
                     'fill': 5,
-                    'perc': {{$diff}}*100/90
+                    'perc': parseInt({{$diff}}*100/90)
                 });
-                var time = {{$diff}}
-                var timeout = setTimeout(function () {
+                var time = {{$diff}};
+                setInterval(function () {
+                    if(time<=0) return;
+                    timer.radialProgress("to", {'perc': parseInt(time*100/90) , 'time': 1});
                     time--;
-                    timer.radialProgress("to", {'perc': time*100/90 , 'time': 1000});
-                    if(time <= 0)
-                            return;
-                            timeout();
                 },1000);
-
             </script>
         @endif
     </td>
