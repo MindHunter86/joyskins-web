@@ -82,6 +82,18 @@ class DuelController extends Controller
                 duel::where('id',$bet->game_id)->update(['status'=>duel::STATUS_ERROR]);
             }
         } else {
+            if($status == duel_bet::STATUS_WAIT_TO_ACCEPT) {
+                $duel = duel::where('id',$bet->game_id)->first();
+                $user = User::where('id',$bet->user_id)->first();
+                $returnValue = [
+                    'betId' => $bet->id,
+                    'roomId' => $bet->game_id,
+                    'steamId' => $user->steamid64,
+                    'html' => view('includes.room', compact('duel'))->render()
+                ];
+                $this->redis->publish(self::NEW_JOIN_CHANNEL, json_encode($returnValue));
+                return;
+            }
             $bets = duel_bet::where('game_id',$bet->game_id)->where('status',duel_bet::STATUS_ACCEPTED)->get();
             if(count($bets)==2) {
                 $duel = duel::where('id', $bet->game_id)->first();

@@ -519,6 +519,10 @@ if (START) {
                 alert('Вы успешно подтвердили, ваша комната создана!');
             }
             $('#roomList').prepend(data.html);
+        })
+        .on('newJoin',function (data) {
+           data = JSON.parse(data);
+            $('tr#duelRoom'+data.roomId).html(data.html);
         });
     var declineTimeout,
         timerStatus = true,
