@@ -46,7 +46,7 @@ if(count($duel_bets)>1)
                 var time = {{$diff}};
                 setInterval(function () {
                     if(time<=0) return;
-                    timer.radialProgress("to", {'perc': parseInt(time*100/90) , 'time': parseInt(time*100/90) ? 100 : 10});
+                    timer.radialProgress("to", {'perc': parseInt(time*100/90) , 'time': (parseInt(time*100/90) ? 100 : 10)});
                     time--;
                 },1000);
             </script>
