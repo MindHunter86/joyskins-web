@@ -28,14 +28,34 @@ if(count($duel_bets)>1)
         {{$duel_bets[0]->price}} руб.<br><span class="small">Надо: {{$duel_bets[0]->price-$duel_bets[0]->price*0.1}} - {{$duel_bets[0]->price+$duel_bets[0]->price*0.1}} руб.</span>
     </td>
     <td class="cf-timer">
-        <div class="fifth circle" data-value="0.9" data-size="60" data-fill="{
+        @if(isset($user_joined))
+            <script>  $('#timer{{$duel->id}}').circleProgress({
+                    <?php
+                            $date = new \Carbon\Carbon($duel->updated_at);
+                            $now = new \Carbon\Carbon::now();
+                            $diff = 90-$date->diffInSeconds($now);
+                            ?>
+                    value: {{$diff/90}}
+                    // all other config options were taken from "data-" attributes
+                    // options passed in config object have higher priority than "data-" attributes
+                    // "data-" attributes are taken into account only on init (not on update/redraw)
+                    // "data-fill" (and other object options) should be in valid JSON format
+                }).on('circle-animation-progress', function(event, progress) {
+                    $(this).find('strong').html(parseInt({{$diff}} * progress) + 'с');
+                }); </script>
+        <div class="fifth circle" id="timer{{$duel->id}}" data-value="0.9" data-size="60" data-fill="{
             &quot;color&quot;: &quot;greenyellow&quot;
         }" >
             <strong></strong>
         </div>
+        @endif
     </td>
     <td class="cf-action" data-id="5776e133ec1914830cb7a4e0" data-team="1" data-steamid="76561198073444442">
+        @if(!isset($user_joined))
         <a class="cfRoundJoin" data-id="{{$duel->id}}">Войти</a>
+        @else
+            <a href="http://steamcommunity.com/profiles/{{$user_joined->steamid64}}" target="_blank"><img src="{{$user_joined->avatar}}" width="45" height="45" alt="Profile" title="{{$user_joined->username}}"></a>
+        @endif
         <a class="cfRoundView">Смотреть</a>
     </td>
 </tr>
