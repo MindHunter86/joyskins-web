@@ -523,6 +523,10 @@ if (START) {
         .on('newJoin',function (data) {
            data = JSON.parse(data);
             $('tr#duelRoom'+data.roomId).html(data.html);
+        })
+        .on('userLeftRoom',function(data){
+            data = JSON.parse(data);
+            $('tr#duelRoom'+data.roomId).html(data.html);
         });
     var declineTimeout,
         timerStatus = true,
