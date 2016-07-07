@@ -30,10 +30,7 @@ if(count($duel_bets)>1)
     <td class="cf-timer">
         @if(isset($user_joined))
 
-        <div class="fifth circle" id="timer{{$duel->id}}" data-value="0.9" data-size="60" data-fill="{
-            &quot;color&quot;: &quot;greenyellow&quot;
-        }" >
-            <strong></strong>
+        <div id="timer{{$duel->id}}">
         </div>
             <?php
             $date = new Carbon\Carbon($duel_bets[1]->updated_at);
@@ -41,18 +38,20 @@ if(count($duel_bets)>1)
             $diff = 90-$date->diffInSeconds($now);
             ?>
             <script>
-                for(var time = {{$diff}}; time > 0; time--) {
-                    $('#timer{{$duel->id}}').circleProgress({
-                        value: time/90
-                        // all other config options were taken from "data-" attributes
-                        // options passed in config object have higher priority than "data-" attributes
-                        // "data-" attributes are taken into account only on init (not on update/redraw)
-                        // "data-fill" (and other object options) should be in valid JSON format
-                    }).on('circle-animation-progress', function (event, progress) {
-                        $(this).find('strong').html(parseInt(time * progress) + 'с'
-                        );
-                    });
-                }
+                var timer = jQuery("#timer{{$duel->id}}").radialProgress("init", {
+                    'size': 100,
+                    'fill': 5,
+                    'perc': {{$diff}}
+                });
+                var time = {{$diff}}
+                var timeout = setTimeout(function () {
+                    time--;
+                    timer.radialProgress("to", {'perc': time, 'time': 10000});
+                    if(time <= 0)
+                            return;
+                            timeout();
+                },1000);
+
             </script>
         @endif
     </td>
