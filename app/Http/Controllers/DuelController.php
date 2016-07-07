@@ -60,6 +60,8 @@ class DuelController extends Controller
         $id = \Request::get('id');
         $status = \Request::get('status');
         $bet = duel_bet::where('id',$id)->first();
+        if($status == $bet->status)
+            return;
         $bet->status = $status;
         $bet->save();
         $bets = duel_bet::where('game_id',$bet->game_id)->count();
