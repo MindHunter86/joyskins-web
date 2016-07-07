@@ -1,5 +1,5 @@
 <?php
-$duel_bets = \App\duel_bet::where('game_id',$duel->id)->where('status',\App\duel_bet::STATUS_ACCEPTED)->orWhere('status',\App\duel_bet::STATUS_WAIT_TO_SENT)->orWhere('status',\App\duel_bet::STATUS_WAIT_TO_ACCEPT)->get();
+$duel_bets = \App\duel_bet::where('game_id',$duel->id)->where('status',\App\duel_bet::STATUS_ACCEPTED)->orWhere('status',\App\duel_bet::STATUS_WAIT_TO_SENT)->orWhere('status',\App\duel_bet::STATUS_WAIT_TO_ACCEPT)t::->get();
 
 $items = json_decode($duel_bets[0]->items);
 $user = \App\User::where('id',$duel_bets[0]->user_id)->first();
@@ -31,7 +31,7 @@ if(count($duel_bets)>1)
         @if(isset($user_joined))
             <script>  $('#timer{{$duel->id}}').circleProgress({
                     <?php
-                            $date = new \Carbon\Carbon($duel->updated_at);
+                            $date = new Carbon\Carbon($duel_bets[1]->updated_at);
                             $now = Carbon\Carbon::now();
                             $diff = 90-$date->diffInSeconds($now);
                             ?>
