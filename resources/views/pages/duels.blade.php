@@ -130,6 +130,7 @@
             text-align: center;
             top: 22px;
             width: 24px;
+            cursor: pointer;
             text-decoration: none;
             font-weight: bold;
             -webkit-border-radius: 12px;
