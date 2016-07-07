@@ -232,7 +232,7 @@
                         <th>&nbsp;</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="roomList">
                     @foreach(\App\duel::where('status',\App\duel::STATUS_PLAYING)->get() as $duel)
                         <?php
                             $duel_bets = \App\duel_bet::where('game_id',$duel->id)->where('status',\App\duel_bet::STATUS_ACCEPTED)->get();
@@ -243,7 +243,7 @@
                                     $user_joined = \App\User::where('id',$duel_bets[1]->user_id)->first();
                         ?>
 
-                        <tr data-amount="2.85" data-id="5776e133ec1914830cb7a4e0" style="display: table-row;">
+                        <tr id="duelRoom" data-id="{{$duel->id}}" style="display: table-row;">
                             <td class="cf-players">
                                 @if($duel_bets[0]->coin == 1)
                                     <img src="{{asset('assets/img/coin-ct.png')}}">

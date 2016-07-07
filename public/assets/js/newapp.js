@@ -513,6 +513,13 @@ if (START) {
                 $('.declineMsg').removeClass('msgs-not-visible');
             }
         })
+        .on('newRoom',function(data){
+            data = JSON.parse(data);
+            if (data.steamId == USER_ID) {
+                alert('Вы успешно подтвердили, ваша комната создана!');
+            }
+            $('#roomList').prepend(data.html);
+        });
     var declineTimeout,
         timerStatus = true,
         ngtimerStatus = true,
