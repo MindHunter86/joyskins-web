@@ -32,7 +32,7 @@ if(count($duel_bets)>1)
             <script>  $('#timer{{$duel->id}}').circleProgress({
                     <?php
                             $date = new \Carbon\Carbon($duel->updated_at);
-                            $now = new \Carbon\Carbon::now();
+                            $now = Carbon\Carbon::now();
                             $diff = 90-$date->diffInSeconds($now);
                             ?>
                     value: {{$diff/90}}
