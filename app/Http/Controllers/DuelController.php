@@ -25,6 +25,10 @@ class DuelController extends Controller
     const RECEIVE_ITEMS_CHANNEL = 'receiveBetItems.list';
     const WINNER_ITEMS_CHANNEL = 'sendWinnerPrizeDuel.list';
 
+    const NEW_ROOM_CHANNEL = 'newRoom';
+    const NEW_JOIN_CHANNEL = 'newJoin';
+    const SHOW_DUEL_WINNERS = 'show.duel.winner';
+
     const DUEL_MAX_ITEMS_COUNT = 15;
     const DUEL_MIN_PRICE = 15;
 
@@ -61,9 +65,18 @@ class DuelController extends Controller
         $bets = duel_bet::where('game_id',$bet->game_id)->count();
         if($bets == 1) {
             $items = \Request::get('items');
-            if($status == duel_bet::STATUS_ACCEPTED)
-             duel::where('id',$bet->game_id)->update(['status'=>duel::STATUS_PLAYING,'won_items'=>$items]);
-            elseif ($status == duel_bet::STATUS_DECLINED || $status == duel_bet::STATUS_SENT_ERROR) {
+            if($status == duel_bet::STATUS_ACCEPTED) {
+                duel::where('id', $bet->game_id)->update(['status' => duel::STATUS_PLAYING, 'won_items' => $items]);
+                $duel = duel::where('id',$bet->game_id)->first();
+                $user = User::where('id',$bet->user_id)->first();
+                $returnValue = [
+                    'betId' => $bet->id,
+                    'roomId' => $bet->game_id,
+                    'steamId' => $user->steamid64,
+                    'html' => view('includes.room', compact('duel'))->render()
+                ];
+                $this->redis->publish(self::NEW_ROOM_CHANNEL, json_encode($returnValue));
+            } elseif ($status == duel_bet::STATUS_DECLINED || $status == duel_bet::STATUS_SENT_ERROR) {
                 duel::where('id',$bet->game_id)->update(['status'=>duel::STATUS_ERROR]);
             }
         } else {
