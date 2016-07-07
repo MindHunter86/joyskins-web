@@ -159,7 +159,7 @@ class DuelController extends Controller
                 'accessToken' => $this->user->accessToken
             ];
             $this->redis->rpush(self::RECEIVE_ITEMS_CHANNEL, json_encode($value));
-            return response()->json(['success'=>true,'error'=>'Вы успешно создали комнату, примите стимоффер!']);
+            return response()->json(['success'=>true,'text'=>'Вы успешно создали комнату, примите стимоффер!']);
         } else {
             $count = duel_bet::where('game_id',$round_id)->where('status',duel_bet::STATUS_ACCEPTED)->orWhere('status',duel_bet::STATUS_WAIT_TO_ACCEPT)->orWhere('status',duel_bet::STATUS_WAIT_TO_SENT)->count();
             if($count != 1)
@@ -182,7 +182,7 @@ class DuelController extends Controller
                     'accessToken' => $this->user->accessToken
                 ];
                 $this->redis->rpush(self::RECEIVE_ITEMS_CHANNEL, json_encode($value));
-                return response()->json(['success'=>true,'error'=>'Вы успешно вошли в комнату, примите стимоффер!']);
+                return response()->json(['success'=>true,'text'=>'Вы успешно вошли в комнату, примите стимоффер!']);
             }else{
                 return response()->json(['success'=>false,'error'=>'Вам не хватает или вы выбрали слишком много предметов']);
             }

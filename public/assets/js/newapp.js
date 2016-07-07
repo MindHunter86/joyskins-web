@@ -649,9 +649,9 @@ $(document).on('click','.btnJoinRoom',function(){
         data: { type: 'joinRoom', items: JSON.stringify(items), id: id },
         success:function (data) {
             if(data.success) {
-                $(this).notify(data.error,{position: 'bottom middle', className :"success"});
+                console.log(data.text);
             }else{
-                $(this).notify(data.error,{position: 'bottom middle', className :"error"});
+                console.log(data.error);
             }
         },
         error:function () {
@@ -683,9 +683,9 @@ $(document).on('click','.btnCreateRoom',function () {
         data: { type: 'createRoom', items: JSON.stringify(items), coin: coin },
         success:function (data) {
             if(data.success) {
-                $(this).notify('Комната успешно создана!',{position: 'bottom middle', className :"success"});
+                console.log(data.text);
             }else{
-                $(this).notify(data.error,{position: 'bottom middle', className :"error"});
+                console.log(data.error);
             }
         },
         error:function () {
