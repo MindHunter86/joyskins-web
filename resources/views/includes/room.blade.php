@@ -1,5 +1,5 @@
 <?php
-$duel_bets = \App\duel_bet::where('game_id',$duel->id)->where('status',\App\duel_bet::STATUS_ACCEPTED)->orWhere('status',\App\duel_bet::STATUS_WAIT_TO_SENT)->orWhere('status',\App\duel_bet::STATUS_WAIT_TO_ACCEPT)t::->get();
+$duel_bets = \App\duel_bet::where('game_id',$duel->id)->where('status',\App\duel_bet::STATUS_ACCEPTED)->orWhere('status',\App\duel_bet::STATUS_WAIT_TO_SENT)->orWhere('status',\App\duel_bet::STATUS_WAIT_TO_ACCEPT)->get();
 
 $items = json_decode($duel_bets[0]->items);
 $user = \App\User::where('id',$duel_bets[0]->user_id)->first();
