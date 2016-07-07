@@ -648,6 +648,9 @@ $(document).on('click','.btnJoinRoom',function(){
         }
     });
 });
+$(document).on('click','.close',function () {
+   $('.window').hide();
+});
 $(document).on('click','.btnCreateRoom',function () {
     var totalPrice = 0;
     var items = [];

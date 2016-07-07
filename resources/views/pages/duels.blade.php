@@ -197,7 +197,7 @@
             <div class="content_title"><div>Coin<b>flip</b>. Создавайте или вступайте в игру.</div></div>
             <div class="clear"></div>
             <div id="modalShowAction" class="window">
-                <a href="#close" title="Закрыть" class="close">X</a>
+                <a title="Закрыть" class="close">X</a>
                 <div class="clear"></div>
                 <div class="inv_cash">Загрузка инвентаря...</div>
                 <div style="display: block;">
