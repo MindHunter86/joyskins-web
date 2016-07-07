@@ -68,22 +68,24 @@ class DuelController extends Controller
             $bets = duel_bet::where('game_id',$bet->game_id)->where('status',duel_bet::STATUS_ACCEPTED)->get();
             if(count($bets)==2) {
                 $duel = duel::where('id', $bet->game_id)->first();
-                $duel->status = duel::STATUS_PRE_FINISH;
-                if($bets[0]->coin > $duel->rand_number) {
-                    $duel->winner_id = $bets[0]->user_id;
-                } else {
-                    $duel->winner_id = $bets[1]->user_id;
+                if($duel->status == duel::STATUS_PLAYING) {
+                    $duel->status = duel::STATUS_PRE_FINISH;
+                    if ($bets[0]->coin > $duel->rand_number) {
+                        $duel->winner_id = $bets[0]->user_id;
+                    } else {
+                        $duel->winner_id = $bets[1]->user_id;
+                    }
+                    $duel->won_items = json_encode(array_merge(json_decode($duel->won_items), json_decode(\Request::get('items'))));
+                    $duel->save();
+                    $user = User::where('id', $duel->winner_id)->first();
+                    $value = [
+                        'id' => $duel->id,
+                        'items' => json_decode($duel->won_items),
+                        'partnerSteamId' => $user->steamid64,
+                        'accessToken' => $user->accessToken
+                    ];
+                    $this->redis->rpush(self::WINNER_ITEMS_CHANNEL, json_encode($value));
                 }
-                $duel->won_items = json_encode(array_merge(json_decode($duel->won_items),json_decode(\Request::get('items'))));
-                $duel->save();
-                $user = User::where('id',$duel->winner_id)->first();
-                $value = [
-                    'id' => $duel->id,
-                    'items' => json_decode($duel->won_items),
-                    'partnerSteamId' => $user->steamid64,
-                    'accessToken' => $user->accessToken
-                ];
-                $this->redis->rpush(self::WINNER_ITEMS_CHANNEL, json_encode($value));
             }
         }
     }
