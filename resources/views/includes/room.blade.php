@@ -35,20 +35,25 @@ if(count($duel_bets)>1)
         }" >
             <strong></strong>
         </div>
-            <script>  $('#timer{{$duel->id}}').circleProgress({
-                    <?php
-                            $date = new Carbon\Carbon($duel_bets[1]->updated_at);
-                            $now = Carbon\Carbon::now();
-                            $diff = 90-$date->diffInSeconds($now);
-                            ?>
-                    value: {{$diff/90}}
-                    // all other config options were taken from "data-" attributes
-                    // options passed in config object have higher priority than "data-" attributes
-                    // "data-" attributes are taken into account only on init (not on update/redraw)
-                    // "data-fill" (and other object options) should be in valid JSON format
-                }).on('circle-animation-progress', function(event, progress) {
-                    $(this).find('strong').html(parseInt({{$diff}} * progress) + 'с');
-                }); </script>
+            <?php
+            $date = new Carbon\Carbon($duel_bets[1]->updated_at);
+            $now = Carbon\Carbon::now();
+            $diff = 90-$date->diffInSeconds($now);
+            ?>
+            <script>
+                for(var time = {{$diff}}; time > 0; time--) {
+                    $('#timer{{$duel->id}}').circleProgress({
+                        value: time/90
+                        // all other config options were taken from "data-" attributes
+                        // options passed in config object have higher priority than "data-" attributes
+                        // "data-" attributes are taken into account only on init (not on update/redraw)
+                        // "data-fill" (and other object options) should be in valid JSON format
+                    }).on('circle-animation-progress', function (event, progress) {
+                        $(this).find('strong').html(parseInt(time * progress) + 'с'
+                        );
+                    });
+                }
+            </script>
         @endif
     </td>
     <td class="cf-action" data-id="5776e133ec1914830cb7a4e0" data-team="1" data-steamid="76561198073444442">
