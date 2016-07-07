@@ -606,25 +606,6 @@ $(document).on('click','.coin',function () {
    $('.coin.choosen').removeClass('choosen');
     $(this).addClass('choosen');
 });
-$(document).on('click','.btnCheckBet',function () {
-    var id = $(this).data('id');
-    $.ajax({
-        url: '/duel/checkOffer',
-        type: 'POST',
-        dataType: 'json',
-        data: { id: id },
-        success:function (data) {
-            if(data.success) {
-                alert(data.text);
-            }else{
-                alert(data.error)
-            }
-        },
-        error:function () {
-            console.log('Ошибка AJAX. Попробуйте позже.');
-        }
-    });
-});
 $(document).on('click','.btnJoinRoom',function(){
     var id = $('#joinRoom').data('roomId');
     var totalPrice = 0;
@@ -655,7 +636,7 @@ $(document).on('click','.btnJoinRoom',function(){
             }
         },
         error:function () {
-            $(this).notify('Ошибка AJAX. Попробуйте позже.',{position: 'bottom middle', className :"error"});
+            alert('Ошибка AJAХ. Попробуйте позже!');
         }
     });
 });
@@ -689,7 +670,7 @@ $(document).on('click','.btnCreateRoom',function () {
             }
         },
         error:function () {
-            $(this).notify('Ошибка AJAX. Попробуйте позже.',{position: 'bottom middle', className :"error"});
+            alert('Ошибка AJAX. Попробуйте позже.');
         }
     });
 });
@@ -748,7 +729,6 @@ function mergeWithDescriptions(items, descriptions) {
         return item;
     })
 }
-
 function mulAndShuffle(arr, k) {
     var
         res = [],

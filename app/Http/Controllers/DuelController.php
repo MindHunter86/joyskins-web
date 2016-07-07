@@ -20,6 +20,8 @@ class DuelController extends Controller
 
 
     private $steamAuth;
+
+    const INFO_CHANNEL = 'msgChannel';
     const RECEIVE_ITEMS_CHANNEL = 'receiveBetItems.list';
     const WINNER_ITEMS_CHANNEL = 'sendWinnerPrizeDuel.list';
 
@@ -190,5 +192,19 @@ class DuelController extends Controller
                 return response()->json(['success'=>false,'error'=>'Вам не хватает или вы выбрали слишком много предметов']);
             }
         }
+    }
+    private function _responseErrorToSite($message, $user, $channel)
+    {
+        return $this->redis->publish($channel, json_encode([
+            'user' => $user,
+            'msg' => $message
+        ]));
+    }
+    private function _responseMessageToSite($message, $user)
+    {
+        return $this->redis->publish(self::INFO_CHANNEL, json_encode([
+            'user' => $user,
+            'msg' => $message
+        ]));
     }
 }
