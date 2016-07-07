@@ -112,7 +112,6 @@
             -moz-transition: opacity 400ms ease-in;
             transition: opacity 400ms ease-in;
             display: none;
-            pointer-events: none;
         }
 
         .window:target {
