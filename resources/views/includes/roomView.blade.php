@@ -76,10 +76,10 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
             <div style="position:relative;">
             @if($duel_bets[1]->coin)
                 <img style="bottom: -10px;
-                     right: 30px; position: absolute;" class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
+                     left: -10px; position: absolute;" class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
             @else
                 <img style="bottom: -10px;
-                     right: 30px; position: absolute;" class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
+                     left: -10px; position: absolute;" class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
             @endif
         </div>
 
@@ -112,7 +112,7 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
         </div>
             @endforeach
     </div>
-    <div class="join-items">
+    <div style="margin-left: 5px;" class="join-items">
         @if(isset($join_user))
             @if($duel_bets[1]->status!=\App\duel_bet::STATUS_ACCEPTED)
                     Игрок заходит.
