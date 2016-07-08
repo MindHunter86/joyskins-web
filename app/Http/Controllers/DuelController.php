@@ -53,7 +53,7 @@ class DuelController extends Controller
         $duel = duel::where('id',$id)->first();
         if(is_null($duel) || $duel->status == duel::STATUS_NOT_STARTED || $duel->status == duel::STATUS_ERROR)
             return response(['success'=>false,'error'=>'Такой игры нет, или ошибка статуса игры!']);
-        $duel_bets = duel_bet::where('game_id',$id)->where('status',duel_bet::STATUS_WAIT_TO_ACCEPT)->orWhere('status',duel_bet::STATUS_WAIT_TO_SENT)->orWhere('status',duel_bet::STATUS_ACCEPTED)->get();
+        $duel_bets = duel_bet::where('game_id',$id)->get()->where('status',duel_bet::STATUS_WAIT_TO_ACCEPT)->orWhere('status',duel_bet::STATUS_ACCEPTED)->get();
         return [
             'success'=>true,
             'html'=>view('includes.roomView', compact('duel','duel_bets'))->render()

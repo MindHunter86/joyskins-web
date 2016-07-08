@@ -211,15 +211,15 @@
             padding-right: 30%;
         }
         .viewRoomBet .info-block .host-player {
-            width: 20%;
+            width: 33%;
             display:inline-block;
         }
         .viewRoomBet .info-block .center-coin{
-            width: 20%;
+            width: 33%;
             display: inline-block;
         }
         .viewRoomBet .info-block .join-player {
-            width: 20%;
+            width: 33%;
             display:inline-block;
         }
     </style>
