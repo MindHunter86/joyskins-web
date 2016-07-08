@@ -206,6 +206,19 @@
             display: block;
             pointer-events: auto;
         }
+        .viewRoomBet.info-block {
+            padding-left: 30%;
+            padding-right: 30%;
+        }
+        .viewRoomBet.info-block.host-player {
+            width: 20%;
+        }
+        .viewRoomBet.info-block.center-coin{
+            width: 20%;
+        }
+        .viewRoomBet.info-block.join-player {
+            width: 20%;
+        }
     </style>
     <div class="content_bg">
         <div class="full">

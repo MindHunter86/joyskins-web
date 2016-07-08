@@ -646,6 +646,7 @@ $(document).on('click','.cfRoundView',function () {
         success:function (data) {
             if(data.success) {
                 $('.viewRoomBet').html(data.html);
+                $('.viewRoomBet').show();
             }else{
                 alert(data.error);
             }
