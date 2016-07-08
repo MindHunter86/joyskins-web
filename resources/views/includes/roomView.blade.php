@@ -49,8 +49,8 @@
                     radius      : 50,
                     seconds     : {{$diff}},
                     fontColor   : '#FFFFFF',
-                    strokeStyle: {{$stroke}},
-                    fillStyle: {{$color}},
+                    strokeStyle: '{{$stroke}}',
+                    fillStyle: '{{$color}}',
                     autostart   : false,
                     onComplete  : function () {}
                 }).start()
