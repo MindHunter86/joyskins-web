@@ -1,5 +1,5 @@
 <?php
-    $duel_bets = \App\duel_bet::where('game_id',$id)->where(function($query){
+    $duel_bets = \App\duel_bet::where('game_id',$duel->id)->where(function($query){
         $query->where('status',\App\duel_bet::STATUS_WAIT_TO_ACCEPT)
                 ->orWhere('status',\App\duel_bet::STATUS_ACCEPTED);
     })->get();
