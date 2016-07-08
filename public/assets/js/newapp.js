@@ -541,7 +541,7 @@ if (START) {
             else
                 $('#roomList').append(data.html);
         })
-        .on('',function (data) {
+        .on('show.duel.winner',function (data) {
             data = JSON.parse(data);
             if($('tr#duelRoom'+data.roomId))
                 $('tr#duelRoom'+data.roomId).replaceWith(data.html);
