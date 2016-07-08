@@ -133,9 +133,9 @@ class DuelController extends Controller
                 $duel = duel::where('id', $bet->game_id)->first();
                 if($duel->status == duel::STATUS_PLAYING) {
                     $duel->status = duel::STATUS_PRE_FINISH;
-                    if ($bets[0]->coin > $duel->rand_number) {
+                    if (($bets[0]->coin && $duel->rand_number > 0.5) || (!$bets[0]->coin && $duel->rand_number < 0.5)) {
                         $duel->winner_id = $bets[0]->user_id;
-                    } else {
+                    } elseif($duel->rand_number>0.5) {
                         $duel->winner_id = $bets[1]->user_id;
                     }
                     $first = json_decode($duel->won_items);
