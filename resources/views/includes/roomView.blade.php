@@ -21,7 +21,7 @@
             @else
                 <img src="{{asset('assets/img/coin-t.png')}}">
             @endif
-        @elseif(($join_user) && ($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_PLAYING))
+        @elseif(isset($join_user) && ($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_PLAYING))
             <div id="viewtimer{{$duel->id}}">
             </div>
             <?php
