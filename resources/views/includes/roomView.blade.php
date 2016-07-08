@@ -71,10 +71,10 @@
             <div style="position:relative;">
             @if($duel_bets[1]->coin)
                 <img style="bottom: -10px;
-                     right: -10px; position: absolute;" class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
+                     right: 10px; position: absolute;" class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
             @else
                 <img style="bottom: -10px;
-                     right: -10px; position: absolute;" class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
+                     right: 10px; position: absolute;" class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
             @endif
         </div>
 
