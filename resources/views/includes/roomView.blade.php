@@ -68,8 +68,7 @@
 
         @if(isset($join_user))
             <img src="{{$join_user->avatar}}" style="width: 120px; vertical-align: middle;" />
-            <div style="position:absolute;     bottom: -10px;
-    right: -10px;">
+            <div style="position:relative;">
             @if($duel_bets[1]->coin)
                 <img style="bottom: -10px;
                      right: -10px; position: absolute;" class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
