@@ -200,6 +200,8 @@
             -moz-transition: opacity 400ms ease-in;
             transition: opacity 400ms ease-in;
             display: none;
+            overflow: auto;
+            height: 100%;
         }
 
         .viewRoomBet:target {
@@ -253,6 +255,7 @@
             margin-left:  20%;
             margin-right: 20%;
             padding-top: 20px;
+
         }
         .viewRoomBet .items-block .host-items{
             display: inline-block;
