@@ -64,10 +64,11 @@
         @endif
     </div>
     <div class="join-player">
-        <img src="{{$join_user->avatar}}" style="width: 120px; vertical-align: middle;" />
-        <div style="position:absolute;     bottom: -10px;
-    right: -10px;">
+
         @if(isset($join_user))
+            <img src="{{$join_user->avatar}}" style="width: 120px; vertical-align: middle;" />
+            <div style="position:absolute;     bottom: -10px;
+    right: -10px;">
             @if($duel_bets[1]->coin)
                 <img class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
             @else
