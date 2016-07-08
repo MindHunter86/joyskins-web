@@ -620,6 +620,7 @@ $(document).on('click','.show_inv',function(){
 $(document).on('click','.btnShowInv',function () {
     $('#joinRoom').hide();
     $('#createRoom').show();
+    $('.inv_table_duel').html('');
     loadMyDuelInventory();
     $('.inv_count').html(0);
     $('.inv_price').html(0);
@@ -629,6 +630,7 @@ $(document).on('click','.cfRoundJoin',function () {
     $('#joinRoom').show();
     $('#joinRoom').data('roomId',$(this).data('id'));
     $('#createRoom').hide();
+    $('.inv_table_duel').html('');
     loadMyDuelInventory();
     $('.inv_count').html(0);
     $('.inv_price').html(0);
