@@ -22,9 +22,9 @@
     <div class="center-coin">
         @if($duel->status == \App\duel::STATUS_FINISHED)
             @if($duel->rand_number>0.5)
-                <img src="{{asset('assets/img/coin-ct.png')}}">
+                <img class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
             @else
-                <img src="{{asset('assets/img/coin-t.png')}}">
+                <img class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
             @endif
         @elseif(isset($join_user) && ($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_PLAYING))
             <div id="viewtimer{{$duel->id}}">
@@ -62,16 +62,28 @@
 
         @if(isset($join_user))
             @if($duel_bets[1]->coin)
-                <img src="{{asset('assets/img/coin-ct.png')}}">
+                <img class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
             @else
-                <img src="{{asset('assets/img/coin-t.png')}}">
+                <img class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
             @endif
             <img src="{{$join_user->avatar}}" style="width: 100%;" />
         @endif
     </div>
 </div>
-<div class="hash-line">
-
+<div class="info-line">
+    <p class="usernames">
+        @if(isset($host_user))
+            {{$host_user->username}}
+        @endif
+    </p>
+    <p class="hash">
+        Хэш раунда: 0e108d6c9964a1b740117cec9cae2b98
+    </p>
+    <p class="usernames">
+        @if(isset($join_user))
+            {{$join_user->username}}
+        @endif
+    </p>
 </div>
 <div class="items-block">
     <div class="host-items">

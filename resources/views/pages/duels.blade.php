@@ -151,7 +151,7 @@
             display: inline-block;
             float: left;
             padding: 15px;
-            background-color: #236235
+            background-color: #236235;
             text-decoration: none;
             cursor:pointer;
             width:100%;
@@ -221,6 +221,32 @@
         .viewRoomBet .info-block .join-player {
             width: 33%;
             display:inline-block;
+        }
+        .viewRoomBet .host-player .coin-ava{
+            position: fixed;
+            top: 5px;
+            left: 29%;
+        }
+        .viewRoomBet .join-player .coin-ava{
+            position: fixed;
+            top: 5px;
+            right: 29%;
+        }
+        .viewRoomBet .info-line {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            margin-left: 15%;
+            margin-right: 15%;
+            width: 100%;
+            background-color: #236235;
+        }
+        .info-line .hash {
+            display: inline-block;
+            width: 30%;
+        }
+        .info-line .usernames{
+            display: inline-block;
+            width: 20%;
         }
     </style>
     <div class="content_bg">
