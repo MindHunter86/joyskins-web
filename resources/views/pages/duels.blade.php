@@ -83,15 +83,21 @@
             display: inline-block;
             float: left;
             padding: 15px;
-            background-color: #45b0cd;
+            background-color: #45ad62;
             text-decoration: none;
             cursor:pointer;
+        }
+        .cfRoundJoin:hover{
+            text-decoration: none;
+        }
+        .cfRoundView:hover{
+            text-decoration: none;
         }
         .cfRoundView{
             display: inline-block;
             float: left;
             padding: 15px;
-            background-color: #b550cd;
+            background-color: #FFFFFF;
             text-decoration: none;
             cursor:pointer;
         }
