@@ -46,7 +46,7 @@
             ?>
             <script type="text/javascript" charset="utf-8">
                 $("#viewtimer{{$duel->id}}").countdown360({
-                    radius      : 22,
+                    radius      : 50,
                     seconds     : {{$diff}},
                     fontColor   : '#FFFFFF',
                     strokeStyle: {{$stroke}},
