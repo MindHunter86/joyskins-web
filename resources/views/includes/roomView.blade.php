@@ -12,15 +12,16 @@
 <div class="info-block">
     <div class="host-player">
         @if(isset($host_user))
+            <div style="bottom: -10px;
+    left: -10px;">
             @if($duel_bets[0]->coin)
                 <img class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
             @else
                 <img class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
             @endif
-            <div style="bottom: -10px;
-    left: -10px;">
-                <img src="{{$host_user->avatar}}" style="width: 120px; vertical-align: middle;" />
             </div>
+                <img src="{{$host_user->avatar}}" style="width: 120px; vertical-align: middle;" />
+
         @endif
     </div>
     <div class="center-coin">
