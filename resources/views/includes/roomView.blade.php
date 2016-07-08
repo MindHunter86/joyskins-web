@@ -13,12 +13,13 @@
     <div class="host-player">
         @if(isset($host_user))
             <img src="{{$host_user->avatar}}" style="width: 120px; vertical-align: middle;" />
-            <div style="position:absolute;     bottom: -10px;
-    left: -10px;">
+            <div style="position:relative;     ">
             @if($duel_bets[0]->coin)
-                <img class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
+                <img style="bottom: -10px;
+    left: -10px; position: absolute;" class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
             @else
-                <img class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
+                <img style="bottom: -10px;
+    left: -10px; position: absolute;" class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
             @endif
             </div>
 
@@ -70,9 +71,11 @@
             <div style="position:absolute;     bottom: -10px;
     right: -10px;">
             @if($duel_bets[1]->coin)
-                <img class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
+                <img style="bottom: -10px;
+                     right: -10px; position: absolute;" class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
             @else
-                <img class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
+                <img style="bottom: -10px;
+                     right: -10px; position: absolute;" class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
             @endif
         </div>
 
