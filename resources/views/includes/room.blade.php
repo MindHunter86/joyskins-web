@@ -57,6 +57,7 @@ vs.
                     fontColor   : '#FFFFFF',
                     strokeStyle: '{{$stroke}}',
                     fillStyle: '{{$color}}',
+                    strokeWidth: 2,
                     autostart   : false,
                     onComplete  : function () {}
                 }).start()
