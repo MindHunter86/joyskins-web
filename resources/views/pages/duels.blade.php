@@ -155,7 +155,6 @@
             background-color: #236235;
             text-decoration: none;
             cursor:pointer;
-            width:100%;
         }
         .btnShowInv:hover{
             text-decoration: none;;
@@ -318,7 +317,6 @@
                 @foreach($items as $item)
                     <img width="45" height="45" src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" alt="">
                 @endforeach
-                <a class="btnCheckBet" data-id="{{$bet->id}}">Проверить ставку</a>
                 <br>
             @endforeach
             <div class="content_title"><div>Coin<b>flip</b>. Создавайте или вступайте в игру.</div></div>
