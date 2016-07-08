@@ -235,8 +235,8 @@
         .viewRoomBet .info-line {
             padding-top: 15px;
             padding-bottom: 15px;
-            margin-left: 15%;
-            margin-right: 15%;
+            padding-left: 15%;
+            padding-right: 15%;
             width: 100%;
             background-color: #236235;
         }
@@ -247,6 +247,40 @@
         .info-line .usernames{
             display: inline-block;
             width: 20%;
+        }
+        .viewRoomBet .items-block{
+            width: 100%;
+            margin-left:  20%;
+            margin-right: 20%;
+            padding-top: 20px;
+        }
+        .viewRoomBet .items-block .host-items{
+            display: inline-block;
+            width: 48%;
+            float:left;
+            background-color: #236235;
+        }
+        .viewRoomBet .items-block .join-items{
+            display: inline-block;
+            width: 48%;
+            float:right;
+            background-color: #236235;
+        }
+        .items-block .item {
+            display:block;
+            width: 100%;
+        }
+        .items-block .item .view-price{
+            width:25%;
+            display:inline-block;
+        }
+        .items-block .item img{
+            width:25%;
+            display:inline-block;
+        }
+        .items-block .item .view-name{
+            width:50%;
+            display:inline-block;
         }
     </style>
     <div class="content_bg">

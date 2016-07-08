@@ -12,9 +12,9 @@
     <div class="host-player">
         @if(isset($host_user))
             @if($duel_bets[0]->coin)
-                <img src="{{asset('assets/img/coin-ct.png')}}">
+                <img class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
             @else
-                <img src="{{asset('assets/img/coin-t.png')}}">
+                <img class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
             @endif
             <img src="{{$host_user->avatar}}" style="width: 100%;" />
         @endif
@@ -22,9 +22,9 @@
     <div class="center-coin">
         @if($duel->status == \App\duel::STATUS_FINISHED)
             @if($duel->rand_number>0.5)
-                <img class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
+                <img  src="{{asset('assets/img/coin-ct.png')}}">
             @else
-                <img class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
+                <img src="{{asset('assets/img/coin-t.png')}}">
             @endif
         @elseif(isset($join_user) && ($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_PLAYING))
             <div id="viewtimer{{$duel->id}}">
@@ -87,7 +87,15 @@
 </div>
 <div class="items-block">
     <div class="host-items">
+        <?php $items = json_decode($duel_bets[0]->items); ?>
+        @foreach($items as $item)
+        <div class="item">
+            <img src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" class="img-responsive" title="{{$item->market_hash_name}} - {{$item->price}} руб.">
 
+            <p class="view-name">{{$item->market_hash_name}}</p>
+            <p class="view-price">{{$item->price}} руб.</p>
+        </div>
+            @endforeach
     </div>
     <div class="join-items">
 
