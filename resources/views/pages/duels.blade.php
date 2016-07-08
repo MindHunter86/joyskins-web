@@ -234,7 +234,7 @@
         .info-line .hash {
             display: inline-block;
             width: 40%;
-
+            text-align: center;
         }
         .info-line .usernames{
             display: inline-block;
