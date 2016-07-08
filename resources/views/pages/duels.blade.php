@@ -200,7 +200,7 @@
             -moz-transition: opacity 400ms ease-in;
             transition: opacity 400ms ease-in;
             display: none;
-            overflow: auto;
+            overflow-y: scroll;
             height: 100%;
         }
 
