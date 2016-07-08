@@ -518,6 +518,8 @@ if (START) {
             if (data.steamId == USER_ID) {
                 alert('Вы успешно подтвердили, ваша комната создана!');
             }
+
+
             $('#roomList').prepend(data.html);
         })
         .on('newJoin',function (data) {
@@ -526,6 +528,10 @@ if (START) {
                 $('tr#duelRoom'+data.roomId).replaceWith(data.html);
             else
                 $('#roomList').append(data.html);
+            if(data.roomId == $('.viewRoomBet').data('id'))
+            {
+                $('.cfroundview').click();
+            }
         })
         .on('userLeftRoom',function(data){
             data = JSON.parse(data);
@@ -533,6 +539,10 @@ if (START) {
                 $('tr#duelRoom'+data.roomId).replaceWith(data.html);
             else
                 $('#roomList').append(data.html);
+            if(data.roomId == $('.viewRoomBet').data('id'))
+            {
+                $('.cfroundview').click();
+            }
         })
         .on('pre.finish.duel',function (data) {
             data = JSON.parse(data);
@@ -540,6 +550,10 @@ if (START) {
                 $('tr#duelRoom'+data.roomId).replaceWith(data.html);
             else
                 $('#roomList').append(data.html);
+            if(data.roomId == $('.viewRoomBet').data('id'))
+            {
+                $('.cfroundview').click();
+            }
         })
         .on('show.duel.winner',function (data) {
             data = JSON.parse(data);
@@ -549,6 +563,10 @@ if (START) {
                 $('#roomList').append(data.html);
             if(data.steamId == USER_ID) {
                 alert('Поздравляем, вы выиграли!');
+            }
+            if(data.roomId == $('.viewRoomBet').data('id'))
+            {
+                $('.cfroundview').click();
             }
             setTimeout(function () {
                 $('tr#duelRoom'+data.roomId).remove();
@@ -646,6 +664,7 @@ $(document).on('click','.cfRoundView',function () {
         success:function (data) {
             if(data.success) {
                 $('.viewRoomBet').html(data.html);
+                $('.viewRoomBet').data('id',id);
                 $('.viewRoomBet').show();
             }else{
                 alert(data.error);
@@ -655,7 +674,7 @@ $(document).on('click','.cfRoundView',function () {
             alert('Ошибка AJAХ. Попробуйте позже!');
         }
     });
-    $('.viewRoomBet').show();
+
 });
 $(document).on('click','.inv_choosen',function () {
     var that = $(this);
