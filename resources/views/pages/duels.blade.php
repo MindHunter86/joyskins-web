@@ -180,7 +180,7 @@
             width:100%;
         }
         .btnCheckBet:hover{
-            text-decoration: none;;
+            text-decoration: none;
         }
     </style>
     <div class="content_bg">
