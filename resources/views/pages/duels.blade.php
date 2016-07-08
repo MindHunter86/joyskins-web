@@ -256,13 +256,13 @@
         }
         .viewRoomBet .items-block .host-items{
             display: inline-block;
-            width: 48%;
+            width: 29%;
             float:left;
             background-color: #236235;
         }
         .viewRoomBet .items-block .join-items{
             display: inline-block;
-            width: 48%;
+            width: 29%;
             float:right;
             background-color: #236235;
         }
