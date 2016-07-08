@@ -61,6 +61,8 @@ class DuelController extends Controller
         $roomId = \Request::get('id');
         $duel = duel::where('id',$roomId)->first();
         $user = User::where('id', $duel->winner_id)->first();
+        if($duel->status != duel::STATUS_PRE_FINISH)
+            return;
         $value = [
             'id' => $duel->id,
             'items' => json_decode($duel->won_items),
@@ -75,7 +77,7 @@ class DuelController extends Controller
             'steamId' => $user->steamid64,
             'html' => view('includes.room', compact('duel'))->render()
         ];
-        $this->redis->publish(self::NEW_JOIN_CHANNEL, json_encode($returnValue));
+        $this->redis->publish(self::SHOW_DUEL_WINNERS, json_encode($returnValue));
     }
     public function setReceiveStatus()
     {

@@ -76,4 +76,5 @@ Route::group(['prefix' => 'api', 'middleware' => 'secretKey'], function () {
 
     post('/duel/setReceiveStatus','DuelController@setReceiveStatus');
     post('/duel/setPrizeStatus','DuelController@setPrizeStatus');
+    post('/duel/finishRoom','DuelController@finishRoom');
 });
