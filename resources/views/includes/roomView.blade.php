@@ -1,6 +1,6 @@
 <?php
     $host_user = \App\User::where('id',$duel_bets[0]->user_id)->first();
-    if(!is_null($duel_bets[1]))
+    if(count($duel_bets)>1)
         $join_user = \App\User::where('id',$duel_bets[1]->user_id)->first();
 ?>
 <h1>CoinFlip раунд № {{$duel->id}}</h1>
