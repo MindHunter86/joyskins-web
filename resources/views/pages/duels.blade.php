@@ -233,7 +233,7 @@
                     </tr>
                     </thead>
                     <tbody id="roomList">
-                    @foreach(\App\duel::where('status',\App\duel::STATUS_PLAYING)->get() as $duel)
+                    @foreach(\App\duel::where('status',\App\duel::STATUS_PLAYING)->orWhere('status',\App\duel::STATUS_PRE_FINISH)->get() as $duel)
                         @include('includes.room',compact('duel'))
                     @endforeach
                     </tbody>

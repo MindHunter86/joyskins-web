@@ -9,12 +9,17 @@ if(count($duel_bets)>1)
 
 <tr id="duelRoom{{$duel->id}}" data-id="{{$duel->id}}" style="display: table-row;">
     <td class="cf-players">
-        @if($duel_bets[0]->coin == 1)
-            <img src="{{asset('assets/img/coin-ct.png')}}">
+        @if($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_FINISHED)
+            <a href="http://steamcommunity.com/profiles/{{$user_joined->steamid64}}" target="_blank"><img src="{{$user_joined->avatar}}" alt="Profile" title="{{$user_joined->username}}"></a>
+vs.
         @else
-            <img src="{{asset('assets/img/coin-t.png')}}">
+            @if($duel_bets[0]->coin == 1)
+                <img src="{{asset('assets/img/coin-ct.png')}}">
+            @else
+                <img src="{{asset('assets/img/coin-t.png')}}">
+            @endif
         @endif
-        <a href="http://steamcommunity.com/profiles/{{$user->steamid64}}" target="_blank"><img src="{{$user->avatar}}" alt="Profile" title="{{$user->username}}"></a>
+            <a href="http://steamcommunity.com/profiles/{{$user->steamid64}}" target="_blank"><img src="{{$user->avatar}}" alt="Profile" title="{{$user->username}}"></a>
     </td>
     <td class="cf-items">
         <h3>{{count($items)}} предметов:</h3>
@@ -28,22 +33,29 @@ if(count($duel_bets)>1)
         {{$duel_bets[0]->price}} руб.<br><span class="small">Надо: {{$duel_bets[0]->price-$duel_bets[0]->price*0.1}} - {{$duel_bets[0]->price+$duel_bets[0]->price*0.1}} руб.</span>
     </td>
     <td class="cf-timer">
-        @if(isset($user_joined))
+        @if(isset($user_joined)&& ($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_PLAYING))
 
         <div id="timer{{$duel->id}}">
         </div>
             <?php
+                if ($duel->status == \App\duel::STATUS_PRE_FINISH){
+                    $cooldown = 10;
+                    $color = '#00ff00';
+                } else {
+                    $cooldown = 90;
+                    $color = '#FF0000';
+                }
             $date = new Carbon\Carbon($duel_bets[1]->updated_at);
             $now = Carbon\Carbon::now();
-            $diff = 90-$date->diffInSeconds($now);
+            $diff = $cooldown-$date->diffInSeconds($now);
             ?>
             <script>
                 var timer = jQuery("#timer{{$duel->id}}").radialProgress("init", {
                     'size': 45,
                     'fill': 5,
-                    'color': '#FF0000',
+                    'color': '{{$color}}',
                     'font-size': 14,
-                    'perc': parseInt({{$diff*100/90}})
+                    'perc': parseInt({{$diff*100/$cooldown}})
                 });
                 var time = {{$diff}};
                 setInterval(function () {
@@ -60,6 +72,13 @@ if(count($duel_bets)>1)
         @else
             <a href="http://steamcommunity.com/profiles/{{$user_joined->steamid64}}" target="_blank"><img src="{{$user_joined->avatar}}" width="45" height="45" alt="Profile" title="{{$user_joined->username}}"></a>
         @endif
+        @if($duel->status == \App\duel::STATUS_FINISHED)
+                @if($duel->rand_number > 0.5)
+                    <img src="{{asset('assets/img/coin-ct.png')}}">
+                @else
+                    <img src="{{asset('assets/img/coin-t.png')}}">
+                @endif
+            @endif
         <a class="cfRoundView">Смотреть</a>
     </td>
 </tr>

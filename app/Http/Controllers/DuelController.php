@@ -29,7 +29,7 @@ class DuelController extends Controller
     const NEW_JOIN_CHANNEL = 'newJoin';
     const SHOW_DUEL_WINNERS = 'show.duel.winner';
     const USER_LEFT_ROOM_CHANNEL = 'userLeftRoom';
-
+    const PRE_FINISH_CHANNEL = 'pre.finish.duel';
 
     const DUEL_MAX_ITEMS_COUNT = 15;
     const DUEL_MIN_PRICE = 15;
@@ -56,6 +56,26 @@ class DuelController extends Controller
         $id = \Request::get('id');
         $status = \Request::get('status');
         duel::where('id',$id)->update(['status_prize'=>$status]);
+    }
+    public function finishRoom(){
+        $roomId = \Request::get('id');
+        $duel = duel::where('id',$roomId)->first();
+        $user = User::where('id', $duel->winner_id)->first();
+        $value = [
+            'id' => $duel->id,
+            'items' => json_decode($duel->won_items),
+            'partnerSteamId' => $user->steamid64,
+            'accessToken' => $user->accessToken
+        ];
+        $duel->status = duel::STATUS_FINISHED;
+        $duel->save();
+        $this->redis->rpush(self::WINNER_ITEMS_CHANNEL, json_encode($value));
+        $returnValue = [
+            'roomId' => $duel->id,
+            'steamId' => $user->steamid64,
+            'html' => view('includes.room', compact('duel'))->render()
+        ];
+        $this->redis->publish(self::NEW_JOIN_CHANNEL, json_encode($returnValue));
     }
     public function setReceiveStatus()
     {
@@ -121,14 +141,11 @@ class DuelController extends Controller
                     $third = array_merge($first,$second);
                     $duel->won_items = json_encode($third);
                     $duel->save();
-                    $user = User::where('id', $duel->winner_id)->first();
-                    $value = [
-                        'id' => $duel->id,
-                        'items' => json_decode($duel->won_items),
-                        'partnerSteamId' => $user->steamid64,
-                        'accessToken' => $user->accessToken
+                    $returnValue = [
+                        'roomId' => $bet->game_id,
+                        'html' => view('includes.room', compact('duel'))->render()
                     ];
-                    $this->redis->rpush(self::WINNER_ITEMS_CHANNEL, json_encode($value));
+                    $this->redis->publish(self::PRE_FINISH_CHANNEL, json_encode($returnValue));
                 }
             }
         }
