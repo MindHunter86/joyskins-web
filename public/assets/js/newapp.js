@@ -709,7 +709,7 @@ $(document).on('click','.close',function () {
    $('.window').hide();
 });
 $(document).on('click','.closeView',function () {
-    $('.window').hide();
+    $('.viewRoomBet').hide();
 });
 $(document).on('click','.btnCreateRoom',function () {
     var totalPrice = 0;
