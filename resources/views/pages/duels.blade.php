@@ -212,12 +212,15 @@
         }
         .viewRoomBet .info-block .host-player {
             width: 20%;
+            display:inline-block;
         }
         .viewRoomBet .info-block .center-coin{
             width: 20%;
+            display: inline-block;
         }
         .viewRoomBet .info-block .join-player {
             width: 20%;
+            display:inline-block;
         }
     </style>
     <div class="content_bg">

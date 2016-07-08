@@ -655,6 +655,7 @@ $(document).on('click','.cfRoundView',function () {
             alert('Ошибка AJAХ. Попробуйте позже!');
         }
     });
+    $('.viewRoomBet').show();
 });
 $(document).on('click','.inv_choosen',function () {
     var that = $(this);
