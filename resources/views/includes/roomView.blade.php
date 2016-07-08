@@ -29,9 +29,9 @@
     <div class="center-coin">
         @if($duel->status == \App\duel::STATUS_FINISHED)
             @if($duel->rand_number>0.5)
-                <img style="width:100%;"  src="{{asset('assets/img/coin-ct.png')}}">
+                <img style="width:120px; vertical-align: middle;"  src="{{asset('assets/img/coin-ct.png')}}">
             @else
-                <img style="width:100%;" src="{{asset('assets/img/coin-t.png')}}">
+                <img style="width:120px; vertical-align: middle;" src="{{asset('assets/img/coin-t.png')}}">
             @endif
         @elseif(isset($join_user) && ($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_PLAYING))
             <div id="viewtimer{{$duel->id}}">
@@ -39,7 +39,7 @@
             <?php
             if ($duel->status == \App\duel::STATUS_PRE_FINISH){
                 $cooldown = 10;
-                $color = '#00ff00';
+                $color = '#236235';
                 $stroke = '#477050';
             } else {
                 $cooldown = 90;
