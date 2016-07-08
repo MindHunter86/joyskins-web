@@ -17,7 +17,10 @@
             @else
                 <img class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
             @endif
-            <img src="{{$host_user->avatar}}" style="width: 120px;" />
+            <div style="bottom: -10px;
+    left: -10px;">
+                <img src="{{$host_user->avatar}}" style="width: 120px; vertical-align: middle;" />
+            </div>
         @endif
     </div>
     <div class="center-coin">
