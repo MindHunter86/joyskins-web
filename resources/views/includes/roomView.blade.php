@@ -109,7 +109,7 @@
     </div>
     <div class="join-items">
         @if(isset($join_user))
-            @if($join_user->status!=\App\duel_bet::STATUS_ACCEPTED)
+            @if($duel_bets[1]->status!=\App\duel_bet::STATUS_ACCEPTED)
                     Игрок заходит.
                 @else
                 <?php $items = json_decode($duel_bets[0]->items); ?>
