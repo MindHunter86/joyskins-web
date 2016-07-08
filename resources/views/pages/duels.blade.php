@@ -3,6 +3,7 @@
 @section('content')
     <script type="text/javascript" src="{{ asset('assets/js/circle-progress.js') }}"></script>
     <script type="text/javascript" src="{{asset('assets/js/radial-progress-bar.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/jquery.countdown360.min.js')}}"></script>
     <style>
         .inv_d_item {
             display: inline-block;

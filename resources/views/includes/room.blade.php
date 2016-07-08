@@ -48,20 +48,14 @@ vs.
             $now = Carbon\Carbon::now();
             $diff = $cooldown-$date->diffInSeconds($now);
             ?>
-            <script>
-                var timer = jQuery("#timer{{$duel->id}}").radialProgress("init", {
-                    'size': 45,
-                    'fill': 5,
-                    'color': '{{$color}}',
-                    'font-size': 14,
-                    'perc': parseInt({{$diff*100/$cooldown}})
-                });
-                var time = {{$diff}};
-                setInterval(function () {
-                    if(time<=0) return;
-                    timer.radialProgress("to", {'perc': parseInt(time*100/90) , 'time': (parseInt(time*100/90) ? 90 : 10)});
-                    time--;
-                },1000);
+            <script type="text/javascript" charset="utf-8">
+                $("#timer{{$duel->id}}").countdown360({
+                    radius      : 22,
+                    seconds     : {{$dif}},
+                    fontColor   : '#FFFFFF',
+                    autostart   : false,
+                    onComplete  : function () { console.log('done') }
+                }).start()
             </script>
         @endif
     </td>
