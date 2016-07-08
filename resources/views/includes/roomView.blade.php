@@ -7,10 +7,15 @@
     if(count($duel_bets)>1)
         $join_user = \App\User::where('id',$duel_bets[1]->user_id)->first();
 ?>
-<h1>CoinFlip раунд № {{$duel->id}}</h1>
+<h1 style="text-align: center;">CoinFlip раунд № {{$duel->id}}</h1>
 <div class="info-block">
     <div class="host-player">
         @if(isset($host_user))
+            @if($duel_bets[0]->coin)
+                <img src="{{asset('assets/img/coin-ct.png')}}">
+            @else
+                <img src="{{asset('assets/img/coin-t.png')}}">
+            @endif
             <img src="{{$host_user->avatar}}" style="width: 100%;" />
         @endif
     </div>
@@ -54,7 +59,13 @@
         @endif
     </div>
     <div class="join-player">
+
         @if(isset($join_user))
+            @if($duel_bets[1]->coin)
+                <img src="{{asset('assets/img/coin-ct.png')}}">
+            @else
+                <img src="{{asset('assets/img/coin-t.png')}}">
+            @endif
             <img src="{{$join_user->avatar}}" style="width: 100%;" />
         @endif
     </div>
