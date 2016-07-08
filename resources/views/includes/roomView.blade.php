@@ -1,4 +1,8 @@
 <?php
+    $duel_bets = \App\duel_bet::where('game_id',$id)->where(function($query){
+        $query->where('status',\App\duel_bet::STATUS_WAIT_TO_ACCEPT)
+                ->orWhere('status',\App\duel_bet::STATUS_ACCEPTED);
+    })->get();
     $host_user = \App\User::where('id',$duel_bets[0]->user_id)->first();
     if(count($duel_bets)>1)
         $join_user = \App\User::where('id',$duel_bets[1]->user_id)->first();
