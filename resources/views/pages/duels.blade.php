@@ -201,6 +201,7 @@
             transition: opacity 400ms ease-in;
             display: none;
             overflow-y: scroll;
+            overflow-y: hidden;
             height: 100%;
         }
 
@@ -227,19 +228,20 @@
         .viewRoomBet .info-line {
             padding-top: 15px;
             padding-bottom: 15px;
-            padding-left: 15%;
-            padding-right: 15%;
-            width: 70%;
+            width: 100%;
             background-color: #236235;
         }
         .info-line .hash {
             display: inline-block;
-            width: 50%;
+            width: 40%;
 
         }
         .info-line .usernames{
             display: inline-block;
-            width: 25%;
+            width: 15%;
+        }
+        .usernames:first-child{
+            padding-left: 15%;
         }
         .viewRoomBet .items-block{
             width: 100%;
@@ -263,6 +265,7 @@
         .items-block .item {
             display:block;
             width: 100%;
+            border-bottom: 1px solid #31d355;
         }
         .items-block .item .view-price{
             width:25%;
