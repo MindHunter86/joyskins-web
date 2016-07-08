@@ -13,7 +13,8 @@
     <div class="host-player">
         @if(isset($host_user))
             <img src="{{$host_user->avatar}}" style="width: 120px; vertical-align: middle;" />
-            <div style="position:absolute; top: 0px;">
+            <div style="position:absolute;     bottom: -10px;
+    left: -10px;">
             @if($duel_bets[0]->coin)
                 <img class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
             @else
@@ -63,14 +64,17 @@
         @endif
     </div>
     <div class="join-player">
-
+        <img src="{{$join_user->avatar}}" style="width: 120px; vertical-align: middle;" />
+        <div style="position:absolute;     bottom: -10px;
+    right: -10px;">
         @if(isset($join_user))
             @if($duel_bets[1]->coin)
                 <img class="coin-ava" src="{{asset('assets/img/coin-ct.png')}}">
             @else
                 <img class="coin-ava" src="{{asset('assets/img/coin-t.png')}}">
             @endif
-            <img src="{{$join_user->avatar}}" style="width: 100%;" />
+        </div>
+
         @endif
     </div>
 </div>
