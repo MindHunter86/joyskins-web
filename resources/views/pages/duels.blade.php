@@ -201,7 +201,7 @@
             transition: opacity 400ms ease-in;
             display: none;
             overflow-y: scroll;
-            overflow-y: hidden;
+            overflow-x: hidden;
             height: 100%;
         }
 
