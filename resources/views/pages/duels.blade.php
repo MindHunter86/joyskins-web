@@ -22,7 +22,7 @@
             display: inline-block;
             float: left;
             padding: 15px;
-            background-color: yellowgreen;
+            background-color: #236235;
             text-decoration: none;
             cursor:pointer;
         }
@@ -151,7 +151,7 @@
             display: inline-block;
             float: left;
             padding: 15px;
-            background-color: yellowgreen;
+            background-color: #236235
             text-decoration: none;
             cursor:pointer;
             width:100%;
@@ -163,7 +163,7 @@
             display: inline-block;
             float: left;
             padding: 15px;
-            background-color: yellowgreen;
+            background-color: #236235;
             text-decoration: none;
             cursor:pointer;
             width:100%;

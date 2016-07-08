@@ -39,7 +39,7 @@ vs.
         </div>
             <?php
                 if ($duel->status == \App\duel::STATUS_PRE_FINISH){
-                    $cooldown = 10;
+                    $cooldown = 15;
                     $color = '#00ff00';
                 } else {
                     $cooldown = 90;
