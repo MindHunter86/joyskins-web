@@ -51,7 +51,7 @@ vs.
             <script type="text/javascript" charset="utf-8">
                 $("#timer{{$duel->id}}").countdown360({
                     radius      : 22,
-                    seconds     : {{$dif}},
+                    seconds     : {{$diff}},
                     fontColor   : '#FFFFFF',
                     autostart   : false,
                     onComplete  : function () { console.log('done') }
