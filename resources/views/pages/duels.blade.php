@@ -188,7 +188,7 @@
             @foreach(\App\duel_bet::where('status',\App\duel_bet::STATUS_WAIT_TO_ACCEPT)->where('user_id',\Auth::user()->id)->get()  as $bet)
                 <h3>Вы вступили в игру, у вас есть: 60 сек для подтверждения</h3>
                 <h3>Ваша ставка:</h3>
-                <?php $items = json_decode($bet->items);?>
+                <?php $items = json_decode($bet->items)?>
                 @foreach($items as $item)
                     <img width="45" height="45" src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" alt="">
                 @endforeach
@@ -222,8 +222,7 @@
                 </div>
             </div>
             <a class="btnShowInv">Создать комнату</a>
-            <div class="duel_games_list">
-                <table class="coinflip-pots table">
+            <div class="duel_games_list"><table class="coinflip-pots table">
                     <thead>
                     <tr>
                         <th>Игроки</th>
