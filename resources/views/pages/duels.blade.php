@@ -234,12 +234,12 @@
         }
         .info-line .hash {
             display: inline-block;
-            width: 30%;
+            width: 50%;
 
         }
         .info-line .usernames{
             display: inline-block;
-            width: 20%;
+            width: 25%;
         }
         .viewRoomBet .items-block{
             width: 100%;

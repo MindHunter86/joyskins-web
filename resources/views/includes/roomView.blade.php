@@ -91,9 +91,9 @@
         @foreach($items as $item)
         <div class="item">
             <img src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" class="img-responsive" title="{{$item->market_hash_name}} - {{$item->price}} руб.">
-
             <p class="view-name">{{$item->market_hash_name}}</p>
             <p class="view-price">{{$item->price}} руб.</p>
+            <hr>
         </div>
             @endforeach
     </div>
