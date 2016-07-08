@@ -259,7 +259,6 @@
         .viewRoomBet .items-block .join-items{
             display: inline-block;
             width: 29%;
-            float:right;
             background-color: #236235;
         }
         .items-block .item {
