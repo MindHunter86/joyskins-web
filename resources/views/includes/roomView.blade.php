@@ -44,7 +44,7 @@
             ?>
                 <script>
                     var timer = jQuery("#viewtimer{{$duel->id}}").radialProgress("init", {
-                        'size': auto,
+                        'size': 'auto',
                         'fill': 5,
                         'color': '{{$color}}',
                         'font-size': 25,
