@@ -636,6 +636,25 @@ $(document).on('click','.cfRoundJoin',function () {
     $('.inv_price').html(0);
     $('.window').show();
 });
+$(document).on('click','.cfRoundView',function () {
+    var id = $(this).data('id');
+    $.ajax({
+        url: '/duel/viewRound',
+        type: 'POST',
+        dataType: 'json',
+        data: { id: id },
+        success:function (data) {
+            if(data.success) {
+                $('.viewRoomBet').html(data.html);
+            }else{
+                alert(data.error);
+            }
+        },
+        error:function () {
+            alert('Ошибка AJAХ. Попробуйте позже!');
+        }
+    });
+});
 $(document).on('click','.inv_choosen',function () {
     var that = $(this);
     $(this)

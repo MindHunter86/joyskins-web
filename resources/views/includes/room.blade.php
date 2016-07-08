@@ -34,7 +34,6 @@ vs.
     </td>
     <td class="cf-timer">
         @if(isset($user_joined)&& ($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_PLAYING))
-
         <div id="timer{{$duel->id}}">
         </div>
             <?php
@@ -66,7 +65,7 @@ vs.
             </script>
         @endif
     </td>
-    <td class="cf-action" data-id="5776e133ec1914830cb7a4e0" data-team="1" data-steamid="76561198073444442">
+    <td class="cf-action">
         @if(!isset($user_joined))
         <a class="cfRoundJoin" data-id="{{$duel->id}}">Войти</a>
         @else
@@ -79,6 +78,6 @@ vs.
                     <img src="{{asset('assets/img/coin-t.png')}}">
                 @endif
             @endif
-        <a class="cfRoundView">Смотреть</a>
+        <a class="cfRoundView" data-id="{{$duel->id}}">Смотреть</a>
     </td>
 </tr>

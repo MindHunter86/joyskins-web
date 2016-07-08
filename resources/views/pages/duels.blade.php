@@ -188,6 +188,24 @@
         .btnCheckBet:hover{
             text-decoration: none;
         }
+        .viewRoomBet {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 99999;
+            -webkit-transition: opacity 400ms ease-in;
+            -moz-transition: opacity 400ms ease-in;
+            transition: opacity 400ms ease-in;
+            display: none;
+        }
+
+        .viewRoomBet:target {
+            display: block;
+            pointer-events: auto;
+        }
     </style>
     <div class="content_bg">
         <div class="full">
@@ -246,6 +264,8 @@
                 </table>
             </div>
         </div>
+    </div>
+    <div class="viewRoomBet">
     </div>
     <script>
         $(function(){
