@@ -229,12 +229,13 @@
             padding-bottom: 15px;
             padding-left: 15%;
             padding-right: 15%;
-            width: 100%;
+            width: 70%;
             background-color: #236235;
         }
         .info-line .hash {
             display: inline-block;
             width: 30%;
+
         }
         .info-line .usernames{
             display: inline-block;
