@@ -231,9 +231,12 @@
             width: 100%;
             background-color: #236235;
         }
-        .info-line .hash {
-            display: inline-block;
-            width: 40%;
+        .hash {
+            margin-top: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            background-color: #236235;
+            width: 100%;
             text-align: center;
         }
         .info-line .usernames{

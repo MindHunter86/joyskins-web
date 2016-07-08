@@ -92,9 +92,7 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
             {{$host_user->username}}
         @endif
     </p>
-    <p class="hash">
-        Хэш раунда: 0e108d6c9964a1b740117cec9cae2b98
-    </p>
+    <p style="width: 32%;"></p>
     <p class="usernames">
         @if(isset($join_user))
             {{$join_user->username}}
@@ -127,5 +125,8 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
                 @endforeach
                 @endif
             @endif
+    </div>
+    <div class="hash">
+        Хэш раунда: 0e108d6c9964a1b740117cec9cae2b98
     </div>
 </div>
