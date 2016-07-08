@@ -522,11 +522,17 @@ if (START) {
         })
         .on('newJoin',function (data) {
            data = JSON.parse(data);
-            $('tr#duelRoom'+data.roomId).replaceWith(data.html);
+            if($('tr#duelRoom'+data.roomId))
+                $('tr#duelRoom'+data.roomId).replaceWith(data.html);
+            else
+                $('#roomList').append(data.html);
         })
         .on('userLeftRoom',function(data){
             data = JSON.parse(data);
-            $('tr#duelRoom'+data.roomId).replaceWith(data.html);
+            if($('tr#duelRoom'+data.roomId))
+                $('tr#duelRoom'+data.roomId).replaceWith(data.html);
+            else
+                $('#roomList').append(data.html);
         });
     var declineTimeout,
         timerStatus = true,
