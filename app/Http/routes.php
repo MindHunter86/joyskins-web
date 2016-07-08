@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     post('/duel/receiveOffer','DuelController@receiveOffer');
     post('/duel/checkOffer','DuelController@checkOffer');
-    post('/duel/viewRoom','DuelController@viewRoom');
+    post('/duel/viewRound','DuelController@viewRoom');
 
 });
 
