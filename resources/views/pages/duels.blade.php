@@ -224,16 +224,6 @@
             width: 33%;
             display:inline-block;
         }
-        .viewRoomBet .host-player .coin-ava{
-            position: fixed;
-            top: 5px;
-            left: 29%;
-        }
-        .viewRoomBet .join-player .coin-ava{
-            position: fixed;
-            top: 5px;
-            right: 29%;
-        }
         .viewRoomBet .info-line {
             padding-top: 15px;
             padding-bottom: 15px;
