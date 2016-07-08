@@ -12,6 +12,7 @@
 padding-top: 10px;
 padding-bottom: 10px;
 width: 100%;
+margin-bottom: 10px;
 background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
 <div class="info-block">
     <div class="host-player">
