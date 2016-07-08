@@ -533,6 +533,26 @@ if (START) {
                 $('tr#duelRoom'+data.roomId).replaceWith(data.html);
             else
                 $('#roomList').append(data.html);
+        })
+        .on('pre.finish.duel',function (data) {
+            data = JSON.parse(data);
+            if($('tr#duelRoom'+data.roomId))
+                $('tr#duelRoom'+data.roomId).replaceWith(data.html);
+            else
+                $('#roomList').append(data.html);
+        })
+        .on('',function (data) {
+            data = JSON.parse(data);
+            if($('tr#duelRoom'+data.roomId))
+                $('tr#duelRoom'+data.roomId).replaceWith(data.html);
+            else
+                $('#roomList').append(data.html);
+            if(data.steamId == USER_ID) {
+                alert('Поздравляем, вы выиграли!');
+            }
+            setTimeout(function () {
+                $('tr#duelRoom'+data.roomId).remove();
+            },5000);
         });
     var declineTimeout,
         timerStatus = true,
