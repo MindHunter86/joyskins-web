@@ -7,6 +7,7 @@
     if(count($duel_bets)>1)
         $join_user = \App\User::where('id',$duel_bets[1]->user_id)->first();
 ?>
+<a title="Закрыть" class="closeView">X</a>
 <h1 style="text-align: center;">CoinFlip раунд № {{$duel->id}}</h1>
 <div class="info-block">
     <div class="host-player">

@@ -287,6 +287,26 @@
             padding-top: 10px;
             display:inline-block;
         }
+        .closeView {
+            background: #cc3300;
+            color: #FFFFFF;
+            line-height: 25px;
+            position: absolute;
+            right: 10px;
+            text-align: center;
+            top: 22px;
+            width: 24px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
+            border-radius: 12px;
+            -moz-box-shadow: 1px 1px 3px #000;
+            -webkit-box-shadow: 1px 1px 3px #000;
+            box-shadow: 1px 1px 3px #000;
+        }
+        .closeView:hover { background: #990000; }
     </style>
     <div class="content_bg">
         <div class="full">
