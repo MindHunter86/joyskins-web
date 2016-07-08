@@ -112,7 +112,7 @@
             @if($duel_bets[1]->status!=\App\duel_bet::STATUS_ACCEPTED)
                     Игрок заходит.
                 @else
-                <?php $items = json_decode($duel_bets[0]->items); ?>
+                <?php $items = json_decode($duel_bets[1]->items); ?>
                 @foreach($items as $item)
                     <div class="item">
                         <img src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" class="img-responsive" title="{{$item->market_hash_name}} - {{$item->price}} руб.">
