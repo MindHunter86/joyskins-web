@@ -32,30 +32,29 @@
             </div>
             <?php
             if ($duel->status == \App\duel::STATUS_PRE_FINISH){
-                $cooldown = 15;
+                $cooldown = 10;
                 $color = '#00ff00';
+                $stroke = '#477050';
             } else {
                 $cooldown = 90;
                 $color = '#FF0000';
+                $stroke = '#700005';
             }
             $date = new Carbon\Carbon($duel_bets[1]->updated_at);
             $now = Carbon\Carbon::now();
             $diff = $cooldown-$date->diffInSeconds($now);
             ?>
-                <script>
-                    var timer = jQuery("#viewtimer{{$duel->id}}").radialProgress("init", {
-                        'fill': 5,
-                        'color': '{{$color}}',
-                        'font-size': 25,
-                        'perc': parseInt({{$diff*100/$cooldown}})
-                    });
-                    var time = {{$diff}};
-                    setInterval(function () {
-                        if(time<=0) return;
-                        timer.radialProgress("to", {'perc': parseInt(time*100/90) , 'time': (parseInt(time*100/90) ? 90 : 10)});
-                        time--;
-                    },1000);
-                </script>
+            <script type="text/javascript" charset="utf-8">
+                $("#viewtimer{{$duel->id}}").countdown360({
+                    radius      : 22,
+                    seconds     : {{$diff}},
+                    fontColor   : '#FFFFFF',
+                    strokeStyle: {{$stroke}},
+                    fillStyle: {{$color}},
+                    autostart   : false,
+                    onComplete  : function () {}
+                }).start()
+            </script>
         @endif
     </div>
     <div class="join-player">

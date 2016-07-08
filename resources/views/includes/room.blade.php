@@ -38,11 +38,13 @@ vs.
         </div>
             <?php
                 if ($duel->status == \App\duel::STATUS_PRE_FINISH){
-                    $cooldown = 15;
+                    $cooldown = 10;
                     $color = '#00ff00';
+                    $stroke = '#477050';
                 } else {
                     $cooldown = 90;
                     $color = '#FF0000';
+                    $stroke = '#700005';
                 }
             $date = new Carbon\Carbon($duel_bets[1]->updated_at);
             $now = Carbon\Carbon::now();
@@ -53,8 +55,10 @@ vs.
                     radius      : 22,
                     seconds     : {{$diff}},
                     fontColor   : '#FFFFFF',
+                    strokeStyle: {{$stroke}},
+                    fillStyle: {{$color}},
                     autostart   : false,
-                    onComplete  : function () { console.log('done') }
+                    onComplete  : function () {}
                 }).start()
             </script>
         @endif
