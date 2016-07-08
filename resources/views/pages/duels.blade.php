@@ -265,14 +265,22 @@
         }
         .items-block .item .view-price{
             width:25%;
+            padding-top: 10px;
             display:inline-block;
         }
+        .items-block .item:after {
+            content: " ";
+            clear: both;
+            display: table;
+        }
         .items-block .item img{
-            width:25%;
+            width:45px;
+            float:left;
             display:inline-block;
         }
         .items-block .item .view-name{
             width:50%;
+            padding-top: 10px;
             display:inline-block;
         }
     </style>
