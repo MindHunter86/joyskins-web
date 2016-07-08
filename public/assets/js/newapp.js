@@ -530,7 +530,7 @@ if (START) {
                 $('#roomList').append(data.html);
             if(data.roomId == $('.viewRoomBet').data('id'))
             {
-                $('.cfroundview').click();
+                loadViewRoom(data.roomId);
             }
         })
         .on('userLeftRoom',function(data){
@@ -541,7 +541,7 @@ if (START) {
                 $('#roomList').append(data.html);
             if(data.roomId == $('.viewRoomBet').data('id'))
             {
-                $('.cfroundview').click();
+                loadViewRoom(data.roomId);
             }
         })
         .on('pre.finish.duel',function (data) {
@@ -552,7 +552,7 @@ if (START) {
                 $('#roomList').append(data.html);
             if(data.roomId == $('.viewRoomBet').data('id'))
             {
-                $('.cfroundview').click();
+                loadViewRoom(data.roomId);
             }
         })
         .on('show.duel.winner',function (data) {
@@ -566,7 +566,7 @@ if (START) {
             }
             if(data.roomId == $('.viewRoomBet').data('id'))
             {
-                $('.cfroundview').click();
+                loadViewRoom(data.roomId);
             }
             setTimeout(function () {
                 $('tr#duelRoom'+data.roomId).remove();
@@ -656,6 +656,9 @@ $(document).on('click','.cfRoundJoin',function () {
 });
 $(document).on('click','.cfRoundView',function () {
     var id = $(this).data('id');
+    loadViewRoom(id);
+});
+function loadViewRoom(id){
     $.ajax({
         url: '/duel/viewRound',
         type: 'POST',
@@ -674,8 +677,7 @@ $(document).on('click','.cfRoundView',function () {
             alert('Ошибка AJAХ. Попробуйте позже!');
         }
     });
-
-});
+}
 $(document).on('click','.inv_choosen',function () {
     var that = $(this);
     $(this)
