@@ -27,9 +27,16 @@ vs.
     <td class="cf-items">
         <h3>{{count($items)}} предметов:</h3>
         <div>
+            <?php $preCount = 0; ?>
             @foreach($items as $item)
+                <?php $preCount++; ?>
+                @if($preCount < 6)
                 <img src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" class="img-responsive" title="{{$item->market_hash_name}} - {{$item->price}} руб.">
-            @endforeach
+                        @endif
+                        @endforeach
+            @if(count($items) > 5)
+                + еще {{count($items)-5}} предмет(ов)
+                @endif
         </div>
     </td>
     <td class="cf-total">
