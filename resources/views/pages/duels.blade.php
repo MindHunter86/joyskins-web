@@ -238,7 +238,6 @@
             padding-left: 20px;
             padding-right: 20px;
             background-color: #236235;
-            text-align: center;
         }
         .info-line .usernames{
             display: inline-block;
