@@ -34,10 +34,11 @@ vs.
                 <img src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" class="img-responsive" title="{{$item->market_hash_name}} - {{$item->price}} руб.">
                         @endif
                         @endforeach
-            @if(count($items) > 5)
-                <div style="vertical-align: middle;">+ еще {{count($items)-5}} предмет(ов)</div>
+                @if(count($items) > 5)
+                    <div style="vertical-align: middle;     padding-bottom: 5px;">+ еще {{count($items)-5}} предмет(ов)</div>
                 @endif
         </div>
+
     </td>
     <td class="cf-total">
         {{$duel_bets[0]->price}} руб.<br><span class="small">Надо: {{$duel_bets[0]->price-$duel_bets[0]->price*0.1}} - {{$duel_bets[0]->price+$duel_bets[0]->price*0.1}} руб.</span>
