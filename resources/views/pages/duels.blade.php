@@ -333,6 +333,9 @@
         canvas{
             vertical-align: middle;
         }
+        .coin-ava{
+            width: 50px;
+        }
         .closeView:hover { background: #990000; }
     </style>
     <div class="content_bg">
