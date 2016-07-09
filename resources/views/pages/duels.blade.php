@@ -246,6 +246,11 @@
         }
         .usernames:first-child{
             padding-left: 15%;
+            float:left;
+        }
+        .usernames:last-child{
+            float:right;
+            padding-right: 15%;
         }
         .viewRoomBet .items-block{
             width: 100%;
@@ -269,6 +274,11 @@
             display:block;
             width: 100%;
             border-bottom: 1px solid #31d355;
+        }
+        .info-line:after {
+            content: " ";
+            clear: both;
+            display: table;
         }
         .items-block:after {
             content: " ";
