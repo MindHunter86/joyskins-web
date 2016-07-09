@@ -243,14 +243,8 @@
             display: inline-block;
             width: 15%;
             text-align: center;
-        }
-        .usernames:first-child{
-            padding-left: 15%;
             float:left;
-        }
-        .usernames:last-child{
-            float:right;
-            padding-right: 15%;
+            padding-left: 32%;
         }
         .viewRoomBet .items-block{
             width: 100%;
