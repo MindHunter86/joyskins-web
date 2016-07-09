@@ -96,7 +96,7 @@ class DuelController extends Controller
         $bet->save();
         $bets = duel_bet::where('game_id',$bet->game_id)->count();
         if($bets == 1) {
-            $items = \Request::get('items');
+            $items = urldecode(\Request::get('items'));
             if($status == duel_bet::STATUS_ACCEPTED) {
                 duel::where('id', $bet->game_id)->update(['status' => duel::STATUS_PLAYING, 'won_items' => $items]);
                 $duel = duel::where('id',$bet->game_id)->first();
@@ -145,7 +145,7 @@ class DuelController extends Controller
                         $duel->winner_id = $bets[1]->user_id;
                     }
                     $first = json_decode($duel->won_items);
-                    $second = json_decode(\Request::get('items'));
+                    $second = json_decode(urldecode(\Request::get('items')));
                     $third = array_merge($first,$second);
                     $duel->won_items = json_encode($third);
                     $duel->save();

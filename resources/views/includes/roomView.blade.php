@@ -92,7 +92,7 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
             {{$host_user->username}}
         @endif
     </p>
-    <p style="width: 32%;"></p>
+    <p style="width: 32%;     display: inline-block;"></p>
     <p class="usernames">
         @if(isset($join_user))
             {{$join_user->username}}
