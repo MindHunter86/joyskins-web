@@ -329,6 +329,9 @@
             -webkit-box-shadow: 1px 1px 3px #000;
             box-shadow: 1px 1px 3px #000;
         }
+        canvas{
+            vertical-align: middle;
+        }
         .closeView:hover { background: #990000; }
     </style>
     <div class="content_bg">
