@@ -242,6 +242,7 @@
         .info-line .usernames{
             display: inline-block;
             width: 15%;
+            text-align: center;
         }
         .usernames:first-child{
             padding-left: 15%;
