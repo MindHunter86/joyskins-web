@@ -103,7 +103,9 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
         <?php $items = json_decode($duel_bets[0]->items); ?>
         @foreach($items as $item)
         <div class="item">
-            <img src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" class="img-responsive" title="{{$item->market_hash_name}} - {{$item->price}} руб.">
+            <div class="item-img">
+                <img src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" class="img-responsive" title="{{$item->market_hash_name}} - {{$item->price}} руб.">
+            </div>
             <p class="view-name">{{$item->market_hash_name}}</p>
             <p class="view-price">{{$item->price}} руб.</p>
         </div>
@@ -117,9 +119,11 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
                 <?php $items = json_decode($duel_bets[1]->items); ?>
                 @foreach($items as $item)
                     <div class="item">
-                        <img src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" class="img-responsive" title="{{$item->market_hash_name}} - {{$item->price}} руб.">
-                        <p class="view-name">{{$item->market_hash_name}}</p>
-                        <p class="view-price">{{$item->price}} руб.</p>
+                            <div class="item-img">
+                            <img src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" class="img-responsive" title="{{$item->market_hash_name}} - {{$item->price}} руб.">
+                            </div>
+                            <p class="view-name">{{$item->market_hash_name}}</p>
+                            <p class="view-price">{{$item->price}} руб.</p>
                     </div>
                 @endforeach
                 @endif

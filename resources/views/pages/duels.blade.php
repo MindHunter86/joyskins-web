@@ -293,10 +293,17 @@
             clear: both;
             display: table;
         }
-        .items-block .item img{
-            width:45px;
+        .items-block .item p{
+            text-align: center;
+        }
+        .items-block .item .item-img{
             float:left;
             display:inline-block;
+            width: 24%;
+        }
+        .items-block .item img{
+            width:45px;
+
         }
         .items-block .item .view-name{
             width:50%;
