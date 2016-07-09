@@ -168,7 +168,11 @@ class DuelController extends Controller
             $game = duel::where('id',$round_id)->where('status',duel::STATUS_PLAYING)->first();
             if(is_null($game))
                 return response()->json(['success'=>false,'error'=>'Комната не существует, или уже занята или завершена!']);
-            $count = duel_bet::where('game_id',$round_id)->where('status',duel_bet::STATUS_ACCEPTED)->orWhere('status',duel_bet::STATUS_WAIT_TO_ACCEPT)->orWhere('status',duel_bet::STATUS_WAIT_TO_SENT)->count();
+            $count = duel_bet::where('game_id',$round_id)->where(function($query){
+                $query->where('status',duel_bet::STATUS_WAIT_TO_ACCEPT)
+                    ->orWhere('status',duel_bet::STATUS_ACCEPTED)
+                    ->orWhere('status',duel_bet::STATUS_WAIT_TO_SENT);
+            })->get();
             if($count != 1)
                 return response()->json(['success'=>false,'error'=>'Данная комната уже занята!']);
         } else if($type == 'createRoom') {
