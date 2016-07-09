@@ -18,6 +18,7 @@
         .coin {
             margin: 2px;
             display: inline-block;
+            width: 50px;
         }
         .btnCreateRoom {
             display: inline-block;

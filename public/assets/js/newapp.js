@@ -644,6 +644,8 @@ $(document).on('click','.btnShowInv',function () {
 $(document).on('click','.cfRoundJoin',function () {
     $('#joinRoom').show();
     $('#joinRoom').data('roomId',$(this).data('id'));
+    $('#room_start').html($(this).data('price')*0.9);
+    $('#room_end').html($(this).data('price')*1.1);
     $('#createRoom').hide();
     $('.inv_table_duel').html('');
     loadMyDuelInventory();

@@ -10,7 +10,7 @@ if(count($duel_bets)>1)
     $user_joined = \App\User::where('id',$duel_bets[1]->user_id)->first();
 ?>
 
-<tr id="duelRoom{{$duel->id}}" data-id="{{$duel->id}}" style="display: table-row;">
+<tr id="duelRoom{{$duel->id}}" data-price="{{$duel_bets[0]->price}}" data-id="{{$duel->id}}" style="display: table-row;">
     <td class="cf-players">
         @if($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_FINISHED)
             <a href="http://steamcommunity.com/profiles/{{$user_joined->steamid64}}" target="_blank"><img src="{{$user_joined->avatar}}" alt="Profile" title="{{$user_joined->username}}"></a>
