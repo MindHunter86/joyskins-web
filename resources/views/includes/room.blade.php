@@ -35,7 +35,7 @@ vs.
                         @endif
                         @endforeach
             @if(count($items) > 5)
-                + еще {{count($items)-5}} предмет(ов)
+                <div style="vertical-align: middle;">+ еще {{count($items)-5}} предмет(ов)</div>
                 @endif
         </div>
     </td>
