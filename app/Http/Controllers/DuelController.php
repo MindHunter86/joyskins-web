@@ -174,7 +174,7 @@ class DuelController extends Controller
                     ->orWhere('status',duel_bet::STATUS_WAIT_TO_SENT);
             })->count();
             if($count != 1)
-                return response()->json(['success'=>false,'error'=>'Данная комната уже занята!'.$round_id]);
+                return response()->json(['success'=>false,'error'=>'Данная комната уже занята!']);
         } else if($type == 'createRoom') {
 
         } else
@@ -234,7 +234,11 @@ class DuelController extends Controller
             $this->redis->rpush(self::RECEIVE_ITEMS_CHANNEL, json_encode($value));
             return response()->json(['success'=>true,'text'=>'Вы успешно создали комнату, примите стимоффер!']);
         } else {
-            $count = duel_bet::where('game_id',$round_id)->where('status',duel_bet::STATUS_ACCEPTED)->orWhere('status',duel_bet::STATUS_WAIT_TO_ACCEPT)->orWhere('status',duel_bet::STATUS_WAIT_TO_SENT)->count();
+            $count = duel_bet::where('game_id',$round_id)->where(function($query){
+                $query->where('status',duel_bet::STATUS_WAIT_TO_ACCEPT)
+                    ->orWhere('status',duel_bet::STATUS_ACCEPTED)
+                    ->orWhere('status',duel_bet::STATUS_WAIT_TO_SENT);
+            })->count();
             if($count != 1)
                 return response()->json(['success'=>false,'error'=>'Данная комната уже занята!']);
             $host_bet = duel_bet::where('game_id',$round_id)->where('status',duel_bet::STATUS_ACCEPTED)->first();
