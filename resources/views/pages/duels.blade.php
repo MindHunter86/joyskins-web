@@ -269,6 +269,11 @@
             width: 100%;
             border-bottom: 1px solid #31d355;
         }
+        .items-block:after {
+            content: " ";
+            clear: both;
+            display: table;
+        }
         .items-block .item .view-price{
             width:25%;
             padding-top: 10px;
