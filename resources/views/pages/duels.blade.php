@@ -194,7 +194,7 @@
             right: 0;
             bottom: 0;
             left: 0;
-            background: rgba(0,0,0,0.7);
+            background: #1c262a;
             z-index: 99999;
             -webkit-transition: opacity 400ms ease-in;
             -moz-transition: opacity 400ms ease-in;
