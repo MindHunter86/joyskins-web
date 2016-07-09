@@ -111,7 +111,7 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
         </div>
             @endforeach
     </div>
-    <div style="margin-left: 5px;" class="join-items">
+    <div style="margin-left: 10px;" class="join-items">
         @if(isset($join_user))
             @if($duel_bets[1]->status!=\App\duel_bet::STATUS_ACCEPTED)
                     Игрок заходит.
