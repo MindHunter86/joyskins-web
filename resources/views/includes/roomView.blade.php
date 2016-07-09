@@ -126,7 +126,8 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
                 @endif
             @endif
     </div>
-    <div class="hash">
-        Хэш раунда: 0e108d6c9964a1b740117cec9cae2b98
-    </div>
+
+</div>
+<div class="hash">
+    Хэш раунда: 0e108d6c9964a1b740117cec9cae2b98
 </div>
