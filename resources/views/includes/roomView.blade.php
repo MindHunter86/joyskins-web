@@ -98,6 +98,13 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
         @endif
     </p>
 </div>
+@if($duel->status == \App\duel::STATUS_FINISHED)
+    @if($duel->rand_number>0.5)
+        <img style="padding-left:30%; width: 40%;" src="http://csgowild.com/assets/images/animations/counterterrorist_8.gif">
+    @else
+        <img style="padding-left:30%; width: 40%;" src="http://csgowild.com/assets/images/animations/terrorist_8.gif">
+    @endif
+@endif
 <div class="items-block">
     <div class="host-items">
         <?php $items = json_decode($duel_bets[0]->items); ?>
