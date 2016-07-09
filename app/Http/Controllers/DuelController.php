@@ -174,7 +174,7 @@ class DuelController extends Controller
                     ->orWhere('status',duel_bet::STATUS_WAIT_TO_SENT);
             })->count();
             if($count != 1)
-                return response()->json(['success'=>false,'error'=>'Данная комната уже занята!']);
+                return response()->json(['success'=>false,'error'=>'Данная комната уже занята!'.$round_id]);
         } else if($type == 'createRoom') {
 
         } else
