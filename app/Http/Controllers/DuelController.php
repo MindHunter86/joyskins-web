@@ -172,7 +172,7 @@ class DuelController extends Controller
                 $query->where('status',duel_bet::STATUS_WAIT_TO_ACCEPT)
                     ->orWhere('status',duel_bet::STATUS_ACCEPTED)
                     ->orWhere('status',duel_bet::STATUS_WAIT_TO_SENT);
-            })->get();
+            })->count();
             if($count != 1)
                 return response()->json(['success'=>false,'error'=>'Данная комната уже занята!']);
         } else if($type == 'createRoom') {
