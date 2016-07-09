@@ -241,14 +241,14 @@
         }
         .info-line .usernames{
             display: inline-block;
-            width: 32%;
+            width: 20%;
             float:left;
         }
         .info-line .usernames:first-child{
             padding-left: 30%;
         }
         .info-line .usernames:last-child{
-            padding-left: 32%;
+            padding-left: 6%;
         }
         .viewRoomBet .items-block{
             width: 100%;
