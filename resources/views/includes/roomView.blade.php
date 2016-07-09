@@ -34,10 +34,21 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
     <div class="center-coin">
         @if($duel->status == \App\duel::STATUS_FINISHED)
             @if($duel->rand_number>0.5)
-                <img style="width:120px; vertical-align: middle;"  src="{{asset('assets/img/coin-ct.png')}}">
+            <img id="winner_t" style="width:120px; vertical-align: middle; display:none;"  src="{{asset('assets/img/coin-ct.png')}}">
+            <img id="winner_ct" style="width:120px; vertical-align: middle;" src="{{asset('assets/img/coin-t.png')}}">
             @else
-                <img style="width:120px; vertical-align: middle;" src="{{asset('assets/img/coin-t.png')}}">
-            @endif
+                <img id="winner_t" style="width:120px; vertical-align: middle; "  src="{{asset('assets/img/coin-ct.png')}}">
+                <img id="winner_ct" style="width:120px; vertical-align: middle; display:none;" src="{{asset('assets/img/coin-t.png')}}">
+                @endif
+          <script>
+              var count = 0;
+            var interval = setInterval(function(){
+                $("#winner_ct").toggle('fast');
+                $("#winner_t").toggle('fast');
+            if(++count == 5)
+            clearInterval(interval);
+            },250);
+          </script>
         @elseif(isset($join_user) && ($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_PLAYING))
             <div id="viewtimer{{$duel->id}}">
             </div>
@@ -98,13 +109,6 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
         @endif
     </p>
 </div>
-@if($duel->status == \App\duel::STATUS_FINISHED)
-    @if($duel->rand_number>0.5)
-        <img style="padding-left:30%; width: 40%;" src="http://csgowild.com/assets/images/animations/counterterrorist_8.gif">
-    @else
-        <img style="padding-left:30%; width: 40%;" src="http://csgowild.com/assets/images/animations/terrorist_8.gif">
-    @endif
-@endif
 <div class="items-block">
     <div class="host-items">
         <?php $items = json_decode($duel_bets[0]->items); ?>

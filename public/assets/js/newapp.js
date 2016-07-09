@@ -561,9 +561,6 @@ if (START) {
                 $('tr#duelRoom'+data.roomId).replaceWith(data.html);
             else
                 $('#roomList').append(data.html);
-            if(data.steamId == USER_ID) {
-                alert('Поздравляем, вы выиграли!');
-            }
             if(data.roomId == $('.viewRoomBet').data('id'))
             {
                 loadViewRoom(data.roomId);
