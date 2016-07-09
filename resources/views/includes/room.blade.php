@@ -77,7 +77,7 @@ vs.
     </td>
     <td class="cf-action">
         @if(!isset($user_joined))
-        <a class="cfRoundJoin" data-id="{{$duel->id}}">Войти</a>
+        <a class="cfRoundJoin" data-price="{{$duel_bets[0]->price}}" data-id="{{$duel->id}}">Войти</a>
         @else
             <a href="http://steamcommunity.com/profiles/{{$user_joined->steamid64}}" target="_blank"><img src="{{$user_joined->avatar}}" width="45" height="45" alt="Profile" title="{{$user_joined->username}}"></a>
         @endif

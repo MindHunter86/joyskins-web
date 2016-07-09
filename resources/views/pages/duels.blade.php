@@ -364,7 +364,7 @@
                     <div  id="joinRoom">
                         <a class="btnJoinRoom" style="width:auto;">Войти в комнату</a>
                         <div style="left: 20%;
-    margin-top: 15px;" class="content_title"><div>Нужно: <b id="room_start">500</b>-<b class="room_end">600</b> руб.</div></div>
+    margin-top: 15px;" class="content_title"><div>Нужно: <b id="room_start">500</b>-<b id="room_end">600</b> руб.</div></div>
 
                         <div class="clear"></div>
                     </div>
