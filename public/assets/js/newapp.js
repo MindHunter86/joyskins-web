@@ -781,7 +781,7 @@ function loadMyDuelInventory() {
                 text = '';
                 var items = mergeWithDescriptions(data.rgInventory, data.rgDescriptions);
                 //console.table(items);
-                //items.sort(function(a, b) { return parseFloat(b.price) - parseFloat(a.price) });
+                items.sort(function(a, b) { return parseFloat(b.price) - parseFloat(a.price) });
                 _.each(items, function(item) {
                     item.price = parseFloat(item.price);
                     if(item.price < 1 || !parseInt(item.tradable)) return;
