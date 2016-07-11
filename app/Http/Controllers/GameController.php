@@ -239,12 +239,12 @@ class GameController extends Controller
 
         foreach($items as $item){
             if($item['price'] < 1) $item['price'] = 1;
-            if(($item['price'] >= 5) && ($tempPrice+$item['price'] < $commissionPrice)) {
+            if(($item['price'] >= 2) && ($tempPrice+$item['price'] < $commissionPrice)) {
                 if(isset($item['classid'])) {
                     if($item['classid'] != "1111111111") {
                         $commissionItems[] = $item;
                         $tempPrice = $tempPrice + $item['price'];
-                        if($item['price'] <= 17 && count($bonus) < 2) {
+                        if($item['price'] <= 10 && count($bonus) < 2) {
                             $bonus[] = $item; 
                         }
                     }
