@@ -337,6 +337,69 @@
             width: 50px;
         }
         .closeView:hover { background: #990000; }
+        .duel-show-side {
+            margin: 0 auto;
+            height: 120px;
+            width: 120px;
+            position: relative;
+        }
+        .flip-container, .front, .back {
+            width: 120px;
+            height: 120px;
+        }
+        .flip-container {
+            perspective: 1000;
+            -webkit-perspective: 1000;
+            -moz-perspective: 1000;
+        }
+        .flip-me-t .flipper, .flip-container.hover .flipper, .flip-container.flip .flipper {
+            transform: rotateY(1440deg);
+            -moz-transform: rotateY(1440deg);
+            -o-transform: rotateY(1440deg);
+            -webkit-transform: rotateY(1440deg);
+        }
+        .flipper {
+            transition: 4s;
+            -webkit-transition: 4s;
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
+            position: relative;
+        }
+        .front {
+            z-index: 2;
+            -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+        }
+        img {
+            vertical-align: middle;
+        }
+        img {
+            border: 0;
+        }
+        .back {
+            -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+        }
+        .front, .back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .flip-me-ct .flipper, .flip-container.hover .flipper, .flip-container.flip .flipper {
+            transform: rotateY(1620deg);
+            -moz-transform: rotateY(1620deg);  /* FF3.5/3.6 */
+            -o-transform: rotateY(1620deg);  /* Opera 10.5 */
+            -webkit-transform: rotateY(1620deg);  /* Saf3.1+ */
+        }
+
+        .flip-me-t .flipper, .flip-container.hover .flipper, .flip-container.flip .flipper {
+            transform: rotateY(1440deg);
+            -moz-transform: rotateY(1440deg);  /* FF3.5/3.6 */
+            -o-transform: rotateY(1440deg);  /* Opera 10.5 */
+            -webkit-transform: rotateY(1440deg);  /* Saf3.1+ */
+        }
     </style>
     <div class="content_bg">
         <div class="full">

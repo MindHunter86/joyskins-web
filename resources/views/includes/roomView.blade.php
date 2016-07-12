@@ -33,22 +33,23 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
     </div>
     <div class="center-coin">
         @if($duel->status == \App\duel::STATUS_FINISHED)
+            <div id="duel-winner-side">
+            </div>
             @if($duel->rand_number>0.5)
-            <img id="winner_t" style="width:120px; vertical-align: middle; display:none;"  src="{{asset('assets/img/coin-ct.png')}}">
-            <img id="winner_ct" style="width:120px; vertical-align: middle;" src="{{asset('assets/img/coin-t.png')}}">
+                <script>$("#duel-winner-side").html('<div class="flip-container" id="flip-toggle"><div class="flipper"><div class="front"><img heigth="120" width="120" src="{{asset('assets/img/coin-t.png')}}"></div><div class="back"><img heigth="120" width="120" src="{{asset('assets/img/coin-ct.png')}}"></div></div></div>');
+                setTimeout(function() {
+                document.querySelector('#flip-toggle').classList.toggle('flip-me-ct');
+                }, 1000);
+                </script>
             @else
-                <img id="winner_t" style="width:120px; vertical-align: middle; "  src="{{asset('assets/img/coin-ct.png')}}">
-                <img id="winner_ct" style="width:120px; vertical-align: middle; display:none;" src="{{asset('assets/img/coin-t.png')}}">
+                <script>
+                    $("#duel-winner-side").html('<div class="flip-container" id="flip-toggle"><div class="flipper"><div class="front"><img heigth="120" width="120" src="{{asset('assets/img/coin-t.png')}}"></div><div class="back"><img heigth="120" width="120" src="{{asset('assets/img/coin-ct.png')}}"></div></div></div>');
+                    setTimeout(function() {
+                        document.querySelector('#flip-toggle').classList.toggle('flip-me-t');
+                    }, 1000);
+                    </script>
                 @endif
-          <script>
-              var count = 0;
-            var interval = setInterval(function(){
-                $("#winner_ct").toggle('fast');
-                $("#winner_t").toggle('fast');
-            if(++count == 5)
-            clearInterval(interval);
-            },250);
-          </script>
+
         @elseif(isset($join_user) && ($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_PLAYING))
             <div id="viewtimer{{$duel->id}}">
             </div>
