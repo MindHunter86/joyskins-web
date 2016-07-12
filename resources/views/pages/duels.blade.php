@@ -384,7 +384,7 @@
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             position: absolute;
-            top: 0;
+            top: 50px;
             left: 0;
         }
         .flip-me-ct .flipper, .flip-container.hover .flipper, .flip-container.flip .flipper {
