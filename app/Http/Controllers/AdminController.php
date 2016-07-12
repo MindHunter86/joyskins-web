@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class AdminController extends Controller {
     const MIN_PRICE     = 30;                    # Минимальная ставка
@@ -48,19 +49,19 @@ class AdminController extends Controller {
 
         $hourgames = DB::select(DB::raw('select created_at as y, SUM(`comission`) as a from `games` where DAY(created_at) = DAY(NOW()) group by hour(created_at) order by created_at asc;'));
         $hourgames = json_encode((array)$hourgames);
-    	$games = DB::select(DB::raw('select DATE(created_at) as y, SUM(`comission`) as item1 from `games` where `created_at` >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH) group by DATE(created_at)'));
-    	$plays = DB::select(DB::raw('select DATE(created_at) as y, count(created_at) as item1 from `games` where `created_at` >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH) group by DATE(created_at)'));
+    	$games = DB::select(DB::raw('select DATE(created_at) as y, SUM(`comission`) as item1 from `games` where `created_at` >= DATE_SUB(CURDATE(), INTERVAL 10 DAY) group by DATE(created_at)'));
+    	$plays = DB::select(DB::raw('select DATE(created_at) as y, count(created_at) as item1 from `games` where `created_at` >= DATE_SUB(CURDATE(), INTERVAL 10 DAY) group by DATE(created_at)'));
 
-        $average = DB::select(DB::raw('select sum(comission) as average from games where created_at >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)'));
-        $average = round($average[0]->average / 30);
+        $average = DB::select(DB::raw('select sum(comission) as average from games where created_at >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)'));
+        $average = round($average[0]->average / 10);
         
-        $averageGame = DB::select(DB::raw('select count(created_at) as average from games where created_at >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)'));
-        $averageGame = round($averageGame[0]->average / 30);
+        $averageGame = DB::select(DB::raw('select count(created_at) as average from games where created_at >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)'));
+        $averageGame = round($averageGame[0]->average / 10);
 
         $referer = DB::select(DB::raw('select * from referer ORDER BY count DESC'));
 
        	$plays = json_encode($plays);
-       	$sumplays = DB::select(DB::raw('select count(created_at) as sum from `games` where `created_at` >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)'));
+       	$sumplays = DB::select(DB::raw('select count(created_at) as sum from `games` where `created_at` >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)'));
        	$sumplays = $sumplays[0]->sum;
         $items = [];
         $commission = self::COMMISSION;
@@ -108,6 +109,17 @@ class AdminController extends Controller {
     	}
     	$this->sendItems($game, $game->bets, $game->winner);
     	return response()->json(['type' => 'success']);
+    }
+    public function reSendAjaxWeek() {
+        $lastWeek = new Carbon('last week');
+        $games = Game::where('finished_at','>=',$lastWeek)->where('status',Game::STATUS_PRIZE_SEND_ERROR)->get();
+        $countSend = 0;
+        foreach($games as $game)
+        {
+            $countSend++;
+            $this->sendItems($game,$game->bets,$game->winner);
+        }
+        return resnpose()->json(['success'=>true,'tradeoffer_count'=>$countSend]);
     }
     public function sendshopAjax(Request $request) {
     	$shop = Shop::find($request->get('buy'));

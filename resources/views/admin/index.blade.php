@@ -5,7 +5,7 @@
 	<section class="content-header">
 	  <h1>
 	    Главная
-	    <small>Статистика за последние 30 дней</small>
+	    <small>Статистика за последние 10 дней</small>
 	  </h1>
 	</section>
 <!-- Main content -->

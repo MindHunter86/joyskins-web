@@ -42,6 +42,23 @@ $(document).ready(function() {
                 }
             });
     });
+    $('.sendWeekItems').click(function () {
+        $.ajax({
+            url: '/admin/send/resendWeek',
+            type: 'POST',
+            dataType: 'json',
+            success: function () {
+                if(data.success) {
+                    alert('Пересылка успешна! Переслано офферов: '+data.tradeoffer_count);
+                } else {
+                    alert('Ошибка : ' + data.error);
+                }
+            },
+            error:function () {
+                alert('Ошибка AJAX. Попробуйте позже!')
+            }
+        });
+    });
     $('.sendComissionItems').click(function(){
         $.ajax({
             url: '/admin/send/comission',
