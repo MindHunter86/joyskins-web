@@ -77,8 +77,6 @@ class DuelController extends Controller
         $sendItems = []; // предметы выигрыша
         $tempPrice = 0;  // сколько взяли комиссии
         foreach($items as $item) {
-            $item['name'] = $item['market_hash_name'];
-            \Debugbar::info($item);
             $itemInfo = new CsgoFast($item);
             if($itemInfo->price )
             {
