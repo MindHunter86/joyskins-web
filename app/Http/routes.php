@@ -12,6 +12,7 @@ get('/history', ['as' => 'history', 'uses' => 'PagesController@history']);
 get('/shop', ['as' => 'shop', 'uses' => 'ShopController@index']);
 get('/payment', 'DonateController@payment');
 get('/duel',['as'=>'duels','uses'=>'DuelController@currentDuels']);
+post('/duel/viewRound','DuelController@viewRoom');
 
 Route::group(['middleware' => 'auth'], function () {
     post('/merchant', 'DonateController@merchant');
@@ -41,8 +42,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     post('/duel/receiveOffer','DuelController@receiveOffer');
     post('/duel/checkOffer','DuelController@checkOffer');
-    post('/duel/viewRound','DuelController@viewRoom');
-
 });
 
 Route::group(['prefix' => 'admin','middleware' => 'access' ], function () {
