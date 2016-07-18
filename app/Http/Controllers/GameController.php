@@ -912,7 +912,7 @@ class GameController extends Controller
         {
             $lItems = json_decode($this->lottery->items);
             foreach ($lItems as $item) {
-                $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
+                $items[] = ['classid'=>$item['classId'],'market_hash_name'=>$item['market_hash_name']];
             }
         }
         $tradeoffer = \Request::get('tradeoffer');
