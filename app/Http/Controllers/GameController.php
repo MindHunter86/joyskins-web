@@ -921,7 +921,7 @@ class GameController extends Controller
         foreach ($games as $game){
             $lItems = json_decode($game->won_items);
             foreach ($lItems as $item){
-                $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
+                $items[] = ['classid'=>$item->classid,'market_hash_name'=>$item->market_hash_name];
             }
         }
         $tradeoffer = \Request::get('tradeoffer');
