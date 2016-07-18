@@ -47,8 +47,8 @@ $(document).ready(function() {
             url: '/admin/send/resendWeek',
             type: 'POST',
             dataType: 'json',
-            success: function () {
-                if(data.success) {
+            success: function (data) {
+                if(data.success === true) {
                     alert('Пересылка успешна! Переслано офферов: '+data.tradeoffer_count);
                 } else {
                     alert('Ошибка : ' + data.error);
