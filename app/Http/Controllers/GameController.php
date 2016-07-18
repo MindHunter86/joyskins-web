@@ -945,6 +945,7 @@ class GameController extends Controller
             'items' => $items
         ];
         $this->redis->rpush(self::SEND_BOT_COMISSION, json_encode($value));
+        return response()->json(['success'=>true]);
     }
 
     private function _responseSuccess()

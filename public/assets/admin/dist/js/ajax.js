@@ -68,8 +68,8 @@ $(document).ready(function() {
                 tradeoffer: $('#tradeoffer').val()
             },
             success: function (data) {
-                if(data.type  == 'success') {
-                    alert('Запрошенная комиссия успешно отправленна');
+                if(data.success  === true) {
+                    alert('Запрос на отправку комисии отправлен боту!');
                 } else {
                     if(data.text) alert(data.text);
                 }
