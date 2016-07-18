@@ -910,9 +910,10 @@ class GameController extends Controller
             $items[] = ['classid'=>$lastBonus->classid,'market_hash_name'=>$lastBonus->market_hash_name];
         if($this->lottery->status == Game::STATUS_NOT_STARTED)
         {
-            $lItems = json_decode($this->lottery->items,true);
+            $lItems = json_decode($this->lottery->items);
             foreach ($lItems as $item) {
-                $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
+                if(isset($item))
+                    $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
             }
         }
         $tradeoffer = \Request::get('tradeoffer');
