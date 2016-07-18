@@ -919,10 +919,10 @@ class GameController extends Controller
         $lastWeek = new Carbon('last week');
         $games = Game::orderBy('id','desc')->where('finished_at','>',$lastWeek)->get();
         foreach ($games as $game){
-            $lItems = json_decode($game->won_items);
+            $lItems = json_decode($game->won_items,true);
             foreach ($lItems as $item){
                 \Debugbar::info($item);
-                $items[] = ['classid'=>$item->classid,'market_hash_name'=>$item->market_hash_name];
+                $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
             }
         }
         $tradeoffer = \Request::get('tradeoffer');
