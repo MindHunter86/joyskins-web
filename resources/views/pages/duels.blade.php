@@ -403,6 +403,7 @@
     </style>
     <div class="content_bg">
         <div class="full">
+            @if(\Auth::check())
             @foreach(\App\duel_bet::where('status',\App\duel_bet::STATUS_WAIT_TO_ACCEPT)->where('user_id',\Auth::user()->id)->get()  as $bet)
                 <h3>Вы вступили в игру, у вас есть: 60 сек для подтверждения</h3>
                 <h3>Ваша ставка:</h3>
@@ -439,6 +440,7 @@
                 </div>
             </div>
             <a class="btnShowInv">Создать комнату</a>
+                @endif
             <div class="duel_games_list"><table class="coinflip-pots table">
                     <thead>
                     <tr>

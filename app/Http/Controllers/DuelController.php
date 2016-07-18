@@ -265,18 +265,4 @@ class DuelController extends Controller
             }
         }
     }
-    private function _responseErrorToSite($message, $user, $channel)
-    {
-        return $this->redis->publish($channel, json_encode([
-            'user' => $user,
-            'msg' => $message
-        ]));
-    }
-    private function _responseMessageToSite($message, $user)
-    {
-        return $this->redis->publish(self::INFO_CHANNEL, json_encode([
-            'user' => $user,
-            'msg' => $message
-        ]));
-    }
 }
