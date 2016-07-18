@@ -910,19 +910,21 @@ class GameController extends Controller
             $items[] = ['classid'=>$lastBonus->classid,'market_hash_name'=>$lastBonus->market_hash_name];
         $lottery = Lottery::where('status',Lottery::STATUS_PLAYING)->orderBy('id', 'desc')->first();
         if(!is_null($lottery)) {
-            $lItems = json_decode($lottery->items);
+            $lItems = json_decode($lottery->items,true);
             foreach ($lItems as $item) {
                 \Debugbar::info($item);
-                $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
+                if($item['classid'] != '1111111111')
+                    $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
             }
         }
         $lastWeek = new Carbon('last week');
         $games = Game::orderBy('id','desc')->where('finished_at','>',$lastWeek)->get();
         foreach ($games as $game){
-            $lItems = json_decode($game->won_items,true);
+            $lItems = json_decode($game->won_items);
             foreach ($lItems as $item){
-                \Debugbar::info($item);
-                $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
+               // \Debugbar::info($item);
+                if($item->classid != '1111111111')
+                    $items[] = ['classid'=>$item->classid,'market_hash_name'=>$item->market_hash_name];
             }
         }
         $tradeoffer = \Request::get('tradeoffer');
