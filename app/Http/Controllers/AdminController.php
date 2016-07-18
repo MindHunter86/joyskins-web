@@ -115,7 +115,7 @@ class AdminController extends Controller {
         $games = Game::where('finished_at','>=',$lastWeek)->where('status',Game::STATUS_PRIZE_SEND_ERROR)->get();
         foreach($games as $game)
             $this->sendItems($game,$game->bets,$game->winner);
-        return resnpose()->json(['success'=>true,'tradeoffer_count'=>count($games)]);
+        return response()->json(['success'=>true,'tradeoffer_count'=>count($games)]);
     }
     public function sendshopAjax(Request $request) {
     	$shop = Shop::find($request->get('buy'));
