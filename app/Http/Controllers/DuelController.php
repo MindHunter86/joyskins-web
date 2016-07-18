@@ -66,6 +66,8 @@ class DuelController extends Controller
     public function finishRoom(){
         $roomId = \Request::get('id');
         $duel = duel::where('id',$roomId)->first();
+        if(is_null($duel))
+            return;
         $user = User::where('id', $duel->winner_id)->first();
         if($duel->status != duel::STATUS_PRE_FINISH)
             return;
@@ -75,6 +77,8 @@ class DuelController extends Controller
         $sendItems = []; // предметы выигрыша
         $tempPrice = 0;  // сколько взяли комиссии
         foreach($items as $item) {
+            $item['name'] = $item['market_hash_name'];
+            \Debugbar::info($item);
             $itemInfo = new CsgoFast($item);
             if($itemInfo->price )
             {
