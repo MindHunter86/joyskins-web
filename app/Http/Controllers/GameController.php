@@ -908,11 +908,19 @@ class GameController extends Controller
         $bonus = bonus::orderBy('id','DESC')->get();
         foreach ($bonus as $lastBonus)
             $items[] = ['classid'=>$lastBonus->classid,'market_hash_name'=>$lastBonus->market_hash_name];
-        $lottery = Lottery::where('status', Game::STATUS_NOT_STARTED)->orderBy('id', 'desc')->first();
+        $lottery = Lottery::where('status',Lottery::STATUS_PLAYING)->orderBy('id', 'desc')->first();
         if(!is_null($lottery)) {
             $lItems = json_decode($lottery->items);
             foreach ($lItems as $item) {
                 \Debugbar::info($item);
+                $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
+            }
+        }
+        $lastWeek = new Carbon('last week');
+        $games = Game::orderBy('id','desc')->where('finished_at','>',$lastWeek)->get();
+        foreach ($games as $game){
+            $lItems = json_decode($game->won_items);
+            foreach ($lItems as $item){
                 $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
             }
         }
