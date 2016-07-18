@@ -557,17 +557,19 @@ if (START) {
         })
         .on('show.duel.winner',function (data) {
             data = JSON.parse(data);
-            if($('tr#duelRoom'+data.roomId))
-                $('tr#duelRoom'+data.roomId).replaceWith(data.html);
-            else
-                $('#roomList').append(data.html);
             if(data.roomId == $('.viewRoomBet').data('id'))
             {
                 loadViewRoom(data.roomId);
             }
+            setTimeout(function(){
+                if($('tr#duelRoom'+data.roomId))
+                    $('tr#duelRoom'+data.roomId).replaceWith(data.html);
+                else
+                    $('#roomList').append(data.html);
+            },11000);
             setTimeout(function () {
                 $('tr#duelRoom'+data.roomId).remove();
-            },5000);
+            },16000);
         });
     var declineTimeout,
         timerStatus = true,
