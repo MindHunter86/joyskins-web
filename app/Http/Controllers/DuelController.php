@@ -94,6 +94,7 @@ class DuelController extends Controller
         ];
         $duel->won_items = json_encode($sendItems);
         $duel->price = $room_price;
+        $duel->comission = $tempPrice;
         $duel->status = duel::STATUS_FINISHED;
         $duel->save();
         $this->redis->rpush(self::WINNER_ITEMS_CHANNEL, json_encode($value));
