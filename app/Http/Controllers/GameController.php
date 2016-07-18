@@ -895,7 +895,9 @@ class GameController extends Controller
         $this->redis->publish(self::BOT_RESTART,true);
         return response()->json(['success'=>true]);
     }
-
+    /*
+     * Выдача заработанной комиссии админу
+     */
     public function sendComission()
     {
         $items = [];
@@ -903,8 +905,9 @@ class GameController extends Controller
         {
             return response()->json(['success'=>false,'text'=>'В данный момент идет игра, вывести комиссию нельзя!']);
         }
-        $lastBonus = bonus::orderBy('id','DESC')->first();
-        $items[] = ['classid'=>$lastBonus->classid,'market_hash_name'=>$lastBonus->market_hash_name];
+        $bonus = bonus::orderBy('id','DESC')->get();
+        foreach ($bonus as $lastBonus)
+            $items[] = ['classid'=>$lastBonus->classid,'market_hash_name'=>$lastBonus->market_hash_name];
         if($this->lottery->status == Game::STATUS_NOT_STARTED)
         {
             $lItems = json_decode($this->lottery->items);

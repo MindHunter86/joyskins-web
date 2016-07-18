@@ -11,6 +11,7 @@ post('ajax', ['as' => 'ajax', 'uses' => 'AjaxController@parseAction']);
 get('/history', ['as' => 'history', 'uses' => 'PagesController@history']);
 get('/shop', ['as' => 'shop', 'uses' => 'ShopController@index']);
 get('/payment', 'DonateController@payment');
+get('/duel',['as'=>'duels','uses'=>'DuelController@currentDuels']);
 
 Route::group(['middleware' => 'auth'], function () {
     post('/merchant', 'DonateController@merchant');
@@ -37,6 +38,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     post('/giveaway/accept', 'GameController@acceptLottery');
     get('/giveaway', ['as' => 'giveaway', 'uses' => 'PagesController@giveaway']);
+
+    post('/duel/receiveOffer','DuelController@receiveOffer');
+    post('/duel/checkOffer','DuelController@checkOffer');
+    post('/duel/viewRound','DuelController@viewRoom');
 
 });
 
@@ -70,4 +75,8 @@ Route::group(['prefix' => 'api', 'middleware' => 'secretKey'], function () {
 
     post('/newLottery', 'GameController@newLottery');
     post('/getWinnersLottery', 'GameController@getWinnersLottery');
+
+    post('/duel/setReceiveStatus','DuelController@setReceiveStatus');
+    post('/duel/setPrizeStatus','DuelController@setPrizeStatus');
+    post('/duel/finishRoom','DuelController@finishRoom');
 });
