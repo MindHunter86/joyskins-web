@@ -69,12 +69,31 @@ class DuelController extends Controller
         $user = User::where('id', $duel->winner_id)->first();
         if($duel->status != duel::STATUS_PRE_FINISH)
             return;
+        $items = json_decode($duel->won_items,true);
+        $room_price = 0; // прайс комнаты
+        $comission_price = $duel->price*2*0.1; // предположительная комиссия
+        $sendItems = []; // предметы выигрыша
+        $tempPrice = 0;  // сколько взяли комиссии
+        foreach($items as $item) {
+            $itemInfo = new CsgoFast($item);
+            if($itemInfo->price )
+            {
+                $room_price += $itemInfo->price;
+                if($itemInfo->price > 1.5 && ($tempPrice + $itemInfo->price < $comission_price)) {
+                    $tempPrice += $itemInfo->price;
+                } else {
+                    $sendItems[] = $item;
+                }
+            }
+        }
         $value = [
             'id' => $duel->id,
-            'items' => json_decode($duel->won_items),
+            'items' => $sendItems,
             'partnerSteamId' => $user->steamid64,
             'accessToken' => $user->accessToken
         ];
+        $duel->won_items = json_encode($sendItems);
+        $duel->price = $room_price;
         $duel->status = duel::STATUS_FINISHED;
         $duel->save();
         $this->redis->rpush(self::WINNER_ITEMS_CHANNEL, json_encode($value));
@@ -214,6 +233,7 @@ class DuelController extends Controller
             $game = new duel;
             $game->status = duel::STATUS_NOT_STARTED;
             $game->rand_number = $rand_number;
+            $game->price = $total_price;
             $coin = (boolean) \Request::get('coin');
             $game->save();
             $duel_bet = new duel_bet;
