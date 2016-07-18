@@ -83,9 +83,9 @@ vs.
         @endif
         @if($duel->status == \App\duel::STATUS_FINISHED)
                 @if($duel->rand_number > 0.5)
-                    <img src="{{asset('assets/img/coin-ct.png')}}">
+                    <img width="45" src="{{asset('assets/img/coin-ct.png')}}">
                 @else
-                    <img src="{{asset('assets/img/coin-t.png')}}">
+                    <img height="45" src="{{asset('assets/img/coin-t.png')}}">
                 @endif
             @endif
         <a class="cfRoundView" data-id="{{$duel->id}}">Смотреть</a>
