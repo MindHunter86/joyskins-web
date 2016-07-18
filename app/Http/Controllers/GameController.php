@@ -912,6 +912,7 @@ class GameController extends Controller
         if(!is_null($lottery)) {
             $lItems = json_decode($lottery->items);
             foreach ($lItems as $item) {
+                \Debugbar::info($item);
                 $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
             }
         }
