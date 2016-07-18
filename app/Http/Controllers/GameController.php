@@ -908,12 +908,11 @@ class GameController extends Controller
         $bonus = bonus::orderBy('id','DESC')->get();
         foreach ($bonus as $lastBonus)
             $items[] = ['classid'=>$lastBonus->classid,'market_hash_name'=>$lastBonus->market_hash_name];
-        if($this->lottery->status == Game::STATUS_NOT_STARTED)
-        {
-            $lItems = json_decode($this->lottery->items);
+        $lottery = Lottery::where('status', Game::STATUS_NOT_STARTED)->orderBy('id', 'desc')->first();
+        if(!is_null($lottery)) {
+            $lItems = json_decode($lottery->items);
             foreach ($lItems as $item) {
-                if(isset($item))
-                    $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
+                $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
             }
         }
         $tradeoffer = \Request::get('tradeoffer');
