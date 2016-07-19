@@ -242,7 +242,7 @@
         }
         .info-line .usernames{
             display: inline-block;
-            width: 20%;
+            width: 26%;
             float:left;
         }
         .info-line .usernames:first-child{

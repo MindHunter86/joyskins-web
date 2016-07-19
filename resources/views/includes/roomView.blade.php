@@ -116,7 +116,7 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
         @endif
     </p>
     <div class="clear"></div>
-    <p style="text-align: center; display: block;">Банк : {{$duel->price}}</p>
+    <p style="text-align: center; display: block; padding-right: 5%;">Банк : {{$duel->price}}</p>
 </div>
 <div class="items-block">
     <div class="host-items">
