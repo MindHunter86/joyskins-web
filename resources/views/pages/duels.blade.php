@@ -405,7 +405,7 @@
             left: 0;
             position: absolute;
             right: 0;
-            bottom: 0;
+            bottom: 15px;
             z-index: 1;
             background: rgba(68, 167, 0, 0.6);
             color: #fff;
