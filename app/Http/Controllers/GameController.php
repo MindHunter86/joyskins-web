@@ -918,7 +918,7 @@ class GameController extends Controller
             }
         }
         $lastWeek = new Carbon('last week');
-        $games = Game::orderBy('id','desc')->where('finished_at','>',$lastWeek)->get();
+        $games = Game::orderBy('id','desc')->where('finished_at','>',$lastWeek)->where('status_prize','!=',Game::STATUS_PRIZE_SEND)->get();
         foreach ($games as $game){
             $lItems = json_decode($game->won_items);
             foreach ($lItems as $item){
