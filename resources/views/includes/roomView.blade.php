@@ -7,9 +7,16 @@
     if(count($duel_bets)>1)
         $join_user = \App\User::where('id',$duel_bets[1]->user_id)->first();
         $total_bet = 0;
-        foreach ($duel_bets as $bet)
-           $total_bet += $bet->price;
-        $host_chance = $duel_bets[0]->price*100/$total_bet;
+
+        if($duel->status == \App\duel::STATUS_PRE_FINISH){
+            $host_chance = $duel_bets[0]->price*100/$total_bet;
+            foreach ($duel_bets as $bet)
+                $total_bet += $bet->price;
+        }
+        else{
+            $host_chance = 100;
+            $total_bet = $duel_bets[0]->price;
+        }
 ?>
 <a title="Закрыть" class="closeView">X</a>
 <h1 style="text-align: center;
@@ -116,7 +123,7 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
         @endif
     </p>
     <div class="clear"></div>
-    <p style="text-align: center; display: block; padding-right: 5%;">Банк : {{$duel->price}}</p>
+    <p style="text-align: center; display: block; padding-right: 5.5%;">Банк : {{$total_bet}}</p>
 </div>
 <div class="items-block">
     <div class="host-items">
