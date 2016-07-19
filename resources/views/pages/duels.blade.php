@@ -401,7 +401,7 @@
             -webkit-transform: rotateY(1440deg);  /* Saf3.1+ */
         }
         .inv_d_item:hover::after{
-            content: 'Имя: 'attr(data-name)'<br>Цена: 'attr(data-price)' руб.';
+            content: 'Имя: 'attr(data-name)' || Цена: 'attr(data-price)' руб.';
             left: 0;
             position: absolute;
             right: 0;
