@@ -762,7 +762,7 @@ $(document).on('click','.btnCreateRoom',function () {
         data: { type: 'createRoom', items: JSON.stringify(items), coin: coin },
         success:function (data) {
             if(data.success) {
-                $('<div title="Создание Комнаты"><p>'+data.text+'</p></div>').dialog();
+                $('<div title="Создание Комнаты"><p>Запрос на создание комнаты отправлен!</p></div>').dialog();
             }else{
                 $('<div title="Ошибка создания комнаты"><p>'+data.error+'</p></div>').dialog();
             }
@@ -791,6 +791,8 @@ function loadMyDuelInventory() {
                 //console.table(items);
                 items.sort(function(a, b) { return parseFloat(b.price) - parseFloat(a.price) });
                 _.each(items, function(item) {
+                    if(item.market_name.indexOf('Case') != -1)
+                        return;
                     item.price = parseFloat(item.price);
                     if(item.price < 1 || !parseInt(item.tradable)) return;
                     item.image = 'https://steamcommunity-a.akamaihd.net/economy/image/class/730/'+item.classid+'/200fx200f';
