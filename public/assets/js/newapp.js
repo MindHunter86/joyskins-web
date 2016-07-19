@@ -82,9 +82,6 @@ $(document).ready(function() {
         $('#modal-6').arcticmodal(); 
         $('.list_participant').jScrollPane(); 
         return false;
-    })
-    $('.depositModal').click(function(e) {
-        return helpers.showPopup("https://joyskins.top/deposit"), !1
     });
     $('.no-link').click(function () {
         $('.linkMsg').removeClass('msgs-not-visible');
@@ -446,6 +443,10 @@ if (START) {
             timerStatus = true;
             ngtimerStatus = true;
         })
+        .on('duelMsg',function (data) {
+            if(data.steamid == USER_ID)
+             $('<div title="'+data.title+'"><p>'+data.text+'!</p></div>').dialog();
+        })
         .on('queue', function (data) {
             if (data) {
                 /*var n = false;
@@ -513,6 +514,64 @@ if (START) {
                 $('.declineMsg').removeClass('msgs-not-visible');
             }
         })
+        .on('newRoom',function(data){
+            data = JSON.parse(data);
+            if (data.steamId == USER_ID) {
+                $('<div title="Комната"><p>Вы успешно подтвердили, ваша комната создана!</p></div>').dialog();
+            }
+
+
+            $('#roomList').prepend(data.html);
+        })
+        .on('newJoin',function (data) {
+           data = JSON.parse(data);
+            if($('tr#duelRoom'+data.roomId))
+                $('tr#duelRoom'+data.roomId).replaceWith(data.html);
+            else
+                $('#roomList').append(data.html);
+            if(data.roomId == $('.viewRoomBet').data('id'))
+            {
+                loadViewRoom(data.roomId);
+            }
+        })
+        .on('userLeftRoom',function(data){
+            data = JSON.parse(data);
+            if($('tr#duelRoom'+data.roomId))
+                $('tr#duelRoom'+data.roomId).replaceWith(data.html);
+            else
+                $('#roomList').append(data.html);
+            if(data.roomId == $('.viewRoomBet').data('id'))
+            {
+                loadViewRoom(data.roomId);
+            }
+        })
+        .on('pre.finish.duel',function (data) {
+            data = JSON.parse(data);
+            if($('tr#duelRoom'+data.roomId))
+                $('tr#duelRoom'+data.roomId).replaceWith(data.html);
+            else
+                $('#roomList').append(data.html);
+            if(data.roomId == $('.viewRoomBet').data('id'))
+            {
+                loadViewRoom(data.roomId);
+            }
+        })
+        .on('show.duel.winner',function (data) {
+            data = JSON.parse(data);
+            if(data.roomId == $('.viewRoomBet').data('id'))
+            {
+                loadViewRoom(data.roomId);
+            }
+            setTimeout(function(){
+                if($('tr#duelRoom'+data.roomId))
+                    $('tr#duelRoom'+data.roomId).replaceWith(data.html);
+                else
+                    $('#roomList').append(data.html);
+            },11000);
+            setTimeout(function () {
+                $('tr#duelRoom'+data.roomId).remove();
+            },16000);
+        });
     var declineTimeout,
         timerStatus = true,
         ngtimerStatus = true,
@@ -560,7 +619,198 @@ function loadMyInventory() {
         }
     });
 }
+$(document).on('click','.inv_d_item:not(.inv_choosen)',function () {
+    var that = $(this)
+    var count = $('.inv_choosen').length + 1;
+    if (count > 15){
+        that.notify('Вы выбрали 15 предметов, больше нельзя!!', {position: 'bottom middle', className :"error"});
+        return;
+    }
+    var price = parseFloat(that.data('price'))+parseFloat($('.inv_price').html());
+    $('.inv_count').html(count);
+    $('.inv_price').html(price.toFixed(2));
+    $(this)
+        .addClass('inv_choosen');
+});
+$(document).on('click','.show_inv',function(){
+    $('.inv_table_duel').slideToggle();
+});
+$(document).on('click','.btnShowInv',function () {
+    $('#joinRoom').hide();
+    $('#createRoom').show();
+    $('.inv_table_duel').html('');
+    loadMyDuelInventory();
+    $('.inv_count').html(0);
+    $('.inv_price').html(0);
+    $('.window').show();
+});
+$(document).on('click','.cfRoundJoin',function () {
+    $('#joinRoom').show();
+    $('#joinRoom').data('roomId',$(this).data('id'));
+    $('#room_start').html(parseFloat(($(this).data('price'))*0.9).toFixed(2));
+    $('#room_end').html(parseFloat(($(this).data('price'))*1.1).toFixed(2));
+    $('#createRoom').hide();
+    $('.inv_table_duel').html('');
+    loadMyDuelInventory();
+    $('.inv_count').html(0);
+    $('.inv_price').html(0);
+    $('.window').show();
+});
+$(document).on('click','.cfRoundView',function () {
+    var id = $(this).data('id');
+    loadViewRoom(id);
+});
+function loadViewRoom(id){
+    $.ajax({
+        url: '/duel/viewRound',
+        type: 'POST',
+        dataType: 'json',
+        data: { id: id },
+        success:function (data) {
+            if(data.success) {
+                $('.viewRoomBet').html(data.html);
+                $('.viewRoomBet').data('id',id);
+                $('.viewRoomBet').show();
+            }else{
+                $('<div title="Просмотр № '+id+'"><p>Ошибка:'+data.error+'</p></div>').dialog();
+            }
+        },
+        error:function () {
+            $('<div title="Ошибка"><p>Ошибка AJAX. Попробуйте позже!</p></div>').dialog();
+        }
+    });
+}
+$(document).on('click','.inv_choosen',function () {
+    var that = $(this);
+    $(this)
+        .removeClass('inv_choosen');
+    var price = parseFloat($('.inv_price').html())-parseFloat(that.data('price'));
+    $('.inv_price').html(price.toFixed(2));
+    var count = $('.inv_choosen').length;
+    $('.inv_count').html(count);
+});
+$(document).on('click','.coin',function () {
+   $('.coin.choosen').removeClass('choosen');
+    $(this).addClass('choosen');
+});
+$(document).on('click','.btnJoinRoom',function(){
+    var id = $('#joinRoom').data('roomId');
+    var totalPrice = 0;
+    var items = [];
+    $('.inv_choosen').each(function(){
+        totalPrice += parseFloat($(this).data('price'));
+        items.push($(this).data('id'));
+    });
+    if(totalPrice < 5)
+    {
+        $(this).notify('Минимальная сумма ставки: 5 рублей', {position: 'bottom middle', className :"error"});
+        return;
+    }
+    if(items.length>15) {
+        $(this).notify('Максимальное кол-во предметов: 15', {position: 'bottom middle', className :"error"});
+        return;
+    }
+    $('.window').hide();
+    $.ajax({
+        url: '/duel/receiveOffer',
+        type: 'POST',
+        dataType: 'json',
+        data: { type: 'joinRoom', items: JSON.stringify(items), id: id },
+        success:function (data) {
+            if(data.success) {
+            }else{
+                $('<div title="Ошибка входа"><p>'+data.error+'</p></div>').dialog();
+            }
+        },
+        error:function () {
+            $('<div title="Ошибка"><p>Ошибка аякс!</p></div>').dialog();
+        }
+    });
+});
+$(document).on('click','.close',function () {
+   $('.window').hide();
+});
+$(document).on('click','.closeView',function () {
+    $('.viewRoomBet').hide();
+});
+$(document).on('click','.btnCreateRoom',function () {
+    var totalPrice = 0;
+    var items = [];
+    $('.inv_choosen').each(function(){
+        totalPrice += parseFloat($(this).data('price'));
+        items.push($(this).data('id'));
+    });
+    if(totalPrice < 5)
+    {
+        $(this).notify('Минимальная сумма ставки: 5 рублей', {position: 'bottom middle', className :"error"});
+        return;
+    }
+    if(items.length>15) {
+        $(this).notify('Максимальное кол-во предметов: 15', {position: 'bottom middle', className :"error"});
+        return;
+    }
+    $('.window').hide();
+    var coin = $('.coin.choosen').data('coin');
+    $.ajax({
+        url: '/duel/receiveOffer',
+        type: 'POST',
+        dataType: 'json',
+        data: { type: 'createRoom', items: JSON.stringify(items), coin: coin },
+        success:function (data) {
+            if(data.success) {
+                //$('<div title="Создание Комнаты"><p>Запрос на создание комнаты отправлен!</p></div>').dialog();
+            }else{
+                $('<div title="Ошибка создания комнаты"><p>'+data.error+'</p></div>').dialog();
+            }
+        },
+        error:function () {
+            $('<div title="Комната"><p>Ошибка аякс!</p></div>').dialog();
+        }
+    });
+});
+function loadMyDuelInventory() {
+    $.ajax({
+        url: '/ajax',
+        type: 'POST',
+        dataType: 'json',
+        data: { action: 'myinventory' },
+        success: function (data) {
+            console.log(data);
+            $('.inv_table_duel').html('');
+            $('.inv_cash').html('Загрузка инвентаря...');
 
+            if (!data.success && data.Error) $('.inv_cash').html('Произошла ошибка. Попробуйте еще раз');
+
+            if (data.success && data.rgInventory && data.rgDescriptions) {
+                text = '';
+                var items = mergeWithDescriptions(data.rgInventory, data.rgDescriptions);
+                //console.table(items);
+                items.sort(function(a, b) { return parseFloat(b.price) - parseFloat(a.price) });
+                _.each(items, function(item) {
+                    if(item.market_name.indexOf('Case') != -1)
+                        return;
+                    item.price = parseFloat(item.price);
+                    if(item.price < 1 || !parseInt(item.tradable)) return;
+                    item.image = 'https://steamcommunity-a.akamaihd.net/economy/image/class/730/'+item.classid+'/200fx200f';
+                    item.market_name = item.market_name || '';
+                    text += '<div data-name="'+item.market_name+'" data-id="'+item.id+'" data-price="'+item.price+'" class="inv_d_item"><img width="50" height="50" src="'+item.image+'"></div>';
+                   /* text += ''
+                        +'<div class="inv_table_info fadeInDown animated ' + getRarity(item.type) + '">'
+                        +'<div class="type1"><div><img src="'+item.image+'" alt="" /></div>'+item.name+'</div>'
+                        +'<div class="type2">'+(item.market_name.replace(item.name,'').replace('(','').replace(')','') || "Не определено")+'</div>'
+                        +'<div class="type3">'+(item.price || '0.00')+'руб.</div>'
+                        +'</div>'*/
+                });
+            }
+            $('.inv_cash').hide();
+            $('.inv_table_duel').html(text);
+        },
+        error: function (data) {
+            console.log(data);
+            $('.inv_cash').html('Произошла ошибка. Попробуйте еще раз');
+        }
+    });
+}
 function mergeWithDescriptions(items, descriptions) {
     return Object.keys(items).map(function(id) {
         var item = items[id];
@@ -575,7 +825,6 @@ function mergeWithDescriptions(items, descriptions) {
         return item;
     })
 }
-
 function mulAndShuffle(arr, k) {
     var
         res = [],
@@ -595,6 +844,7 @@ function mulAndShuffle(arr, k) {
     }
     return res;
 }
+
 $('.tabs_button').on('click', 'li:not(.active)', function() {
     $(this)
     .addClass('active').siblings().removeClass('active')

@@ -17,7 +17,8 @@ class CsgoFast {
     public function __construct($info)
     {
         $this->classid = !isset($info['classid']) ? $info['classId'] : $info['classid'];
-        $this->name = $info['name'];
+        if(isset($info['name']))
+         $this->name = $info['name'];
         $this->market_hash_name = !isset($info['market_hash_name']) ? ($info['quality']=='Normal') ? $info['name'] : $info['name'].' ('.$info['quality'].')' : $info['market_hash_name'];
         $this->rarity = isset($info['rarity']) ? $info['rarity'] : $this->getItemRarity($info);
         if ($price = $this->getItemPrice()) {
@@ -43,6 +44,7 @@ class CsgoFast {
     }
 
     public function getItemRarity($info) {
+        if(!isset($info['type'])) return;
         $type = $info['type'];
         $rarity = '';
 

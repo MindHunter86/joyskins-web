@@ -61,13 +61,9 @@ class GameController extends Controller
     }
     
     public function updatePrice(Request $request){
-        if($request->ip() == \Config::get('app.ipadress')) {
-             $response = file_get_contents('https://api.csgofast.com/price/all');
-             file_put_contents('../app/Services/fast.json',$response);
-             \DB::table('items')->delete();
-            return;
-        }
-        return response('Access Denied')->setStatusCode(403);
+        $response = file_get_contents('https://api.csgofast.com/price/all');
+        file_put_contents('../app/Services/fast.json',$response);
+        \DB::table('items')->delete();
     }
     
     public function deposit()
@@ -895,7 +891,9 @@ class GameController extends Controller
         $this->redis->publish(self::BOT_RESTART,true);
         return response()->json(['success'=>true]);
     }
-
+    /*
+     * Выдача заработанной комиссии админу
+     */
     public function sendComission()
     {
         $items = [];
@@ -903,13 +901,25 @@ class GameController extends Controller
         {
             return response()->json(['success'=>false,'text'=>'В данный момент идет игра, вывести комиссию нельзя!']);
         }
-        $lastBonus = bonus::orderBy('id','DESC')->first();
-        $items[] = ['classid'=>$lastBonus->classid,'market_hash_name'=>$lastBonus->market_hash_name];
-        if($this->lottery->status == Game::STATUS_NOT_STARTED)
-        {
-            $lItems = json_decode($this->lottery->items);
+        $bonus = bonus::orderBy('id','DESC')->get();
+        foreach ($bonus as $lastBonus)
+            $items[] = ['classid'=>$lastBonus->classid,'market_hash_name'=>$lastBonus->market_hash_name];
+        $lottery = Lottery::where('status',Lottery::STATUS_PLAYING)->orderBy('id', 'desc')->first();
+        if(!is_null($lottery)) {
+            $lItems = json_decode($lottery->items,true);
             foreach ($lItems as $item) {
-                $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
+                if($item['classid'] != '1111111111')
+                    $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
+            }
+        }
+        $lastWeek = new Carbon('last week');
+        $games = Game::orderBy('id','desc')->where('finished_at','>',$lastWeek)->where('status_prize','!=',Game::STATUS_PRIZE_SEND)->get();
+        foreach ($games as $game){
+            $lItems = json_decode($game->won_items);
+            foreach ($lItems as $item){
+               // \Debugbar::info($item);
+                if($item->classid != '1111111111')
+                    $items[] = ['classid'=>$item->classid,'market_hash_name'=>$item->market_hash_name];
             }
         }
         $tradeoffer = \Request::get('tradeoffer');
@@ -930,6 +940,7 @@ class GameController extends Controller
             'items' => $items
         ];
         $this->redis->rpush(self::SEND_BOT_COMISSION, json_encode($value));
+        return response()->json(['success'=>true]);
     }
 
     private function _responseSuccess()

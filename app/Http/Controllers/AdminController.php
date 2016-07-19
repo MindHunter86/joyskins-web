@@ -112,14 +112,10 @@ class AdminController extends Controller {
     }
     public function reSendAjaxWeek() {
         $lastWeek = new Carbon('last week');
-        $games = Game::where('finished_at','>=',$lastWeek)->where('status',Game::STATUS_PRIZE_SEND_ERROR)->get();
-        $countSend = 0;
+        $games = Game::where('finished_at','>=',$lastWeek)->where('status_prize',Game::STATUS_PRIZE_SEND_ERROR)->get();
         foreach($games as $game)
-        {
-            $countSend++;
             $this->sendItems($game,$game->bets,$game->winner);
-        }
-        return resnpose()->json(['success'=>true,'tradeoffer_count'=>$countSend]);
+        return response()->json(['success'=>true,'tradeoffer_count'=>count($games)]);
     }
     public function sendshopAjax(Request $request) {
     	$shop = Shop::find($request->get('buy'));
