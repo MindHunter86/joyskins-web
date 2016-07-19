@@ -516,7 +516,7 @@ if (START) {
         .on('newRoom',function(data){
             data = JSON.parse(data);
             if (data.steamId == USER_ID) {
-                alert('Вы успешно подтвердили, ваша комната создана!');
+                $('<div title="Комната"><p>Вы успешно подтвердили, ваша комната создана!</p></div>').dialog();
             }
 
 
@@ -671,11 +671,11 @@ function loadViewRoom(id){
                 $('.viewRoomBet').data('id',id);
                 $('.viewRoomBet').show();
             }else{
-                alert(data.error);
+                $('<div title="Просмотр № '+id+'"><p>Ошибка:'+data.error+'</p></div>').dialog();
             }
         },
         error:function () {
-            alert('Ошибка AJAХ. Попробуйте позже!');
+            $('<div title="Ошибка"><p>Ошибка AJAX. Попробуйте позже!</p></div>').dialog();
         }
     });
 }
@@ -717,13 +717,13 @@ $(document).on('click','.btnJoinRoom',function(){
         data: { type: 'joinRoom', items: JSON.stringify(items), id: id },
         success:function (data) {
             if(data.success) {
-                alert(data.text);
+                $('<div title="Вход в комнату"><p>Запрос на вход, ожидайте оповещения и подтвердите оффер!</p></div>').dialog();
             }else{
-                alert(data.error);
+                $('<div title="Ошибка входа"><p>'+data.error+'</p></div>').dialog();
             }
         },
         error:function () {
-            alert('Ошибка AJAХ. Попробуйте позже!');
+            $('<div title="Ошибка"><p>Ошибка аякс!</p></div>').dialog();
         }
     });
 });
@@ -758,13 +758,13 @@ $(document).on('click','.btnCreateRoom',function () {
         data: { type: 'createRoom', items: JSON.stringify(items), coin: coin },
         success:function (data) {
             if(data.success) {
-                console.log(data.text);
+                $('<div title="Создание Комнаты"><p>'+data.text+'</p></div>').dialog();
             }else{
-                console.log(data.error);
+                $('<div title="Ошибка создания комнаты"><p>'+data.error+'</p></div>').dialog();
             }
         },
         error:function () {
-            alert('Ошибка AJAX. Попробуйте позже.');
+            $('<div title="Комната"><p>Ошибка аякс!</p></div>').dialog();
         }
     });
 });
