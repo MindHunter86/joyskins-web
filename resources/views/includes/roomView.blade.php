@@ -8,7 +8,7 @@
         $join_user = \App\User::where('id',$duel_bets[1]->user_id)->first();
         $total_bet = 0;
 
-        if($duel->status == \App\duel::STATUS_PRE_FINISH){
+        if($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_FINISHED){
             $host_chance = $duel_bets[0]->price*100/$total_bet;
             foreach ($duel_bets as $bet)
                 $total_bet += $bet->price;
