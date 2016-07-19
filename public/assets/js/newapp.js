@@ -82,9 +82,6 @@ $(document).ready(function() {
         $('#modal-6').arcticmodal(); 
         $('.list_participant').jScrollPane(); 
         return false;
-    })
-    $('.depositModal').click(function(e) {
-        return helpers.showPopup("https://joyskins.top/deposit"), !1
     });
     $('.no-link').click(function () {
         $('.linkMsg').removeClass('msgs-not-visible');
