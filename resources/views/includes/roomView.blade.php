@@ -9,6 +9,7 @@
         $total_bet = 0;
         foreach ($duel_bets as $bet)
            $total_bet += $bet->price;
+        $host_chance = $duel_bets[0]->price*100/$total_bet;
 ?>
 <a title="Закрыть" class="closeView">X</a>
 <h1 style="text-align: center;
@@ -105,13 +106,13 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
     <p class="usernames">
         @if(isset($host_user))
             {{$host_user->username}}<br>
-            {{$duel_bets[0]->price*100/$total_bet}}%
+            {{$host_chance}}%
         @endif
     </p>
     <p class="usernames">
         @if(isset($join_user))
             {{$join_user->username}}<br>
-            <?php if ((int)($duel_bets[1]->price*100/$total_bet) == 100) echo '0%'; ?>
+            {{100-$host_chance}}%
         @endif
     </p>
     <div class="clear"></div>
