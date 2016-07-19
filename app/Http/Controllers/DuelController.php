@@ -221,6 +221,8 @@ class DuelController extends Controller
             $itemInfo = new CsgoFast($d_item);
             $d_item['price'] = $itemInfo->price;
             $s_item['price'] = $d_item['price'];
+            if(strpos($s_item['market_hash_name'], 'case') !== false)
+                return response()->json(['success'=>false,'error'=>'Извините, но на сайте запрещены кейсы!']);
             $s_item['market_hash_name'] = $d_item['market_hash_name'];
             $s_item['id'] = $item;
             $s_item['classId'] = $d_item['classid'];
