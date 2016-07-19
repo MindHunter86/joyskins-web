@@ -9,9 +9,9 @@
         $total_bet = 0;
 
         if($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_FINISHED){
-            $host_chance = $duel_bets[0]->price*100/$total_bet;
             foreach ($duel_bets as $bet)
                 $total_bet += $bet->price;
+            $host_chance = $duel_bets[0]->price*100/$total_bet;
         }
         else{
             $host_chance = 100;
