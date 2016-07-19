@@ -446,6 +446,10 @@ if (START) {
             timerStatus = true;
             ngtimerStatus = true;
         })
+        .on('duelMsg',function (data) {
+            if(data.steamid == USER_ID)
+             $('<div title="'+data.title+'"><p>'+data.text+'!</p></div>').dialog();
+        })
         .on('queue', function (data) {
             if (data) {
                 /*var n = false;
