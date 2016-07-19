@@ -6,6 +6,9 @@
     $host_user = \App\User::where('id',$duel_bets[0]->user_id)->first();
     if(count($duel_bets)>1)
         $join_user = \App\User::where('id',$duel_bets[1]->user_id)->first();
+        $total_bet = 0;
+        foreach ($duel_bets as $bet)
+           $total_bet += $bet->price;
 ?>
 <a title="Закрыть" class="closeView">X</a>
 <h1 style="text-align: center;
@@ -102,13 +105,13 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
     <p class="usernames">
         @if(isset($host_user))
             {{$host_user->username}}<br>
-            {{$duel_bets[0]->price*100/$duel->price}}%
+            {{$duel_bets[0]->price*100/$total_bet}}%
         @endif
     </p>
     <p class="usernames">
         @if(isset($join_user))
             {{$join_user->username}}<br>
-            {{$duel_bets[1]->price*100/$duel->price}}%
+            <?php if ((int)($duel_bets[1]->price*100/$total_bet) == 100) echo '0%'; ?>
         @endif
     </p>
     <div class="clear"></div>
