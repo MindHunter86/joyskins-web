@@ -291,7 +291,7 @@ function replaceLogin(login) {
 }
 
 if (START) {
-    var socket = io.connect('164.132.47.168:8080', { secure: false });
+    var socket = io.connect('https://joyskins.top', { secure: true });
     socket
         .on('connect', function () {
             $('#loader').hide();

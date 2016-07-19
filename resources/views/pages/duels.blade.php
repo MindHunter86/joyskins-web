@@ -425,7 +425,7 @@
                 @endforeach
                 <br>
             @endforeach
-            <div class="content_title"><div>Coin<b>flip</b> БЕТА. Создавайте или вступайте в игру.</div></div>
+            <div class="content_title"><div>Coin<b>flip</b> БЕТА. Создавайте или вступайте в игру. Мин. сумма ставки: 30 руб.</div></div>
             <div class="clear"></div>
             <div id="modalShowAction" class="window">
                 <a title="Закрыть" class="close">X</a>

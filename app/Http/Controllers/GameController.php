@@ -22,7 +22,7 @@ use App\Http\Controllers\Controller;
 class GameController extends Controller
 {
     const SECRET_KEY    = 'oDWx4GYTr4Acbdms';
-    const BOT_TRADE_LINK    = 'https://steamcommunity.com/tradeoffer/new/?partner=344219342&token=aa6nnsrb';
+    const BOT_TRADE_LINK    = 'https://steamcommunity.com/tradeoffer/new/?partner=325864551&token=zco-sm1t';
 
     const MIN_PRICE     = 20;                    # Минимальная ставка
     const MAX_ITEMS     = 16;                   # Максимальное кол-во предметов в ставке
@@ -908,7 +908,6 @@ class GameController extends Controller
         if(!is_null($lottery)) {
             $lItems = json_decode($lottery->items,true);
             foreach ($lItems as $item) {
-                \Debugbar::info($item);
                 if($item['classid'] != '1111111111')
                     $items[] = ['classid'=>$item['classid'],'market_hash_name'=>$item['market_hash_name']];
             }
