@@ -102,17 +102,16 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
     <p class="usernames">
         @if(isset($host_user))
             {{$host_user->username}}<br>
-            {{$host_user->price/$duel->price}}
+            {{$duel_bets[0]->price/$duel->price}}
         @endif
     </p>
     <p class="usernames">
         @if(isset($join_user))
             {{$join_user->username}}<br>
-            {{$host_user->price/$duel->price}}
+            {{$duel_bets[1]->price/$duel->price}}
         @endif
     </p>
-    <br>
-    <p style="text-align: center;">Банк : {{$duel->price}}</p>
+    <p style="text-align: center; display: block;">Банк : {{$duel->price}}</p>
 </div>
 <div class="items-block">
     <div class="host-items">
