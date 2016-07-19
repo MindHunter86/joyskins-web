@@ -1,8 +1,8 @@
 @extends('layout')
 
 @section('content')
-    <script type="text/javascript" src="{{ asset('assets/js/circle-progress.js') }}"></script>
-    <script type="text/javascript" src="{{asset('assets/js/radial-progress-bar.js')}}"></script>
+    <link rel="stylesheet" src="{{ asset('assets/css/popup.css') }}">
+    <script type="text/javascript" src="{{ asset('assets/js/popup.js') }}"></script>
     <script type="text/javascript" src="{{asset('assets/js/jquery.countdown360.min.js')}}"></script>
     <style>
         .inv_d_item {
