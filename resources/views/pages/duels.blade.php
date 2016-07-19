@@ -400,6 +400,19 @@
             -o-transform: rotateY(1440deg);  /* Opera 10.5 */
             -webkit-transform: rotateY(1440deg);  /* Saf3.1+ */
         }
+        .inv_d_item:hover::after {
+            content: attr(data-price)+' руб.';
+            position: absolute;
+            left: 0; right: 0; bottom: 5px;
+            z-index: 1;
+            background: rgba(0,42,167,0.6);
+            color: #fff;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            padding: 5px 10px;
+            border: 1px solid #333;
+        }
     </style>
     <div class="content_bg">
         <div class="full">
