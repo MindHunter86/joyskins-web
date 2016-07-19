@@ -32,7 +32,7 @@ class DuelController extends Controller
     const PRE_FINISH_CHANNEL = 'pre.finish.duel';
 
     const DUEL_MAX_ITEMS_COUNT = 15;
-    const DUEL_MIN_PRICE = 15;
+    const DUEL_MIN_PRICE = 30;
 
     public function __construct(SteamAuth $auth)
     {
@@ -233,7 +233,7 @@ class DuelController extends Controller
         }
         if($type == 'createRoom') {
             if($total_price<self::DUEL_MIN_PRICE)
-                return response()->json(['success'=>false,'error'=>'Минимальная сумма депозита для создания комнаты: '.self::DUEL_MIN_PRICE]);
+                return response()->json(['success'=>false,'error'=>'Минимальная сумма депозита для создания комнаты: '.self::DUEL_MIN_PRICE.' руб.']);
             $rand_number = "0.".mt_rand(100000000,999999999).mt_rand(100000000,999999999);
             $game = new duel;
             $game->status = duel::STATUS_NOT_STARTED;
