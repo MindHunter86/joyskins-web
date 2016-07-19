@@ -1,8 +1,8 @@
 @extends('layout')
 
 @section('content')
-    <link rel="stylesheet" src="{{ asset('assets/css/popup.css') }}">
-    <script type="text/javascript" src="{{ asset('assets/js/popup.js') }}"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script type="text/javascript" src="{{asset('assets/js/jquery.countdown360.min.js')}}"></script>
     <style>
         .inv_d_item {
@@ -414,6 +414,12 @@
         }
     </style>
     <div class="content_bg">
+        <script> $( function() {
+                $( "#dialog" ).dialog();
+            } );</script>
+        <div id="dialog" title="Basic dialog">
+            <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+        </div>
         <div class="full">
             @if(\Auth::check())
             @foreach(\App\duel_bet::where('status',\App\duel_bet::STATUS_WAIT_TO_ACCEPT)->where('user_id',\Auth::user()->id)->get()  as $bet)
