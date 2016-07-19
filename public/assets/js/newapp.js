@@ -721,7 +721,6 @@ $(document).on('click','.btnJoinRoom',function(){
         data: { type: 'joinRoom', items: JSON.stringify(items), id: id },
         success:function (data) {
             if(data.success) {
-                $('<div title="Вход в комнату"><p>Запрос на вход, ожидайте оповещения и подтвердите оффер!</p></div>').dialog();
             }else{
                 $('<div title="Ошибка входа"><p>'+data.error+'</p></div>').dialog();
             }
@@ -762,7 +761,7 @@ $(document).on('click','.btnCreateRoom',function () {
         data: { type: 'createRoom', items: JSON.stringify(items), coin: coin },
         success:function (data) {
             if(data.success) {
-                $('<div title="Создание Комнаты"><p>Запрос на создание комнаты отправлен!</p></div>').dialog();
+                //$('<div title="Создание Комнаты"><p>Запрос на создание комнаты отправлен!</p></div>').dialog();
             }else{
                 $('<div title="Ошибка создания комнаты"><p>'+data.error+'</p></div>').dialog();
             }
