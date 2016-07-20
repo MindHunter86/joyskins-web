@@ -72,7 +72,7 @@ Copyright (c) 2015 Daniel Eden
 @-o-keyframes color-change {
   0% { color: red; }
   15% { color: purple;}
-  25% {color: white}
+  25% {color: #601515;}
   45% { color: blue; }
   60% { color: cyan;}
   75% {color: green; }
@@ -83,7 +83,7 @@ Copyright (c) 2015 Daniel Eden
 @keyframes color-change {
   0% { color: red; }
   15% { color: purple;}
-  25% {color: white}
+  25% {color: #601515;}
   45% { color: blue; }
   60% { color: cyan;}
   75% {color: green; }
