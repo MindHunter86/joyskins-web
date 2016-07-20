@@ -65,7 +65,7 @@
                 @endif
                 <div class="nav">
                     <ul>
-                        <li><a href="/duel">Дуэли</a></li>
+                        <li><a style="animation: 3s ease 0s normal none infinite running color-change;" href="/duel">Дуэли</a></li>
                         <li><a href="/top">Топ игроков</a></li>
                         <li><a href="/history">История игр</a></li>
                         <li><a data-modal="#fairplay" href="#fairplay">Честная игра</a></li>
