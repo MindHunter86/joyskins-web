@@ -59,6 +59,23 @@ $(document).ready(function() {
             }
         });
     });
+    $('.sendWeekDuelItems').click(function () {
+        $.ajax({
+            url: '/admin/send/resendWeekDuel',
+            type: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                if(data.success === true) {
+                    alert('Пересылка успешна! Переслано офферов: '+data.tradeoffer_count);
+                } else {
+                    alert('Ошибка : ' + data.error);
+                }
+            },
+            error:function () {
+                alert('Ошибка AJAX. Попробуйте позже!')
+            }
+        });
+    });
     $('.sendComissionItems').click(function(){
         $.ajax({
             url: '/admin/send/comission',

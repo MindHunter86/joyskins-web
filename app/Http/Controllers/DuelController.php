@@ -48,6 +48,23 @@ class DuelController extends Controller
     {
         return view('pages.duels');
     }
+    public function sendItemsWeek()
+    {
+        $lastWeek = new Carbon('last week');
+        $duels = duel::where('updated_at','>=',$lastWeek)->where('status_prize',duel::STATUS_PRIZE_SEND_ERROR)->get();
+        foreach($duels as $duel)
+        {
+            $user = User::where('id',$duel->winner_id)->first();
+            $value = [
+                'id' => $duel->id,
+                'items' => json_decode($duel->won_items),
+                'partnerSteamId' => $user->steamid64,
+                'accessToken' => $user->accessToken
+            ];
+            $this->redis->rpush(self::WINNER_ITEMS_CHANNEL, json_encode($value));
+        }
+        return response()->json(['success'=>true,'tradeoffer_count'=>count($duels)]);
+    }
     public function viewRoom(){
         $id = \Request::get('id');
         $duel = duel::where('id',$id)->first();
