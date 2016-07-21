@@ -46,7 +46,7 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
         @if($duel->status == \App\duel::STATUS_FINISHED)
             <div id="duel-winner-side">
             </div>
-            <?php $win_coin = ($duel->winner_id==$user_joined) ? $duel_bets[0]->coin : $duel_bets[1]->coin; ?>
+            <?php $win_coin = ($duel->winner_id==$join_user->id) ? $duel_bets[0]->coin : $duel_bets[1]->coin; ?>
             @if($win_coin == 1)
                 <script>$("#duel-winner-side").html('<div class="flip-container" id="flip-toggle"><div class="flipper"><div class="front"><img heigth="120" width="120" src="{{asset('assets/img/coin-t.png')}}"></div><div class="back"><img heigth="120" width="120" src="{{asset('assets/img/coin-ct.png')}}"></div></div></div>');
                 setTimeout(function() {
