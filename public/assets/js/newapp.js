@@ -774,7 +774,8 @@ function loadDuelHistory(){
         type: 'POST',
         data:{},
         success: function(data){
-            $('#roomList').html(data);
+            $('#roomHistoryList').html(data);
+            $('#historyModal').arcticmodal();
         },
         error: function(data){
             console.log(data);

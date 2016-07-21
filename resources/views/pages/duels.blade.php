@@ -46,7 +46,7 @@
                 <a style="display: inline-block;
     float: left;
     padding: 15px;
-    background-color: #236235;
+    background-color: rgb(107, 39, 132);
     text-decoration: none;
     cursor:pointer;" onclick="loadDuelHistory()">История игр</a>
                 @endif
@@ -81,4 +81,19 @@
 
         });
     </script>
+    <div class="none">
+        <div id="historyModal" class="duel_games_list"><table class="coinflip-pots table">
+                <thead>
+                <tr>
+                    <th>Игроки</th>
+                    <th>Предметы</th>
+                    <th>Всего</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody id="roomHistoryList"></tbody>
+            </table>
+        </div>
+    </div>
 @endsection
