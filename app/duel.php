@@ -15,4 +15,9 @@ class duel extends Model
     const STATUS_PRIZE_WAIT_TO_SENT = 0;
     const STATUS_PRIZE_SEND = 1;
     const STATUS_PRIZE_SEND_ERROR = 2;
+
+    public function winner()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

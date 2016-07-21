@@ -13,6 +13,7 @@ get('/shop', ['as' => 'shop', 'uses' => 'ShopController@index']);
 get('/payment', 'DonateController@payment');
 get('/duel',['as'=>'duels','uses'=>'DuelController@currentDuels']);
 post('/duel/viewRound','DuelController@viewRoom');
+post('/ajax/getDuelHistory','AjaxController@getDuelHistory');
 
 Route::group(['middleware' => 'auth'], function () {
     post('/merchant', 'DonateController@merchant');
@@ -50,6 +51,7 @@ Route::group(['prefix' => 'admin','middleware' => 'access' ], function () {
     get('/send', ['uses' => 'AdminController@send']);
     post('/send/ajax', 'AdminController@sendAjax');
     post('/send/resendWeek','AdminController@reSendAjaxWeek');
+    post('/send/resendWeekDuel','DuelController@sendItemsWeek');
     post('/send/ajaxShop', 'AdminController@sendshopAjax');
     post('/send/refershPrice','AdminController@refreshPrice');
     post('/send/restartBot','GameController@restartBot');

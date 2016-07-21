@@ -768,6 +768,21 @@ $(document).on('click','.btnCreateRoom',function () {
         }
     });
 });
+function loadDuelHistory(){
+    $.ajax({
+        url: '/ajax/getDuelHistory',
+        type: 'POST',
+        data:{},
+        success: function(data){
+            $('#roomHistoryList').html(data);
+            $('#historyModal').arcticmodal();
+        },
+        error: function(data){
+            console.log(data);
+            alert('Ошибка загрузки истории дуэлей!');
+        }
+    });
+}
 function loadMyDuelInventory() {
     $.ajax({
         url: '/ajax',
@@ -787,7 +802,7 @@ function loadMyDuelInventory() {
                 //console.table(items);
                 items.sort(function(a, b) { return parseFloat(b.price) - parseFloat(a.price) });
                 _.each(items, function(item) {
-                    if(item.market_name.indexOf('Case') != -1)
+                    if(item.type.indexOf('Container') != -1)
                         return;
                     item.price = parseFloat(item.price);
                     if(item.price < 1 || !parseInt(item.tradable)) return;

@@ -22,7 +22,19 @@ class AjaxController extends Controller
     private $ban_time = 120; // Время блокировки в чате
 
     const DELAY_BEFORE_NEW_MSG = 0.09; // Время делая в минутах
-    
+
+    public function getDuelHistory(Request $request){
+        $games = \App\duel::where('status',\App\duel::STATUS_FINISHED)
+            ->orderBy('id','desc')
+            ->take(10)
+            ->get();
+        $html = '';
+        foreach($games as $duel)
+        {
+            $html .= view('includes.room', compact('duel'))->render();
+        }
+        return response($html);
+    }
     public function chat(Request $request) {
         $type = $request->get('type');
         if(!$request->has('type')) {

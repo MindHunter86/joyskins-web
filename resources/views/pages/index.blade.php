@@ -1,5 +1,4 @@
 @extends('layout')
-
 @section('content')
     @if(!is_null($lottery))
     <div class="none">

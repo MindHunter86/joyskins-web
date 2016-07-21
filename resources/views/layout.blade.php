@@ -65,7 +65,7 @@
                 @endif
                 <div class="nav">
                     <ul>
-                        <li><a href="/duel">Дуэли</a></li>
+                        <li><a style="font-weight: bold; animation: 3s ease 0s normal none infinite running color-change;" href="/duel">Дуэли</a></li>
                         <li><a href="/top">Топ игроков</a></li>
                         <li><a href="/history">История игр</a></li>
                         <li><a data-modal="#fairplay" href="#fairplay">Честная игра</a></li>
@@ -138,6 +138,7 @@
     <div class="footer"><a href="https://vk.com/joyskins_top">МЫ ВКонтакте</a></div>
 
     <div class="none">
+        @yield('modals')
         <div class="box-modal" id="about" style="width:900px;">
             <div class="box-modal-top"><div class="box-modal_close arcticmodal-close"></div>О сайте</div>
             <div class="rules">

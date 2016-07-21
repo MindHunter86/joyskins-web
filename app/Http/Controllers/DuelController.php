@@ -48,6 +48,23 @@ class DuelController extends Controller
     {
         return view('pages.duels');
     }
+    public function sendItemsWeek()
+    {
+        $lastWeek = new Carbon('last week');
+        $duels = duel::where('updated_at','>=',$lastWeek)->where('status_prize',duel::STATUS_PRIZE_SEND_ERROR)->get();
+        foreach($duels as $duel)
+        {
+            $user = User::where('id',$duel->winner_id)->first();
+            $value = [
+                'id' => $duel->id,
+                'items' => json_decode($duel->won_items),
+                'partnerSteamId' => $user->steamid64,
+                'accessToken' => $user->accessToken
+            ];
+            $this->redis->rpush(self::WINNER_ITEMS_CHANNEL, json_encode($value));
+        }
+        return response()->json(['success'=>true,'tradeoffer_count'=>count($duels)]);
+    }
     public function viewRoom(){
         $id = \Request::get('id');
         $duel = duel::where('id',$id)->first();
@@ -161,7 +178,10 @@ class DuelController extends Controller
                 $duel = duel::where('id', $bet->game_id)->first();
                 if($duel->status == duel::STATUS_PLAYING) {
                     $duel->status = duel::STATUS_PRE_FINISH;
-                    if (($bets[0]->coin && $duel->rand_number > 0.5) || (!$bets[0]->coin && $duel->rand_number < 0.5)) {
+                    $duel->save();
+                    $total_price = $bets[0]->price + $bets[1]->price;
+
+                    if($bets[0]->price/$total_price < $duel->rand_number){
                         $duel->winner_id = $bets[0]->user_id;
                     } else {
                         $duel->winner_id = $bets[1]->user_id;
@@ -221,7 +241,7 @@ class DuelController extends Controller
             $itemInfo = new CsgoFast($d_item);
             $d_item['price'] = $itemInfo->price;
             $s_item['price'] = $d_item['price'];
-            if(strpos($d_item['market_hash_name'], 'Case') !== false)
+            if(strpos($d_item['type'], 'Container') !== false)
                 return response()->json(['success'=>false,'error'=>'Извините, но на сайте запрещены кейсы!']);
             $s_item['market_hash_name'] = $d_item['market_hash_name'];
             $s_item['id'] = $item;
@@ -239,6 +259,7 @@ class DuelController extends Controller
             $game->status = duel::STATUS_NOT_STARTED;
             $game->rand_number = $rand_number;
             $game->price = $total_price;
+            $game->secret = substr(md5(uniqid(rand(), true)),0,8);
             $coin = (boolean) \Request::get('coin');
             $game->save();
             $duel_bet = new duel_bet;

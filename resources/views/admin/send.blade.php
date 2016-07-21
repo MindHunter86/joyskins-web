@@ -96,6 +96,19 @@
         <!-- general form elements disabled -->
         <!-- /.box -->
     </div>
+    <div class="col-md-6">
+        <!-- Horizontal Form -->
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Переотправить офферы ДУЭЛЕЙ за последнюю неделю</h3>
+            </div><!-- /.box-header -->
+            <div class="box-footer">
+                <button type="submit" class="btn btn-info pull-right sendWeekDuelItems">Переотправить</button>
+            </div><!-- /.box-footer -->
+        </div><!-- /.box -->
+        <!-- general form elements disabled -->
+        <!-- /.box -->
+    </div>
 </div>
 </section>
 @endsection

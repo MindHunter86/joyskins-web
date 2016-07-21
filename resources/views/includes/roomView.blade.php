@@ -46,7 +46,8 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
         @if($duel->status == \App\duel::STATUS_FINISHED)
             <div id="duel-winner-side">
             </div>
-            @if($duel->rand_number>0.5)
+            <?php $win_coin = ($duel->winner_id==$join_user->id) ? $duel_bets[0]->coin : $duel_bets[1]->coin; ?>
+            @if($win_coin == 1)
                 <script>$("#duel-winner-side").html('<div class="flip-container" id="flip-toggle"><div class="flipper"><div class="front"><img heigth="120" width="120" src="{{asset('assets/img/coin-t.png')}}"></div><div class="back"><img heigth="120" width="120" src="{{asset('assets/img/coin-ct.png')}}"></div></div></div>');
                 setTimeout(function() {
                 document.querySelector('#flip-toggle').classList.toggle('flip-me-ct');
@@ -123,7 +124,17 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
         @endif
     </p>
     <div class="clear"></div>
-    <p style="text-align: center; display: block; padding-right: 5.5%;">Банк : {{$total_bet}}</p>
+    <p style="text-align: center; display: block; padding-right: 5.5%;"><br>
+        Хэш раунда: {{md5($duel->secret.':'.$duel->rand_number)}}
+        @if($duel->status == \App\duel::STATUS_FINISHED)
+<br>
+        Процент раунда: {{$duel->rand_number*100}}%
+        <br>
+            Секретное слово: {{$duel->secret}}
+                <br>
+        Банк : {{$total_bet}}
+        @endif
+        </p>
 </div>
 <div class="items-block">
     <div class="host-items">
@@ -157,7 +168,4 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
             @endif
     </div>
 
-</div>
-<div class="hash">
-    Хэш раунда: 0e108d6c9964a1b740117cec9cae2b98
 </div>

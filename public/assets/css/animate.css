@@ -36,6 +36,61 @@ Copyright (c) 2015 Daniel Eden
   animation-duration: .75s;
 }
 
+@-webkit-keyframes color-change {
+  0% { color: red; }
+  15% { color: purple;}
+  25% {color: white}
+  45% { color: blue; }
+  60% { color: cyan;}
+  75% {color: green; }
+  90% { color: yellow; }
+  100% { color: red;}
+}
+
+@-moz-keyframes color-change {
+  0% { color: red; }
+  15% { color: purple;}
+  25% {color: white}
+  45% { color: blue; }
+  60% { color: cyan;}
+  75% {color: green; }
+  90% { color: yellow; }
+  100% { color: red;}
+}
+
+@-ms-keyframes color-change {
+  0% { color: red; }
+  15% { color: purple;}
+  25% {color: white}
+  45% { color: blue; }
+  60% { color: cyan;}
+  75% {color: green; }
+  90% { color: yellow; }
+  100% { color: red;}
+}
+
+@-o-keyframes color-change {
+  0% { color: red; }
+  15% { color: purple;}
+  25% {color: #601515;}
+  45% { color: blue; }
+  60% { color: cyan;}
+  75% {color: green; }
+  90% { color: yellow; }
+  100% { color: red;}
+}
+
+@keyframes color-change {
+  0% { color: red; }
+  15% { color: purple;}
+  25% {color: #601515;}
+  45% { color: blue; }
+  60% { color: cyan;}
+  75% {color: green; }
+  90% { color: yellow; }
+  100% { color: red;}
+}
+
 @-webkit-keyframes bounce {
   0%, 20%, 53%, 80%, 100% {
     -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
