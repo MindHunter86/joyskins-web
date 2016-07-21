@@ -1,5 +1,49 @@
 @extends('layout')
-
+@section('modals')
+    <div class="box-modal" id="about" style="width:900px;">
+        <div class="box-modal-top"><div class="box-modal_close arcticmodal-close"></div>О сайте</div>
+        <div class="rules">
+            <div style="margin-bottom: 10px; border-left: 1px solid #FFBD4C; padding-left: 6px;">
+                <span style="color: #FFBD57;">JoySkins</span> – Сервис в котором участвующие вносят свои предметы (скины) и когда в сумме набирается 100 предметов или проходит 3 минуты с момента второго депозита, система определяет 1 победителя, которому и достаются все внесенные предметы.<br>
+                Победитель определяется случайным образом, шанс выигрыша зависит от стоимости внесенных скинов.
+            </div>
+            <div style="margin-bottom: 10px; padding: 5px 6px; border: 1px solid #5cb85c;">
+                <span style="text-transform: uppercase; color: #3FAA5D;">Принцип прост:</span> Чем больше и дороже предметы Вы ставите, тем больше шанс сорвать джекпот! Но даже вкладывая {{ $min_price = \App\Http\Controllers\GameController::MIN_PRICE }}р., у Вас есть возможность сорвать джекпот!
+            </div>
+            <div style="margin-bottom: 10px; border-left: 1px solid #60B3E5; padding-left: 6px; line-height: 16px;">
+                <span style="color: #60B3E5; padding-bottom: 5px; text-transform: uppercase;">Как это работает:</span><br>
+                <div style="margin-bottom: 8px; margin-top: 2px; padding-left: 30px;">
+                    1. <span style="">Вы вносите свои предметы через кнопку «Принять участие», отправляя трейд нашему боту.<br>
+                    Вы можете внести максимум 20 скинов за раз, общая сумма которых не может быть меньше 30р</span>
+                </div>
+                <div style="margin-bottom: 8px; padding-left: 30px;">
+                    2. Мы переводим внесенные вами предметы в билеты в соотвествии с их ценой. За каждую 1 копейку стоимости предметов вы получите 1 билет (1 рубль - 100 билетов)<br>
+                    Шанс на победу зависит от количества поинтов. Чем больше предметов вы внесете – тем выше ваш шанс на победу.
+                </div>
+                <div style="padding-left: 30px;">
+                    3. При достижении порога в 100 скинов (или 2 минуты с момента второго депозита), мы собираем все выданные поинты вместе и случайным образом выбираем одного победителя, но в приоритете те участники, у которых поинтов больше чем у остальных.<br>
+                    Победитель получает все внесенные предметы по окончанию раунда.
+                </div>
+            </div>
+            <div class="rules_text" style="margin-bottom: 10px;padding-left: 6px;line-height: 18px;border: 1px solid #3FAA80;">
+                <div style="color: #EC785D; padding-top: 5px; text-transform: uppercase;">Правила и особенности:</div>
+                <ol style="padding: 0px 30px; margin: 3px; line-height: 15px; font-size: 13px;">
+                    <li style="padding-bottom: 6px;">Максимальный депозит - {{ $max_items = \App\Http\Controllers\GameController::MAX_ITEMS }} предметов на трейд. Нет ограничений по стоимости предметов. Стоимость одного депозита - минимум {{ $min_price = \App\Http\Controllers\GameController::MIN_PRICE }}р.</li>
+                    <li style="padding-bottom: 6px;">Для развития сайта и проведения конкурсов, мы взымаем комиссию с каждой игры - до 10% от всех вещей игры.</li>
+                    <li style="padding-bottom: 6px;">Депозиты и вывод призового фонда происходят автоматически. Срок отправки выигрыша зависит от загруженности ботов и серверов Steam (в среднем - 1-5 минут)</li>
+                    <li style="padding-bottom: 6px;">Каждый раз отправляя предметы, Вы соглашаетесь с правилами использования сайта.</li>
+                    <li style="padding-bottom: 6px;">Если Ваш инвентарь закрыт, и\или обмены разрешены только с друзьями, приз будет аннулирован!</li>
+                    <li style="padding-bottom: 6px;">Принимаются вещи только из CS:GO, другие вещи будут приняты, но не засчитаны на сайте. Так-же мы можем гарантировать правильную оценку стоимости вещи только тогда, когда она есть на Торговой площадке Steam, иначе ваш предмет может быть неверно оценен.</li>
+                    <li style="padding-bottom: 6px;">Вы имеете гарантию получения ваших вещей в течение получаса с момента закрытия пула. По истечении этого времени мы не несем ответственности за утерянные вещи.</li>
+                    <li style="padding-bottom: 6px;">Если вы отменили обмен или отправили контр-предложение после победы, то ваши вещи возвращены вам не будут, так как бот не рассчитан на повторную отправку вещей</li>
+                    <li style="padding-bottom: 6px;">Если нашего бота забанили в течение 30 минут с окончания матча, мы возмещаем только вашу ставку, но не выигрыш.</li>
+                    <li style="padding-bottom: 6px;">Если вы ставите в течение 30 секунд до окончания матча, то есть возможность что ваши скины попадут на следующую игру. Мы не несем за это ответственность: стим не всегда обрабатывает обмены мгновенно</li>
+                </ol>
+            </div>
+            <a href="//www.free-kassa.ru/"><img src="//www.free-kassa.ru/img/fk_btn/13.png"></a>
+        </div>
+    </div>
+@endsection
 @section('content')
     @if(!is_null($lottery))
     <div class="none">
