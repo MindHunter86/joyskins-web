@@ -13,6 +13,7 @@ get('/shop', ['as' => 'shop', 'uses' => 'ShopController@index']);
 get('/payment', 'DonateController@payment');
 get('/duel',['as'=>'duels','uses'=>'DuelController@currentDuels']);
 post('/duel/viewRound','DuelController@viewRoom');
+post('/ajax/loadDuelHistory','AjaxController@getDuelHistory');
 
 Route::group(['middleware' => 'auth'], function () {
     post('/merchant', 'DonateController@merchant');

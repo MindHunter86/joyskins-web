@@ -43,6 +43,12 @@
                 </div>
             </div>
             <a class="btnShowInv">Создать комнату</a>
+                <a style="display: inline-block;
+    float: left;
+    padding: 15px;
+    background-color: #236235;
+    text-decoration: none;
+    cursor:pointer;" onclick="loadDuelHistory()">История игр</a>
                 @endif
             <div class="duel_games_list"><table class="coinflip-pots table">
                     <thead>
