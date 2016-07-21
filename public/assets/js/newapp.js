@@ -787,7 +787,7 @@ function loadMyDuelInventory() {
                 //console.table(items);
                 items.sort(function(a, b) { return parseFloat(b.price) - parseFloat(a.price) });
                 _.each(items, function(item) {
-                    if(item.market_name.indexOf('Case') != -1)
+                    if(item.type.indexOf('Container') != -1)
                         return;
                     item.price = parseFloat(item.price);
                     if(item.price < 1 || !parseInt(item.tradable)) return;
