@@ -773,10 +773,12 @@ function loadDuelHistory(){
         url: '/ajax/getDuelHistory',
         type: 'POST',
         dataType: 'json',
+        data:{},
         success: function(data){
             $('#roomList').html(data);
         },
-        error: function(){
+        error: function(data){
+            console.log(data);
             alert('Ошибка загрузки истории дуэлей!');
         }
     });
