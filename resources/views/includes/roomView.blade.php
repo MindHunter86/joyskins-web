@@ -117,13 +117,12 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
     <div class="clear"></div>
     <p style="text-align: center; display: block; padding-right: 5.5%;"><br>
         Хэш раунда: {{md5($duel->secret.':'.$duel->rand_number)}}
+
         @if($duel->status == \App\duel::STATUS_FINISHED)
-<br>
-        Процент раунда: {{$duel->rand_number*100}}%
-        <br>
-            Секретное слово: {{$duel->secret}}
-                <br>
-        Банк : {{$total_bet}}
+            <script>setTimeout(function(){$('#winner_info').show();},3000);</script>
+            <p id="winner_info" style="display:none;">
+                <br>Процент раунда: {{$duel->rand_number*100}}%<br>Секретное слово: {{$duel->secret}}<br>Банк : {{$total_bet}}
+            </p>
         @endif
         </p>
 </div>
