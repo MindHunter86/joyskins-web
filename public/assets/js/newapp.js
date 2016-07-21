@@ -768,6 +768,19 @@ $(document).on('click','.btnCreateRoom',function () {
         }
     });
 });
+function loadDuelHistory(){
+    $.ajax({
+        url: '/ajax/getDuelHistory',
+        type: 'POST',
+        dataType: 'json',
+        success: function(data){
+            $('#roomList').html(data);
+        },
+        error: function(){
+            alert('Ошибка загрузки истории дуэлей!');
+        }
+    });
+}
 function loadMyDuelInventory() {
     $.ajax({
         url: '/ajax',
