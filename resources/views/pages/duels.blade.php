@@ -55,6 +55,12 @@
     background-color: rgb(9, 132, 100);
     text-decoration: none;
     cursor:pointer;" onclick="$('#getStart').arcticmodal()">О дуэлях</a>
+                <a style="display: inline-block;
+    float: left;
+    padding: 15px;
+    background-color: rgb(58, 97, 132);
+    text-decoration: none;
+    cursor:pointer;" onclick="$('#fairplayduel').arcticmodal()">Честная игра</a>
                 @endif
             <div class="duel_games_list"><table class="coinflip-pots table">
                     <thead>
@@ -89,6 +95,16 @@
     </script>
 @endsection
 @section('modals')
+    <div class="box-modal" id="fairplayduel" style="width:800px;">
+        <div class="box-modal-top"><div class="box-modal_close arcticmodal-close"></div>Честная игра</div>
+        <div class="fairgame">
+            <div class="fairgame_text">
+                <div style="color: #3FAA5D;padding-bottom: 7px;text-align: center;text-transform: uppercase;font-size: 18px;">Честная игра - как это работает?</div>
+                <div style="line-height: 18px;font-size: 13px;">                      <div style="padding-bottom: 10px;">           В начале каждого раунда наша система берет абсолютно рандомное длинное число от 0 до 1 <span style="color: #3FAA5D;">(например, 0.83952926436439157)</span> и шифрует его через md5 , и показывает его в зашифрованном виде в начале раунда.           <span style="color: #3FAA5D;">(если вы не знаете, что такое md5 - можете <a href="https://ru.wikipedia.org/wiki/MD5" style="color: #324488;" target="_blank">почитать статью на википедии</a>)</span>           </div>           <div style="padding-bottom: 10px;">           Затем, когда раунд завершился, система показывает то число и секретное слово, которое было зашифровано вначале <span style="color: #3FAA5D;">(проверить его вы можете на сайте <a href="http://www.md5.cz/" style="color: #324488;" target="_blank">md5.cz</a>)</span>в виде md5(ЧИСЛО_РАУНДА:СЕКРЕТНОЕ_СЛОВО).           </div>                             </div>
+            </div>
+
+        </div>
+    </div>
     <div class="box-modal" id="getStart" style="width:900px;">
         <div class="box-modal-top"><div class="box-modal_close arcticmodal-close"></div>О сайте</div>
         <div class="rules">
