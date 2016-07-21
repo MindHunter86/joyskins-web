@@ -124,7 +124,12 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
         @endif
     </p>
     <div class="clear"></div>
-    <p style="text-align: center; display: block; padding-right: 5.5%;">Банк : {{$total_bet}}</p>
+    <p style="text-align: center; display: block; padding-right: 5.5%;">Банк : {{$total_bet}}<br>
+        Хэш раунда: {{md5($duel->secret.':'.$duel->rand_number)}}
+        @if($duel->status == \App\duel::STATUS_FINISHED)
+            <br>Процент раунда: {{$duel->rand_number*100}}%<br>
+            Секретное слово: {{$duel->secret}}
+        @endif</p>
 </div>
 <div class="items-block">
     <div class="host-items">
@@ -158,11 +163,4 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
             @endif
     </div>
 
-</div>
-<div class="hash">
-    Хэш раунда: {{md5($duel->secret.':'.$duel->rand_number)}}
-    @if($duel->status == \App\duel::STATUS_FINISHED)
-       <br>Процент раунда: {{$duel->rand_number*100}}%<br>
-        Секретное слово: {{$duel->secret}}
-    @endif
 </div>

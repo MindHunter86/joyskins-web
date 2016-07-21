@@ -259,7 +259,7 @@ class DuelController extends Controller
             $game->status = duel::STATUS_NOT_STARTED;
             $game->rand_number = $rand_number;
             $game->price = $total_price;
-            $game->secret = md5(uniqid(rand(), true));
+            $game->secret = substr(md5(uniqid(rand(), true)),0,8);
             $coin = (boolean) \Request::get('coin');
             $game->save();
             $duel_bet = new duel_bet;
