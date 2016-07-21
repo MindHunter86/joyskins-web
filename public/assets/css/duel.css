@@ -418,7 +418,6 @@ img {
     display:none;
     width:120px;
     height:120px;
-    margin:0 auto
 }
 
 #coin {
@@ -435,12 +434,14 @@ img {
 #coin .front {
     transform:translateZ(1px);
     border-radius:50%;
-    background:transparent url('/assets/img/coin-t.png') center center no-repeat
+    background:transparent url('/assets/img/coin-t.png') center center no-repeat;
+    background-size: cover;
 }
 #coin .back {
     transform:translateZ(-1px) rotateY(180deg);
     border-radius:50%;
-    background:transparent url('/assets/img/coin-ct.png') center center no-repeat
+    background:transparent url('/assets/img/coin-ct.png') center center no-repeat;
+    background-size:cover;
 }
 #coin.animation900 {
     -webkit-animation:rotate900 3s linear forwards;
