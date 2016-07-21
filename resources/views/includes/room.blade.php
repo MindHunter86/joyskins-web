@@ -28,7 +28,7 @@ vs.
             <a href="http://steamcommunity.com/profiles/{{$user->steamid64}}" target="_blank"><img src="{{$user->avatar}}" alt="Profile" title="{{$user->username}}"></a>
     </td>
     <td class="cf-items">
-        <h3>{{count($items)+count($j_count)}} предметов:</h3>
+        <h3>{{count($items)+$j_count}} предметов:</h3>
         <div>
             <?php $preCount = 0; ?>
             @foreach($items as $item)
