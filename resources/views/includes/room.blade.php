@@ -82,7 +82,8 @@ vs.
             <a href="http://steamcommunity.com/profiles/{{$user_joined->steamid64}}" target="_blank"><img src="{{$user_joined->avatar}}" width="45" height="45" alt="Profile" title="{{$user_joined->username}}"></a>
         @endif
         @if($duel->status == \App\duel::STATUS_FINISHED)
-                @if($duel->rand_number > 0.5)
+            <?php $win_coin = ($duel->winner_id==$user_joined) ? $duel_bets[0]->coin : $duel_bets[1]->coin; ?>
+                @if($win_coin == 1)
                     <img width="45" src="{{asset('assets/img/coin-ct.png')}}">
                 @else
                     <img height="45" src="{{asset('assets/img/coin-t.png')}}">

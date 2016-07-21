@@ -178,6 +178,7 @@ class DuelController extends Controller
                 $duel = duel::where('id', $bet->game_id)->first();
                 if($duel->status == duel::STATUS_PLAYING) {
                     $duel->status = duel::STATUS_PRE_FINISH;
+                    $duel->save();
                     if (($bets[0]->coin && $duel->rand_number > 0.5) || (!$bets[0]->coin && $duel->rand_number < 0.5)) {
                         $duel->winner_id = $bets[0]->user_id;
                     } else {
@@ -238,7 +239,7 @@ class DuelController extends Controller
             $itemInfo = new CsgoFast($d_item);
             $d_item['price'] = $itemInfo->price;
             $s_item['price'] = $d_item['price'];
-            if(strpos($d_item['market_hash_name'], 'Case') !== false)
+            if(strpos($d_item['type'], 'Container') !== false)
                 return response()->json(['success'=>false,'error'=>'Извините, но на сайте запрещены кейсы!']);
             $s_item['market_hash_name'] = $d_item['market_hash_name'];
             $s_item['id'] = $item;
@@ -256,6 +257,7 @@ class DuelController extends Controller
             $game->status = duel::STATUS_NOT_STARTED;
             $game->rand_number = $rand_number;
             $game->price = $total_price;
+            $game->secret = md5(uniqid(rand(), true));
             $coin = (boolean) \Request::get('coin');
             $game->save();
             $duel_bet = new duel_bet;
