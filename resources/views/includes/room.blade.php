@@ -76,19 +76,29 @@ vs.
         @endif
     </td>
     <td class="cf-action">
-        @if(!isset($user_joined))
-        <a class="cfRoundJoin" data-price="{{$duel_bets[0]->price}}" data-id="{{$duel->id}}">Войти</a>
-        @else
-            <a href="http://steamcommunity.com/profiles/{{$user_joined->steamid64}}" target="_blank"><img src="{{$user_joined->avatar}}" width="45" height="45" alt="Profile" title="{{$user_joined->username}}"></a>
-        @endif
         @if($duel->status == \App\duel::STATUS_FINISHED)
+
             <?php $win_coin = ($duel->winner_id==$user_joined->id) ? $duel_bets[1]->coin : $duel_bets[0]->coin; ?>
+        @if($duel->winner_id == $user_joined->id)
+                    <a href="http://steamcommunity.com/profiles/{{$user_joined->steamid64}}" target="_blank"><img src="{{$user_joined->avatar}}" width="45" height="45" alt="Profile" title="{{$user_joined->username}}"></a>
+
+                @else
+                    <a href="http://steamcommunity.com/profiles/{{$user->steamid64}}" target="_blank"><img src="{{$user->avatar}}" width="45" height="45" alt="Profile" title="{{$user->username}}"></a>
+
+                @endif
                 @if($win_coin == 1)
                     <img width="45" src="{{asset('assets/img/coin-ct.png')}}">
                 @else
                     <img height="45" src="{{asset('assets/img/coin-t.png')}}">
                 @endif
+            @else
+                @if(!isset($user_joined))
+                    <a class="cfRoundJoin" data-price="{{$duel_bets[0]->price}}" data-id="{{$duel->id}}">Войти</a>
+                @else
+                    <a href="http://steamcommunity.com/profiles/{{$user_joined->steamid64}}" target="_blank"><img src="{{$user_joined->avatar}}" width="45" height="45" alt="Profile" title="{{$user_joined->username}}"></a>
+                @endif
             @endif
+
         <a class="cfRoundView" data-id="{{$duel->id}}">Смотреть</a>
     </td>
 </tr>
