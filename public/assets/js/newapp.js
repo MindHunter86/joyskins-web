@@ -772,7 +772,6 @@ function loadDuelHistory(){
     $.ajax({
         url: '/ajax/getDuelHistory',
         type: 'POST',
-        dataType: 'json',
         data:{},
         success: function(data){
             $('#roomList').html(data);
