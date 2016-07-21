@@ -435,12 +435,12 @@ img {
 #coin .front {
     transform:translateZ(1px);
     border-radius:50%;
-    background:transparent url('/assets/images/coinflip/coin-t-big.png') center center no-repeat
+    background:transparent url('/assets/img/coin-t.png') center center no-repeat
 }
 #coin .back {
     transform:translateZ(-1px) rotateY(180deg);
     border-radius:50%;
-    background:transparent url('/assets/images/coinflip/coin-ct-big.png') center center no-repeat
+    background:transparent url('/assets/img/coin-ct.png') center center no-repeat
 }
 #coin.animation900 {
     -webkit-animation:rotate900 3s linear forwards;
