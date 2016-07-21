@@ -6,8 +6,11 @@ $duel_bets = \App\duel_bet::where('game_id',$duel->id)->where(function($query){
 
 $items = json_decode($duel_bets[0]->items);
 $user = \App\User::where('id',$duel_bets[0]->user_id)->first();
-if(count($duel_bets)>1)
+        $j_count = 0;
+if(count($duel_bets)>1){
     $user_joined = \App\User::where('id',$duel_bets[1]->user_id)->first();
+    $j_count = count(json_decode($duel_bets[1]->items));
+}
 ?>
 
 <tr id="duelRoom{{$duel->id}}" data-price="{{$duel_bets[0]->price}}" data-id="{{$duel->id}}" style="display: table-row;">
@@ -25,7 +28,7 @@ vs.
             <a href="http://steamcommunity.com/profiles/{{$user->steamid64}}" target="_blank"><img src="{{$user->avatar}}" alt="Profile" title="{{$user->username}}"></a>
     </td>
     <td class="cf-items">
-        <h3>{{count($items)}} предметов:</h3>
+        <h3>{{count($items)+count($j_count)}} предметов:</h3>
         <div>
             <?php $preCount = 0; ?>
             @foreach($items as $item)
