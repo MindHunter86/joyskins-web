@@ -138,7 +138,7 @@
     <div class="footer"><a href="https://vk.com/joyskins_top">МЫ ВКонтакте</a></div>
 
     <div class="none">
-
+        @yield('modals')
         <div class="box-modal" id="about" style="width:900px;">
             <div class="box-modal-top"><div class="box-modal_close arcticmodal-close"></div>О сайте</div>
             <div class="rules">
