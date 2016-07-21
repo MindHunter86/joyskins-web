@@ -48,18 +48,9 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
             </div>
             <?php $win_coin = ($duel->winner_id==$join_user->id) ? $duel_bets[1]->coin : $duel_bets[0]->coin; ?>
             @if($win_coin == 1)
-                <script>$("#duel-winner-side").html('<div class="flip-container" id="flip-toggle"><div class="flipper"><div class="front"><img heigth="120" width="120" src="{{asset('assets/img/coin-t.png')}}"></div><div class="back"><img heigth="120" width="120" src="{{asset('assets/img/coin-ct.png')}}"></div></div></div>');
-                setTimeout(function() {
-                document.querySelector('#flip-toggle').classList.toggle('flip-me-ct');
-                }, 1000);
-                </script>
+                <div style="display: block;" id="cfanim-wrapper"><div class="animation1260" id="coin"><div class="front"></div><div class="back"></div></div></div>
             @else
-                <script>
-                    $("#duel-winner-side").html('<div class="flip-container" id="flip-toggle"><div class="flipper"><div class="front"><img heigth="120" width="120" src="{{asset('assets/img/coin-t.png')}}"></div><div class="back"><img heigth="120" width="120" src="{{asset('assets/img/coin-ct.png')}}"></div></div></div>');
-                    setTimeout(function() {
-                        document.querySelector('#flip-toggle').classList.toggle('flip-me-t');
-                    }, 1000);
-                    </script>
+                <div style="display: block;" id="cfanim-wrapper"><div class="animation1080" id="coin"><div class="front"></div><div class="back"></div></div></div>
                 @endif
 
         @elseif(isset($join_user) && ($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_PLAYING))
