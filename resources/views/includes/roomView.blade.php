@@ -121,7 +121,7 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
         @if($duel->status == \App\duel::STATUS_FINISHED)
             <script>setTimeout(function(){$('#winner_info').show();},3000);</script>
             <p id="winner_info" style="display:none; text-align: center; padding-right: 5.5%;">
-                Процент раунда: {{$duel->rand_number*100}}%<br>Секретное слово: {{$duel->secret}}<br>Банк : {{$total_bet}}
+                Число раунда: {{$duel->rand_number}} <br> <?php echo $duel->rand_number;?> <br>Секретное слово: {{$duel->secret}}<br>Банк : {{$total_bet}}
             </p>
         @endif
         </p>
