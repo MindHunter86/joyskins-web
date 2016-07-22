@@ -34,7 +34,7 @@ class AjaxController extends Controller
         $html = '';
         foreach($gamesId as $duelId)
         {
-            $duel = \App\duel::get_history_duel($gamesId['id']);
+            $duel = \App\duel::get_history_duel($duelId['id']);
             $html .= view('includes.room', compact('duel'))->render();
         }
         return response($html);
