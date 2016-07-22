@@ -20,4 +20,12 @@ class duel extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public static function get_history_duel($id)
+    {
+        $result = \Cache::remember('history_duel_id',60,function($id){
+            return duel::where('id',$id)->first();
+        });
+        return $result;
+    }
 }

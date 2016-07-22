@@ -11,6 +11,7 @@ use Firebase\Firebase;
 use App\Services\CsgoFast;
 use Illuminate\Http\Request;
 
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use PhpParser\Node\Expr\Cast\Object_;
@@ -24,16 +25,22 @@ class AjaxController extends Controller
     const DELAY_BEFORE_NEW_MSG = 0.09; // Время делая в минутах
 
     public function getDuelHistory(Request $request){
-        $games = \App\duel::where('status',\App\duel::STATUS_FINISHED)
+        $gamesId = \App\duel::where('status',\App\duel::STATUS_FINISHED)
             ->orderBy('updated_at','desc')
             ->take(10)
-            ->get();
+            ->select(10)
+            ->get()
+            ->toArray();
         $html = '';
-        foreach($games as $duel)
+        foreach($gamesId as $duelId)
         {
+            $duel = \App\duel::get_history_duel($gamesId['id']);
             $html .= view('includes.room', compact('duel'))->render();
         }
         return response($html);
+    }
+    public function duels_history(){
+
     }
     public function chat(Request $request) {
         $type = $request->get('type');
