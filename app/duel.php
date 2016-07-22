@@ -23,7 +23,7 @@ class duel extends Model
 
     public static function get_history_duel($id)
     {
-        $result = \Cache::remember('history_duel_id',60,function($id){
+        $result = \Cache::remember('history_duel_id_'.$id,60,function($id){
             return duel::where('id',$id)->first();
         });
         return $result;
