@@ -1,13 +1,15 @@
 <?php
-$duel_bets = \App\duel_bet::get_room_bets($duel->id);
-
-$items = json_decode($duel_bets[0]->items);
-$user = \App\User::get_user_cache($duel_bets[0]->user_id);
-$j_count = 0;
-if(count($duel_bets)>1){
-    $user_joined = \App\User::get_user_cache($duel_bets[1]->user_id);
-    $j_count = count(json_decode($duel_bets[1]->items));
-}
+    $duel_bets = \App\duel_bet::get_room_bets($duel->id);
+    $items = json_decode($duel_bets[0]->items);
+    $user = \App\User::get_user_cache($duel_bets[0]->user_id);
+    $total_items_count = count($items);
+    $total_price = $duel_bets[0]->price;
+    if(count($duel_bets)>1){
+        $user_joined = \App\User::get_user_cache($duel_bets[1]->user_id);
+        $joined_items = json_decode($duel_bets[1]->items);
+        $total_items_count += count($joined_items);
+        $total_price += $duel_bets[1]->price;
+    }
 ?>
 
 <tr id="duelRoom{{$duel->id}}" data-price="{{$duel_bets[0]->price}}" data-id="{{$duel->id}}" style="display: table-row;">
@@ -25,26 +27,26 @@ vs.
             <a href="http://steamcommunity.com/profiles/{{$user->steamid64}}" target="_blank"><img src="{{$user->avatar}}" alt="Profile" title="{{$user->username}}"></a>
     </td>
     <td class="cf-items">
-        <h3>{{count($items)+$j_count}} предметов:</h3>
+        <h3>{{$total_items_count}} предметов:</h3>
         <div>
             <?php $preCount = 0; ?>
             @foreach($items as $item)
                 <?php $preCount++; ?>
-                @if($preCount < 6)
-                <img src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" class="img-responsive" title="{{$item->market_hash_name}} - {{$item->price}} руб.">
-                        @endif
-                        @endforeach
-                @if(count($items) > 5)
-                    <div style="vertical-align: middle;     padding-bottom: 5px;">+ еще {{count($items)-5}} предмет(ов)</div>
+                    @if($preCount < 6)
+                        <img src="https://steamcommunity-a.akamaihd.net/economy/image/class/{{ \App\Http\Controllers\GameController::APPID }}/{{ $item->classId }}/120fx120f" class="img-responsive" title="{{$item->market_hash_name}} - {{$item->price}} руб.">
+                    @endif
+                @endforeach
+                @if(count($total_items_count) > 5)
+                    <div style="vertical-align: middle;     padding-bottom: 5px;">+ еще {{$total_items_count-5}} предмет(ов)</div>
                 @endif
         </div>
 
     </td>
     <td class="cf-total">
         @if($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_FINISHED)
-                {{$duel_bets[0]->price+$duel_bets[1]->price}} руб.
+                {{$total_price}} руб.
             @else
-            {{$duel_bets[0]->price}} руб.<br><span class="small">Надо: {{$duel_bets[0]->price-$duel_bets[0]->price*0.1}} - {{$duel_bets[0]->price+$duel_bets[0]->price*0.1}} руб.</span>
+            {{$duel_bets[0]->price}} руб.<br><span class="small">Надо: {{$duel_bets[0]->price*0.9}} - {{$duel_bets[0]->price*1.1}} руб.</span>
 
         @endif
     </td>
