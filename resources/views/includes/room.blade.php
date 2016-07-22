@@ -2,10 +2,10 @@
 $duel_bets = \App\duel_bet::get_room_bets($duel->id);
 
 $items = json_decode($duel_bets[0]->items);
-$user = \App\User::where('id',$duel_bets[0]->user_id)->first();
-        $j_count = 0;
+$user = \App\User::get_user_cache($duel_bets[0]->user_id);
+$j_count = 0;
 if(count($duel_bets)>1){
-    $user_joined = \App\User::where('id',$duel_bets[1]->user_id)->first();
+    $user_joined = \App\User::get_user_cache($duel_bets[1]->user_id);
     $j_count = count(json_decode($duel_bets[1]->items));
 }
 ?>
