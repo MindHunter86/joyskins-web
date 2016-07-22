@@ -25,6 +25,8 @@ class duel extends Model
     {
         if(!\Cache::has('history_duel_id_'.$id)){
             $duel = duel::where('id',$id)->first();
+            if($duel->status != self::STATUS_FINISHED)
+                return false;
             \Cache::put('history_duel_id_'.$id,$duel,60);
         }
         return \Cache::get('history_duel_id_'.$id);

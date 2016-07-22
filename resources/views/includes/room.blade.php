@@ -1,8 +1,5 @@
 <?php
-$duel_bets = \App\duel_bet::where('game_id',$duel->id)->where(function($query){
-    $query->where('status',\App\duel_bet::STATUS_WAIT_TO_ACCEPT)
-            ->orWhere('status',\App\duel_bet::STATUS_ACCEPTED);
-})->get();
+$duel_bets = \App\duel_bet::get_room_bets($duel->id);
 
 $items = json_decode($duel_bets[0]->items);
 $user = \App\User::where('id',$duel_bets[0]->user_id)->first();
