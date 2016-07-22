@@ -28,7 +28,7 @@ class AjaxController extends Controller
         $gamesId = \App\duel::where('status',\App\duel::STATUS_FINISHED)
             ->orderBy('updated_at','desc')
             ->take(10)
-            ->select(10)
+            ->select('id')
             ->get()
             ->toArray();
         $html = '';
