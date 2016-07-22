@@ -26,7 +26,7 @@ class duel_bet extends Model
         return \Cache::get($key);
     }
 
-    public function duel_bets_query($id){
+    public static function duel_bets_query($id){
         return self::where('game_id',$id)->where(function($query){
             $query->where('status',\App\duel_bet::STATUS_WAIT_TO_ACCEPT)
                 ->orWhere('status',\App\duel_bet::STATUS_ACCEPTED);
