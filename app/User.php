@@ -33,6 +33,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['trade_link', 'remember_token', 'is_admin', 'is_moderator', 'accessToken'];
 
+    public static function get_user_cache($id){
+        $key = 'user_cache_id_'.$id;
+        if(!\Cache::has($key)) {
+            $user = self::where('id',$id)->first();
+            \Cache::put($key,$user,60);
+        }
+        return \Cache::get($key);
+    }
+
     public function games()
     {
         return $this->hasMany('App\Game');

@@ -181,12 +181,16 @@ class DuelController extends Controller
                     $duel->save();
                     $total_price = $bets[0]->price + $bets[1]->price;
 
-                    if($bets[0]->coin == 0 && $bets[0]->price / $total_price > $duel->rand_number){
-                        $duel->winner_id = $bets[0]->user_id;
-                    } else if ($bets[0]->coin == 1 && $bets[0]->price / $total_price < $duel->rand_number){
-                        $duel->winner_id = $bets[0]->user_id;
-                    } else {
-                        $duel->winner_id = $bets[1]->user_id;
+                    if($bets[0]->coin == 0){
+                        if($bets[0]->price / $total_price > $duel->rand_number)
+                            $duel->winner_id = $bets[0]->user_id;
+                        else
+                            $duel->winner_id = $bets[1]->user_id;
+                    } else if ($bets[1]->coin == 0){
+                        if($bets[1]->price / $total_price > $duel->rand_number)
+                            $duel->winner_id = $bets[1]->user_id;
+                        else
+                            $duel->winner_id = $bets[0]->user_id;
                     }
                     $first = json_decode($duel->won_items);
                     $second = json_decode(urldecode(\Request::get('items')));
