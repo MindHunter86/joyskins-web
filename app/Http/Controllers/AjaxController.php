@@ -27,8 +27,8 @@ class AjaxController extends Controller
     public function getDuelHistory(Request $request){
         $gamesId = \App\duel::where('status',\App\duel::STATUS_FINISHED)
             ->orderBy('updated_at','desc')
+            ->select(['id'])
             ->take(10)
-            ->select('id')
             ->get()
             ->toArray();
         $html = '';
