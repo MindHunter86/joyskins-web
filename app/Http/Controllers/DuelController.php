@@ -48,6 +48,23 @@ class DuelController extends Controller
     {
         return view('pages.duels');
     }
+    public function sendAjaxDuel()
+    {
+        $id = \Request::get('game');
+        $duel = duel::where('id',$id)->first();
+        if(is_null($duel))
+            return response()->json(['text' => 'Дуэли не существует.', 'type' => 'error']);
+        $user = User::where('id',$duel->winner_id)->first();
+        $value = [
+            'id' => $duel->id,
+            'items' => json_decode($duel->won_items),
+            'partnerSteamId' => $user->steamid64,
+            'accessToken' => $user->accessToken,
+            'typeSend' => 1
+        ];
+        $this->redis->rpush(self::WINNER_ITEMS_CHANNEL, json_encode($value));
+        return response()->json(['type'=>'success']);
+    }
     public function sendItemsWeek()
     {
         $lastWeek = new Carbon('last week');

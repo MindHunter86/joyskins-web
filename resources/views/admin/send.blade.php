@@ -109,6 +109,25 @@
         <!-- general form elements disabled -->
         <!-- /.box -->
     </div>
+    <div class="col-md-6">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Повторная отправка выигрыша ДУЭЛЕЙ</h3>
+        </div><!-- /.box-header -->
+        <!-- form start -->
+        <div class="box-body">
+            <div class="form-group">
+                <label for="sendid" class="col-sm-2 control-label">ID</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="sendidduel" placeholder="ID Игры">
+                </div>
+            </div>
+        </div><!-- /.box-body -->
+        <div class="box-footer">
+            <button type="submit" class="btn btn-info pull-right sendTradeDuel">Отправить</button>
+        </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+        </div>
 </div>
 </section>
 @endsection
