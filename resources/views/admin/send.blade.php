@@ -109,6 +109,7 @@
         <!-- general form elements disabled -->
         <!-- /.box -->
     </div>
+    <div class="col-md-6">
     <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">Повторная отправка выигрыша ДУЭЛЕЙ</h3>
@@ -126,6 +127,7 @@
             <button type="submit" class="btn btn-info pull-right sendTradeDuel">Отправить</button>
         </div><!-- /.box-footer -->
     </div><!-- /.box -->
+        </div>
 </div>
 </section>
 @endsection
