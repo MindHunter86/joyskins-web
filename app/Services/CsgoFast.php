@@ -31,6 +31,7 @@ class CsgoFast {
     }
 
     public function getItemPrice() {
+        /*
         try{
 		    $json = file_get_contents(__DIR__.'/fast.json');
 		    $json = json_decode($json);
@@ -41,8 +42,26 @@ class CsgoFast {
 	        	return false;
         }catch(Exception $e){
             return false;
+        }*/
+        $this->getPriceFromCache($this->market_hash_name);
+    }
+
+    public static function getPriceFromCache($market_hash_name) {
+        try {
+            $json = \Cache::remember('csgofast_items_price', 480, function () {
+                $response = file_get_contents('https://api.csgofast.com/price/all');
+                \DB::table('items')->delete();
+                return $response;
+            });
+            if ($json)
+                return $json->{$market_hash_name};
+            else
+                return false;
+        }catch (Exception $e) {
+            return false;
         }
     }
+
 
     public function getItemRarity($info) {
         if(!isset($info['type'])) return;

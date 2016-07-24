@@ -232,7 +232,9 @@ class GameController extends Controller
                 }
             }
         }
-
+        usort($items,function($a,$b){
+            return $b['price']-$a['price'];
+        });
         foreach($items as $item){
             if($item['price'] < 1) $item['price'] = 1;
             if(($item['price'] >= 2) && ($tempPrice+$item['price'] < $commissionPrice)) {
