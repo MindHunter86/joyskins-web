@@ -115,6 +115,25 @@ $(document).ready(function() {
             }
         });
     });
+    $('.sendTradeDuel').click(function() {
+        $.ajax({
+            url: '/admin/send/ajaxDuel',
+            type: 'POST',
+            dataType: 'json',
+            data: {game: $('#sendidduel').val() },
+            success: function (data) {
+                if (data.type == 'success') {
+                    alert('Запрошена повторная отправка выигрыша');
+                }
+                else {
+                    if(data.text) alert(data.text);
+                }
+            },
+            error: function () {
+                alert("Произошла ошибка. Попробуйте еще раз");
+            }
+        });
+    });
     $('.sendTradeShop').click(function() {
         $.ajax({
             url: '/admin/send/ajaxShop',
