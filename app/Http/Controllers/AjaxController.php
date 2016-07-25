@@ -33,6 +33,7 @@ class AjaxController extends Controller
                 ->groupBy('duel_bets.game_id')
                 ->orderBy('duels.created_at', 'desc')
                 ->select(['duels.id'])
+                ->where('duels.status',\App\duel::STATUS_FINISHED)
                 ->take(10)
                 ->get();
         } else {
