@@ -75,10 +75,10 @@ class PagesController extends Controller
 
     public function history()
     {
-        $gamesId = Game::with(['id'])
+        $gamesId = Game::select(['id'])
             ->where('status', Game::STATUS_FINISHED)
             ->orderBy('created_at', 'desc')
-            ->take(50)
+            ->limit(50)
             ->get();
         $games = [];
         foreach ($gamesId as $id)
