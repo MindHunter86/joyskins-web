@@ -25,12 +25,23 @@ class AjaxController extends Controller
     const DELAY_BEFORE_NEW_MSG = 0.09; // Время делая в минутах
 
     public function getDuelHistory(Request $request){
-        $gamesId = \App\duel::where('status',\App\duel::STATUS_FINISHED)
-            ->orderBy('updated_at','desc')
-            ->select(['id'])
-            ->take(10)
-            ->get()
-            ->toArray();
+        $my_history = $request->get('my_history');
+        if($my_history) {
+            $gamesId = \DB::table('duels')
+                ->join('duel_bets', 'duels.id', '=', 'duel_bets.game_id')
+                ->where('duel_bets.user_id', $this->user->id)
+                ->groupBy('duel_bets.game_id')
+                ->orderBy('duels.created_at', 'desc')
+                ->select('duels.id')->get()
+                ->toArray();
+        } else {
+            $gamesId = \App\duel::where('status',\App\duel::STATUS_FINISHED)
+                ->orderBy('updated_at','desc')
+                ->select(['id'])
+                ->take(10)
+                ->get()
+                ->toArray();
+        }
         $html = '';
         foreach($gamesId as $duelId)
         {
