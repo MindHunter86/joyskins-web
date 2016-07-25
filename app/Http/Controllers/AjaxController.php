@@ -34,8 +34,7 @@ class AjaxController extends Controller
                 ->orderBy('duels.created_at', 'desc')
                 ->select(['duels.id'])
                 ->take(10)
-                ->get()
-                ->toArray();
+                ->get();
         } else {
             $gamesId = \App\duel::where('status',\App\duel::STATUS_FINISHED)
                 ->orderBy('updated_at','desc')
