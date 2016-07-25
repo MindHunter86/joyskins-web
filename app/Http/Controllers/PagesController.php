@@ -83,7 +83,7 @@ class PagesController extends Controller
         $games = [];
         foreach ($gamesId as $id)
             $games[] = Game::get_cache_game($id);
- 
+        \Debugbar::info($games);
         foreach($games as $key => $game) {
             $items = array();
             $price = array();
