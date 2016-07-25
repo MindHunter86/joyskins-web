@@ -1,4 +1,5 @@
 <?php
+        \Debugbar::info($duel);
     $duel_bets = \App\duel_bet::get_room_bets($duel->id);
     $items = json_decode($duel_bets[0]->items);
     $user = \App\User::get_user_cache($duel_bets[0]->user_id);
