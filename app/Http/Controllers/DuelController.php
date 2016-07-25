@@ -112,8 +112,8 @@ class DuelController extends Controller
         $tempPrice = 0;  // сколько взяли комиссия
         foreach($items as $key=>$item) {
             $items[$key]['price'] = CsgoFast::getPriceFromCache($item['market_hash_name']);
-            if( $item['price'] )
-                $room_price += $item['price'];
+            if( $items[$key]['price'] )
+                $room_price += $items[$key]['price'];
         }
         usort($items,function($a,$b){
             return $b['price']-$a['price'];
