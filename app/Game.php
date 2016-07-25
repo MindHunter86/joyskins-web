@@ -27,8 +27,6 @@ class Game extends Model
         $key = md5('history_game_'.$id);
         if(!\Cache::has($key)) {
             $game = self::where('id',$id)->with(['bets','winner'])->first();
-            if($game->status != self::STATUS_FINISHED)
-                return false;
             \Cache::put($key,json_decode($game),60);
         }
         return json_decode(\Cache::get($key));
