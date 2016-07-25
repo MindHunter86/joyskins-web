@@ -35,13 +35,13 @@ class AjaxController extends Controller
                 ->select(['duels.id'])
                 ->take(10)
                 ->get();
-            \Debugbar::info($gamesId);
         } else {
             $gamesId = \App\duel::where('status',\App\duel::STATUS_FINISHED)
                 ->orderBy('updated_at','desc')
                 ->select(['id'])
                 ->take(10)
-                ->get();
+                ->get()
+                ->toArray();
         }
         $html = '';
         foreach($gamesId as $duelId)
