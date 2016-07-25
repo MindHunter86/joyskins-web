@@ -79,6 +79,7 @@ class PagesController extends Controller
             ->where('status', Game::STATUS_FINISHED)
             ->orderBy('created_at', 'desc')
             ->limit(50)
+            ->remember(5)
             ->get();
  
         foreach($games as $key => $game) {

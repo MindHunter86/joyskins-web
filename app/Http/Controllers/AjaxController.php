@@ -51,9 +51,6 @@ class AjaxController extends Controller
         }
         return response($html);
     }
-    public function duels_history(){
-
-    }
     public function chat(Request $request) {
         $type = $request->get('type');
         if(!$request->has('type')) {
