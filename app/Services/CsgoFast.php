@@ -43,7 +43,7 @@ class CsgoFast {
         }catch(Exception $e){
             return false;
         }*/
-        $this->getPriceFromCache($this->market_hash_name);
+        return $this->getPriceFromCache($this->market_hash_name);
     }
 
     public static function getPriceFromCache($market_hash_name) {
