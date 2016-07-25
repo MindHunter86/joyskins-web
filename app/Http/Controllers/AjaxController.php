@@ -40,13 +40,12 @@ class AjaxController extends Controller
                 ->orderBy('updated_at','desc')
                 ->select(['id'])
                 ->take(10)
-                ->get()
-                ->toArray();
+                ->get();
         }
         $html = '';
         foreach($gamesId as $duelId)
         {
-            $duel = \App\duel::get_history_duel($duelId['id']);
+            $duel = \App\duel::get_history_duel($duelId->id);
             $html .= view('includes.room', compact('duel'))->render();
         }
         return response($html);
