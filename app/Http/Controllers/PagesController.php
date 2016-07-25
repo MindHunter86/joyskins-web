@@ -75,12 +75,14 @@ class PagesController extends Controller
 
     public function history()
     {
-        $games = Game::with(['bets', 'winner'])
+        $gamesId = Game::with(['id'])
             ->where('status', Game::STATUS_FINISHED)
             ->orderBy('created_at', 'desc')
-            ->limit(50)
-            ->remember(5)
+            ->take(50)
             ->get();
+        $games = [];
+        foreach ($gamesId as $id)
+            $games[] = Game::get_cache_game($id);
  
         foreach($games as $key => $game) {
             $items = array();
