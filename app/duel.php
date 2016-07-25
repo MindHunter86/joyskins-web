@@ -23,13 +23,13 @@ class duel extends Model
 
     public static function get_history_duel($id)
     {
-        $key = 'history_duel_id_'.$id;
-        if(!\Cache::has($key)){
+        $key = md5('history_duel_id_'.$id);
+        $value = \Cache::remember($key,60,function($id){
             $duel = duel::where('id',$id)->first();
             if($duel->status != self::STATUS_FINISHED)
-                return false;
-            \Cache::put($key,$duel,60);
-        }
-        return \Cache::get($key);
+                return;
+            return json_encode($duel);
+        });
+        return json_decode($value);
     }
 }
