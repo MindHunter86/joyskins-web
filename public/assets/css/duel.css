@@ -95,6 +95,7 @@
     background-color: #236235;
     text-decoration: none;
     cursor:pointer;
+    margin-right: 5px;
 }
 .circle strong {
     position: absolute;
