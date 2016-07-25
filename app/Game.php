@@ -27,8 +27,10 @@ class Game extends Model
         $key = md5('history_game_'.$id);
         if(!\Cache::has($key)) {
             $game = self::where('id',$id)->with(['bets','winner'])->get();
+            \\Debugbar::info($game);
             \Cache::put($key,json_encode($game),60);
         }
+        \Debugbar::info(\Cache::get($key));
         return json_decode(\Cache::get($key));
     }
     public function users()
