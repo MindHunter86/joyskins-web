@@ -24,7 +24,7 @@ class CsgoFast {
         $this->rarity = isset($info['rarity']) ? $info['rarity'] : $this->getItemRarity($info);
         if ($price = $this->getItemPrice()) {
             if(isset($price))
-                $this->price = round($price*self::DOLLAR, 2);
+                $this->price = $price;
         }else{
             $this->_setToFalse();
         }
