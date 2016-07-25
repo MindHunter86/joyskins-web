@@ -143,7 +143,7 @@
             <a href="http://www.free-kassa.ru/"><img src="./JOYSKINS.TOP_files/13.png"></a>
         </div>
     </div>
-    <div id="historyModal" class="duel_games_list history-modal"><table class="coinflip-pots table">
+    <div id="historyModal" class="duel_games_list history-modal box-modal"><table class="coinflip-pots table">
             <thead>
             <tr>
                 <th>Игроки</th>
