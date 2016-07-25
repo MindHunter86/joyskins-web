@@ -32,7 +32,7 @@ class AjaxController extends Controller
                 ->where('duel_bets.user_id', $this->user->id)
                 ->groupBy('duel_bets.game_id')
                 ->orderBy('duels.created_at', 'desc')
-                ->select('duels.id')
+                ->select(['id'])
                 ->take(10)
                 ->get()
                 ->toArray();
