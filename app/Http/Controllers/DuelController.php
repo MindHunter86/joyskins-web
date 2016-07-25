@@ -300,6 +300,7 @@ class DuelController extends Controller
             $value = [
                 'id' => $duel_bet->id,
                 'items' => $d_items,
+                'hash' => md5($game->secret.':'.$game->rand_number),
                 'partnerSteamId' => $this->user->steamid64,
                 'accessToken' => $this->user->accessToken
             ];
@@ -328,6 +329,7 @@ class DuelController extends Controller
                     'id' => $duel_bet->id,
                     'items' => $d_items,
                     'partnerSteamId' => $this->user->steamid64,
+                    'hash' => md5($game->secret.':'.$game->rand_number),
                     'accessToken' => $this->user->accessToken
                 ];
                 $this->redis->rpush(self::RECEIVE_ITEMS_CHANNEL, json_encode($value));
