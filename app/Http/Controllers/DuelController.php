@@ -110,7 +110,7 @@ class DuelController extends Controller
         $comission_price = $duel->price*2*0.1; // предположительная комиссия
         $sendItems = []; // предметы выигрыша
         $tempPrice = 0;  // сколько взяли комиссия
-        foreach($items as $item) {
+        foreach($items as &$item) {
             $item['price'] = CsgoFast::getPriceFromCache($item['market_hash_name']);
             if( $item['price'] )
                 $room_price += $item['price'];
