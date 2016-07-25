@@ -53,6 +53,7 @@ class CsgoFast {
                 \DB::table('items')->delete();
                 return $response;
             });
+            $json = json_decode($json);
             if ($json)
                 return $json->{$market_hash_name};
             else
