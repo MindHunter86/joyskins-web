@@ -55,7 +55,7 @@ class CsgoFast {
             });
             $json = json_decode($json);
             if ($json)
-                return $json->{$market_hash_name};
+                return round($json->{$market_hash_name}*self::DOLLAR,2);
             else
                 return false;
         }catch (Exception $e) {
