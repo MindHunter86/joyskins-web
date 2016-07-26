@@ -46,8 +46,7 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
             <?php $win_coin = ($duel->winner_id==$join_user->id) ? $duel_bets[1]->coin : $duel_bets[0]->coin; ?>
             @if($win_coin == 1)
                 <div style="display: block;" id="cfanim-wrapper"><div class="animation1260" id="coin"><div class="front"></div><div class="back"></div></div></div>
-                <div style="display: block;" id="cfanim-wrapper"><div class="animation1080" id="coin"><div class="back"></div><div class="front"></div></div></div>
-            @else
+                @else
                 <div style="display: block;" id="cfanim-wrapper"><div class="animation1080" id="coin"><div class="back"></div><div class="front"></div></div></div>
                 @endif
 
