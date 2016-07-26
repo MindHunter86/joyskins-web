@@ -429,9 +429,9 @@ img {
     border-bottom: 1px solid #8a908c;
 }
 #cfanim-wrapper {
-    display:none;
+    /*display:none;
     width:120px;
-    height:120px;
+    height:120px;*/
 }
 
 #coin {
@@ -439,6 +439,7 @@ img {
     width:120px;
     height:120px;
     transform-style:preserve-3d
+    bottom: 120px;
 }
 #coin .front,#coin .back {
     position:absolute;
