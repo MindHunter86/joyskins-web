@@ -45,7 +45,7 @@ class AdminController extends Controller {
                 $botSumBet = $botSumBet + $item->price;
             }
         }
-        if(!\Request::has('duel')){
+        if(\Request::has('duel')){
             $table = 'duels';
         } else {
             $table = 'games';
