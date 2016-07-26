@@ -45,24 +45,28 @@ class AdminController extends Controller {
                 $botSumBet = $botSumBet + $item->price;
             }
         }
-
-
-        $hourgames = DB::select(DB::raw('select created_at as y, SUM(`comission`) as a from `games` where DAY(created_at) = DAY(NOW()) group by hour(created_at) order by created_at asc;'));
+        if(!\Request::has('duel')){
+            $table = 'duels';
+        } else {
+            $table = 'games';
+        }
+        $hourgames = DB::select(DB::raw('select created_at as y, SUM(`comission`) as a from `'.$table.'` where DAY(created_at) = DAY(NOW()) group by hour(created_at) order by created_at asc;'));
         $hourgames = json_encode((array)$hourgames);
-    	$games = DB::select(DB::raw('select DATE(created_at) as y, SUM(`comission`) as item1 from `games` where `created_at` >= DATE_SUB(CURDATE(), INTERVAL 10 DAY) group by DATE(created_at)'));
-    	$plays = DB::select(DB::raw('select DATE(created_at) as y, count(created_at) as item1 from `games` where `created_at` >= DATE_SUB(CURDATE(), INTERVAL 10 DAY) group by DATE(created_at)'));
+    	$games = DB::select(DB::raw('select DATE(created_at) as y, SUM(`comission`) as item1 from `'.$table.'` where `created_at` >= DATE_SUB(CURDATE(), INTERVAL 10 DAY) group by DATE(created_at)'));
+    	$plays = DB::select(DB::raw('select DATE(created_at) as y, count(created_at) as item1 from `'.$table.'` where `created_at` >= DATE_SUB(CURDATE(), INTERVAL 10 DAY) group by DATE(created_at)'));
 
-        $average = DB::select(DB::raw('select sum(comission) as average from games where created_at >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)'));
+        $average = DB::select(DB::raw('select sum(comission) as average from '.$table.' where created_at >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)'));
         $average = round($average[0]->average / 10);
         
-        $averageGame = DB::select(DB::raw('select count(created_at) as average from games where created_at >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)'));
+        $averageGame = DB::select(DB::raw('select count(created_at) as average from '.$table.' where created_at >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)'));
         $averageGame = round($averageGame[0]->average / 10);
 
         $referer = DB::select(DB::raw('select * from referer ORDER BY count DESC'));
 
        	$plays = json_encode($plays);
-       	$sumplays = DB::select(DB::raw('select count(created_at) as sum from `games` where `created_at` >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)'));
-       	$sumplays = $sumplays[0]->sum;
+       	$sumplays = DB::select(DB::raw('select count(created_at) as sum from `'.$table.'` where `created_at` >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)'));
+
+        $sumplays = $sumplays[0]->sum;
         $items = [];
         $commission = self::COMMISSION;
         $sum = 0;
