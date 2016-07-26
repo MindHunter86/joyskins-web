@@ -144,6 +144,7 @@
         </div>
     </div>
     <div id="historyModal" class="duel_games_list history-modal"><table class="coinflip-pots table">
+            <a style="padding-left: 15px;padding-right: 15px;background-color: gray;padding-top: 8px;padding-bottom: 8px;text-decoration: none;cursor: pointer;" onclick="loadMyDuelHistory()">Моя история</a>
             <thead>
             <tr>
                 <th>Игроки</th>

@@ -24,13 +24,14 @@ class CsgoFast {
         $this->rarity = isset($info['rarity']) ? $info['rarity'] : $this->getItemRarity($info);
         if ($price = $this->getItemPrice()) {
             if(isset($price))
-                $this->price = round($price*self::DOLLAR, 2);
+                $this->price = $price;
         }else{
             $this->_setToFalse();
         }
     }
 
     public function getItemPrice() {
+        /*
         try{
 		    $json = file_get_contents(__DIR__.'/fast.json');
 		    $json = json_decode($json);
@@ -41,8 +42,27 @@ class CsgoFast {
 	        	return false;
         }catch(Exception $e){
             return false;
+        }*/
+        return $this->getPriceFromCache($this->market_hash_name);
+    }
+
+    public static function getPriceFromCache($market_hash_name) {
+        try {
+            $json = \Cache::remember('csgofast_items_price', 480, function () {
+                $response = file_get_contents('https://api.csgofast.com/price/all');
+                \DB::table('items')->delete();
+                return $response;
+            });
+            $json = json_decode($json);
+            if ($json)
+                return round($json->{$market_hash_name}*self::DOLLAR,2);
+            else
+                return false;
+        }catch (Exception $e) {
+            return false;
         }
     }
+
 
     public function getItemRarity($info) {
         if(!isset($info['type'])) return;

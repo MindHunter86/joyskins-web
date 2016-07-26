@@ -95,6 +95,7 @@
     background-color: #236235;
     text-decoration: none;
     cursor:pointer;
+    margin-right: 5px;
 }
 .circle strong {
     position: absolute;
@@ -410,10 +411,23 @@ img {
     position:relative;
     z-index:100;
     padding:30px;
-    background: rgba(0, 0, 0, 0.58);
+    background:#fff;
     border-radius:3px;
+    color: #0a0b0a;
 }
 
+.history-modal .coinflip-pots tbody tr:nth-child(2n) {
+    background-color: #eaeceb;
+}
+.history-modal .cfRoundView{
+    background-color: #000000;
+}
+.history-modal .coinflip-pots{
+    border-top: 3px solid #728076;
+}
+.history-modal .coinflip-pots thead{
+    border-bottom: 1px solid #8a908c;
+}
 #cfanim-wrapper {
     display:none;
     width:120px;

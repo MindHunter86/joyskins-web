@@ -23,7 +23,14 @@ class Game extends Model
     {
         return $this->belongsTo('App\User');
     }
-
+    public static function get_cache_game($id){
+        $key = md5('history_game_'.$id);
+        if(!\Cache::has($key)) {
+            $game = self::with(['bets','winner'])->where('id',$id)->first();
+            \Cache::put($key,$game,60);
+        }
+        return \Cache::get($key);
+    }
     public function users()
     {
         return \DB::table('games')

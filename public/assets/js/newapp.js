@@ -783,6 +783,21 @@ function loadDuelHistory(){
         }
     });
 }
+function loadMyDuelHistory(){
+    $.ajax({
+        url: '/ajax/getDuelHistory',
+        type: 'POST',
+        data:{ my_history: 1 },
+        success: function(data){
+            $('#roomHistoryList').html(data);
+            $('#historyModal').arcticmodal();
+        },
+        error: function(data){
+            console.log(data);
+            alert('Ошибка загрузки истории дуэлей!');
+        }
+    });
+}
 function loadMyDuelInventory() {
     $.ajax({
         url: '/ajax',

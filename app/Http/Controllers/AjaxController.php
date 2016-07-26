@@ -25,22 +25,31 @@ class AjaxController extends Controller
     const DELAY_BEFORE_NEW_MSG = 0.09; // Время делая в минутах
 
     public function getDuelHistory(Request $request){
-        $gamesId = \App\duel::where('status',\App\duel::STATUS_FINISHED)
-            ->orderBy('updated_at','desc')
-            ->select(['id'])
-            ->take(10)
-            ->get()
-            ->toArray();
+        $my_history = $request->get('my_history');
+        if($my_history) {
+            $gamesId = \DB::table('duels')
+                ->join('duel_bets', 'duels.id', '=', 'duel_bets.game_id')
+                ->where('duel_bets.user_id', $this->user->id)
+                ->groupBy('duel_bets.game_id')
+                ->orderBy('duels.created_at', 'desc')
+                ->select(['duels.id'])
+                ->where('duels.status',\App\duel::STATUS_FINISHED)
+                ->take(10)
+                ->get();
+        } else {
+            $gamesId = \App\duel::where('status',\App\duel::STATUS_FINISHED)
+                ->orderBy('updated_at','desc')
+                ->select(['id'])
+                ->take(10)
+                ->get();
+        }
         $html = '';
         foreach($gamesId as $duelId)
         {
-            $duel = \App\duel::get_history_duel($duelId['id']);
+            $duel = \App\duel::get_history_duel($duelId->id);
             $html .= view('includes.room', compact('duel'))->render();
         }
         return response($html);
-    }
-    public function duels_history(){
-
     }
     public function chat(Request $request) {
         $type = $request->get('type');

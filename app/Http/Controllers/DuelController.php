@@ -109,17 +109,20 @@ class DuelController extends Controller
         $room_price = 0; // прайс комнаты
         $comission_price = $duel->price*2*0.1; // предположительная комиссия
         $sendItems = []; // предметы выигрыша
-        $tempPrice = 0;  // сколько взяли комиссии
-        foreach($items as $item) {
-            $itemInfo = new CsgoFast($item);
-            if($itemInfo->price )
-            {
-                $room_price += $itemInfo->price;
-                if($itemInfo->price > 1.5 && ($tempPrice + $itemInfo->price < $comission_price)) {
-                    $tempPrice += $itemInfo->price;
-                } else {
-                    $sendItems[] = $item;
-                }
+        $tempPrice = 0;  // сколько взяли комиссия
+        foreach($items as $key=>$item) {
+            $items[$key]['price'] = CsgoFast::getPriceFromCache($item['market_hash_name']);
+            if( $items[$key]['price'] )
+                $room_price += $items[$key]['price'];
+        }
+        usort($items,function($a,$b){
+            return $b['price']-$a['price'];
+        });
+        foreach ($items as $item) {
+            if($item['price'] > 1.5 && ($tempPrice + $item['price'] < $comission_price)) {
+                $tempPrice += $item['price'];
+            } else {
+                $sendItems[] = $item;
             }
         }
         $value = [
@@ -297,6 +300,7 @@ class DuelController extends Controller
             $value = [
                 'id' => $duel_bet->id,
                 'items' => $d_items,
+                'hash' => md5($game->secret.':'.$game->rand_number),
                 'partnerSteamId' => $this->user->steamid64,
                 'accessToken' => $this->user->accessToken
             ];
@@ -325,6 +329,7 @@ class DuelController extends Controller
                     'id' => $duel_bet->id,
                     'items' => $d_items,
                     'partnerSteamId' => $this->user->steamid64,
+                    'hash' => md5($game->secret.':'.$game->rand_number),
                     'accessToken' => $this->user->accessToken
                 ];
                 $this->redis->rpush(self::RECEIVE_ITEMS_CHANNEL, json_encode($value));
