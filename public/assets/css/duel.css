@@ -437,7 +437,6 @@ img {
 #coin {
     position:relative;
     width:120px;
-    height:120px;
     transform-style:preserve-3d;
     bottom: 120px;
 }
