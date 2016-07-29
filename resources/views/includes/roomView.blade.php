@@ -48,7 +48,7 @@ background-color: #236235;">CoinFlip # {{$duel->id}}</h1>
                 <div style="display: block;" id="cfanim-wrapper"><div class="animation1260" id="coin"><div class="front"></div><div class="back"></div></div></div>
                 @else
                 <div style="display: block;" id="cfanim-wrapper"><div class="animation1080" id="coin"><div class="back"></div><div class="front"></div></div></div>
-                @endif
+            @endif
 
         @elseif(isset($join_user) && ($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_PLAYING))
             <div id="viewtimer{{$duel->id}}">
