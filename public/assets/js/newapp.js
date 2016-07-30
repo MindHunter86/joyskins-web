@@ -562,12 +562,10 @@ if (START) {
             {
                 loadViewRoom(data.roomId);
             }
-            setTimeout(function(){
-                if($('tr#duelRoom'+data.roomId))
-                    $('tr#duelRoom'+data.roomId).replaceWith(data.html);
-                else
-                    $('#roomList').append(data.html);
-            },11000);
+            if($('tr#duelRoom'+data.roomId))
+                $('tr#duelRoom'+data.roomId).replaceWith(data.html);
+            else
+                $('#roomList').append(data.html);
             setTimeout(function () {
                 $('tr#duelRoom'+data.roomId).remove();
             },16000);
