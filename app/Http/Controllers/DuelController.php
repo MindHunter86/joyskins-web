@@ -32,7 +32,7 @@ class DuelController extends Controller
     const PRE_FINISH_CHANNEL = 'pre.finish.duel';
 
     const DUEL_MAX_ITEMS_COUNT = 15;
-    const DUEL_MIN_PRICE = 5;
+    const DUEL_MIN_PRICE = 30;
 
     public function __construct(SteamAuth $auth)
     {
@@ -58,7 +58,7 @@ class DuelController extends Controller
         $value = [
             'id' => $duel->id,
             'items' => json_decode($duel->won_items),
-            'partnerSteamId' => (int)$user->steamid64,
+            'partnerSteamId' => $user->steamid64,
             'accessToken' => $user->accessToken,
             'typeSend' => 1
         ];
@@ -75,7 +75,7 @@ class DuelController extends Controller
             $value = [
                 'id' => $duel->id,
                 'items' => json_decode($duel->won_items),
-                'partnerSteamId' => (int)$user->steamid64,
+                'partnerSteamId' => $user->steamid64,
                 'accessToken' => $user->accessToken,
                 'typeSend' => 0
             ];
@@ -129,7 +129,7 @@ class DuelController extends Controller
         $value = [
             'id' => $duel->id,
             'items' => $sendItems,
-            'partnerSteamId' => (int)$user->steamid64,
+            'partnerSteamId' => $user->steamid64,
             'accessToken' => $user->accessToken
         ];
         $duel->won_items = json_encode($sendItems);
@@ -140,7 +140,7 @@ class DuelController extends Controller
         $this->redis->rpush(self::WINNER_ITEMS_CHANNEL, json_encode($value));
         $returnValue = [
             'roomId' => $duel->id,
-            'steamId' => (int)$user->steamid64,
+            'steamId' => $user->steamid64,
             'html' => view('includes.room', compact('duel'))->render()
         ];
         $this->redis->publish(self::SHOW_DUEL_WINNERS, json_encode($returnValue));
@@ -271,7 +271,7 @@ class DuelController extends Controller
             if(strpos($d_item['type'], 'Container') !== false)
                 return response()->json(['success'=>false,'error'=>'Извините, но на сайте запрещены кейсы!']);
             $s_item['market_hash_name'] = $d_item['market_hash_name'];
-            $s_item['id'] = (int)$item;
+            $s_item['id'] = $item;
             $s_item['classId'] = $d_item['classid'];
             if(!$d_item['price'])
                 return response()->json(['success'=>false,'error'=>'Извините, данный предмет запрещен: '.$item['market_hash_name']]);
@@ -302,7 +302,7 @@ class DuelController extends Controller
                 'id' => $duel_bet->id,
                 'items' => $d_items,
                 'hash' => md5($game->secret.':'.$game->rand_number),
-                'partnerSteamId' => (int)$this->user->steamid64,
+                'partnerSteamId' => $this->user->steamid64,
                 'accessToken' => $this->user->accessToken
             ];
             $this->redis->rpush(self::RECEIVE_ITEMS_CHANNEL, json_encode($value));
@@ -329,7 +329,7 @@ class DuelController extends Controller
                 $value = [
                     'id' => $duel_bet->id,
                     'items' => $d_items,
-                    'partnerSteamId' => (int)$this->user->steamid64,
+                    'partnerSteamId' => $this->user->steamid64,
                     'hash' => md5($game->secret.':'.$game->rand_number),
                     'accessToken' => $this->user->accessToken
                 ];

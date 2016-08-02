@@ -736,7 +736,7 @@ $(document).on('click','.btnReadyDeposit',function(){
             }
         });
         //$('#deposit').arcticmodal('close');
-    } else if(totalPrice < 5) {
+    } else if(totalPrice < 30) {
         $(this).notify('Минимальная сумма для создания комнаты 30 рублей.', {position: 'bottom middle', className :"error"});
     } else {
         var coin = $('.coin.choosen').data('coin');
@@ -776,7 +776,7 @@ $(document).on('click','.inventory .item',function(){
             $('#pot_total_price').css('color', 'green');
         }
     } else {
-        if (parseFloat($('#pot_total_price').html()) < 5) {
+        if (parseFloat($('#pot_total_price').html()) <30) {
             $('#pot_total_price').css('color', 'red');
         } else {
             $('#pot_total_price').css('color', 'green');
@@ -795,7 +795,7 @@ $(document).on('click','.pot .item',function(){
             $('#pot_total_price').css('color', 'green');
         }
     } else {
-        if (parseFloat($('#pot_total_price').html()) < 5) {
+        if (parseFloat($('#pot_total_price').html()) < 30) {
             $('#pot_total_price').css('color', 'red');
         } else {
             $('#pot_total_price').css('color', 'green');
@@ -809,7 +809,7 @@ $(document).on('click','.btnCreateRoom',function () {
         totalPrice += parseFloat($(this).data('price'));
         items.push($(this).data('id'));
     });
-    if(totalPrice < 5)
+    if(totalPrice < 30)
     {
         $(this).notify('Минимальная сумма ставки: 5 рублей', {position: 'bottom middle', className :"error"});
         return;
