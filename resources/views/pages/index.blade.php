@@ -439,3 +439,33 @@
     </div>
 </div>
 @endsection
+
+@section('attachments')
+    <script>
+                @if(!Auth::guest())
+        var timeout = false;
+        function updateBalance() {
+            $.post('{{route('get.balance')}}', function (data) {
+                console.log(data);
+                $('.balanced').text(data);
+            });
+        }
+        function addTicket(id, btn) {
+            if(!timeout) {
+                timeout = true;
+                $.post('{{route('add.ticket')}}',{id:id}, function(data){
+                    updateBalance();
+                    timeout = false;
+                    return $(btn).notify(data.text, {position: 'bottom middle', className :data.type});
+                });
+            }
+            else {
+                return $(btn).notify('Пожалуйста подождите..', {position: 'bottom middle', className :'error'});
+            }
+
+        }
+
+        @endif
+
+    </script>
+@endsection

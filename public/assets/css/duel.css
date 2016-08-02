@@ -681,3 +681,313 @@ img {
         transform:rotateY(2160deg)
     }
 }
+#deposit {
+    width: 1180px;
+    position: relative;
+}
+.item {
+    height: 119px;
+    width: 119px;
+    display: inline-block;
+    float: left;
+    background: none;
+    position: relative;
+    vertical-align: bottom;
+    font-size: 12px;
+    text-align: center;
+}
+#deposit .inventory{
+    width: 619px;
+    float: left;
+    position: relative;
+}
+.item .title {
+    bottom: 0;
+    left: 0;
+    height: 20px;
+    line-height: 20px;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    background: none;
+    color: #868686;
+    font-size: 13px;
+    padding: 0 5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.item .btn{
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    background-image: none;
+    white-space: nowrap;
+    font-size: 14px;
+    line-height: 1.42857;
+    border-radius: 4px;
+    padding: 0 !important;
+    border: none;
+    cursor: default;
+    position: relative;
+    z-index: 1;
+    opacity: 0.85;
+}
+.item .btn.right span.left.icon {
+    position: relative;
+    background-color: #3faa5d;
+}
+.item .btn.right span.left.icon .slant-left {
+    position: absolute;
+    border-top: 0 solid transparent;
+    border-bottom: 20px solid transparent;
+    right: 0;
+    border-right: 10px solid #3faa5d;
+}
+.item .btn.right span.left.prices {
+    width: 45px;
+    height: 20px;
+    background: #3faa5d;
+    color: #FFF;
+    font-size: 12px;
+    line-height: 20px;
+}
+.item .btn.right span.right.icon {
+    position: relative;
+    background-color: #3faa5d;
+}
+.item .btn.right span.right {
+    float: right;
+    padding: 0;
+}
+.item {
+    border-right: 1px solid #3faa5d;
+    border-top: 1px solid #3faa5d;
+    overflow: hidden;
+    margin-bottom: 9px;
+    border-bottom: 1px solid #3faa5d;
+}
+
+.inventory .item:nth-child(2) {
+    border-left: 1px solid #3faa5d
+}
+.pot .item:nth-child(2){
+    border-left: 1px solid #3faa5d
+}
+.inventory .item:nth-child(5n+1) {
+    border-left:1px solid #3faa5d
+}
+.pot .item:nth-child(4n+1) {
+    border-left:1px solid #3faa5d
+}
+.clearfix:after {
+    clear: both;
+}
+.clearfix:before, .clearfix:after {
+    content: " ";
+    display: table;
+}
+.inventory .item:before {
+    color: #ffffff;
+    content: "Добавить";
+    background-image: url(../img/plus_icon.png);
+    background-position: 0 92px;
+    padding: 102px 0px 0px 20px;
+}
+.pot .item:before {
+    color: #ffffff;
+    content: "Исключить";
+    background-image: url(../img/remove_icon.png);
+    background-position: 0 92px;
+    padding: 102px 0px 0px 20px;
+}
+.pot .item{
+    background-color: white;
+}
+#itemsPlace{
+    overflow-y: scroll;
+    height: 400px;
+}
+#potItems{
+    overflow-y: scroll;
+    height: 365px;
+}
+.item:before {
+    position: absolute;
+    left: 0;
+    top: -129px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 13px;
+    z-index: 1;
+    background-color: rgba(49, 211, 85, 0.4);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+    background-repeat: no-repeat;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 129px;
+    width: 100%;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.hover-item:before {
+    top: -5px;
+}
+.pot {
+    position: relative;
+    border: 1px solid #3faa5d;
+    background-color: rgb(149, 208, 165);
+    width: 500px;
+    float: right;
+    padding: 16px;
+}
+.zoomIn {
+    -webkit-animation-name: zoomIn;
+    animation-name: zoomIn;
+}
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+@-webkit-keyframes zoomIn {
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(.3,.3,.3);
+        transform: scale3d(.3,.3,.3)
+    }
+
+    50% {
+        opacity: 1
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(.3,.3,.3);
+        transform: scale3d(.3,.3,.3)
+    }
+
+    50% {
+        opacity: 1
+    }
+}
+.btnReadyDeposit{
+    background-color: #5cb775;
+    color: white;
+    text-decoration: none;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+.btnReadyDeposit:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#duel_view_room {
+    width: 1000px;
+}
+.duel_header{
+    display: inline-block;
+    width: 570px;
+    margin-left: 215px;
+    margin-right: 200px;
+    margin-top: 25px;
+}
+.duel_h_block {
+    width: 120px;
+    display: inline-block;
+}
+.duel_h_block img {
+    width: 100%;
+}
+.duel_h_center_block{
+    display: inline-block;
+    width: 120px;
+    margin-left:100px;
+    margin-right:100px;
+}
+.duel_info{
+    background-color:rgba(63, 170, 93, 0.33);
+    margin-top:50px;
+    padding-top: 15px;
+}
+.duel_info #d_nickname:first-child{
+    float: left;
+    display: inline-block;
+    margin-left: 215px;
+    width: 120px;
+}
+.duel_info #d_game{
+    display: inline-block;
+    float: left;
+    width: 280px;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #236235;
+    text-align: center;
+}
+.duel_info #d_nickname:last-child{
+    float: left;
+    display: inline-block;
+}
+.duel_items{
+    width: 900px;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+#duel_items_block{
+    width: 435px;
+    display: inline-block;
+    float:left;
+}
+
+#duel_items_block:last-child{
+    float: right;
+}
+#duel_items_block #d_items_header {
+    background-color: rgba(63, 170, 93, 0.33);
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-align: center;
+}
+#duel_items_block #d_items_header span{
+    width: 140px;
+    display:inline-block;
+}
+.d_item{
+    color:#304235;
+    padding-top: 15px;
+    background-color: rgba(10, 107, 37, 0.44);
+    border-bottom: rgba(9, 70, 9, 0.37) 2px solid;
+}
+
+.d_item #d_item_img{
+    width: 90px;
+    float:left;
+    padding-left:15px;
+}
+.d_item #d_item_name {
+    width: 205px;
+    padding-left: 15px;
+    padding-right: 15px;
+    float: left;
+}
+.d_item #d_item_price{
+    width: 70px;
+    float: left;
+}
+.d_item img{
+    width: 90px;
+}

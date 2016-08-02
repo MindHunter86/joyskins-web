@@ -8,7 +8,7 @@ $(document).ready(function() {
 	var messageField = $('#sendie');
 	var lastMsg = '';
 	var lastMsgTime = '';
-	var chat = new Firebase("https://csgo-prod.firebaseio.com" + CHAT_CONNECT);
+	var chat = new Firebase("https://joyskinstop.firebaseio.com" + CHAT_CONNECT);
 	$('#chatScroll').css('height', $(window).innerHeight() - 120);
 	$('#chatScroll').perfectScrollbar();
 	function sendMessage() {

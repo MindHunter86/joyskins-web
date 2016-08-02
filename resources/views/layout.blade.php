@@ -8,20 +8,28 @@
     <meta name="description" content="Рулетка cs go для бомжей с минимальной ставкой 1 рубль. Именно рулетки кс го с минимальной ставкой 1 рубль самые доступные для бомжей. JOYSKINS.TOP - это cs go рулетка не больше 100 рублей без минимальной ставки. " />
     <meta name="csrf-token" content="{!!  csrf_token()   !!}">
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/png">
+    <script type="text/javascript" src="{{ asset('new/js/jquery.min.js') }}"></script>
     <link href="{{ asset('assets/css/animate.css') }}" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="{{ asset('new/css/style.css') }}" />
-    <script type="text/javascript" src="{{ asset('new/js/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('new/js/jquery.arcticmodal-0.3.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('new/js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('new/js/bootstrap-tooltip.js') }}"></script>
     <script type="text/javascript" src="{{ asset('new/js/script.js') }}"></script>
     <script src="{{ asset('assets/js/inc.js') }}" ></script>
     <script src="{{ asset('assets/js/main.js') }}" ></script>
-
+    <script type="text/javascript" src="{{ asset('new/js/jquery.arcticmodal-0.3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('new/js/lemmon-slider.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('new/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('new/js/bootstrap-tooltip.js') }}"></script>
     <script>
         var CHAT_CONNECT = '/chat/4';
     </script>
-
+    <script>
+        $(document).ready(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
+    </script>
     @if(!Auth::guest())
         <script>
             const USER_ID = '{{ $u->steamid64 }}';
@@ -353,38 +361,12 @@
                 </div>
             </div>
         </div>
-    </div><script>!function(e,t,a,n,c,s,o){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,s=t.createElement(a),o=t.getElementsByTagName(a)[0],s.async=1,s.src=n,o.parentNode.insertBefore(s,o)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-64317858-7","auto"),ga("send","pageview");</script>
-<script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
-<script>
-    @if(!Auth::guest())
-    var timeout = false;
-    function updateBalance() {
-        $.post('{{route('get.balance')}}', function (data) {
-            console.log(data);
-            $('.balanced').text(data);
-        });
-    }
-    function addTicket(id, btn) {
-        if(!timeout) {
-            timeout = true;
-            $.post('{{route('add.ticket')}}',{id:id}, function(data){
-                updateBalance();
-                timeout = false;
-                return $(btn).notify(data.text, {position: 'bottom middle', className :data.type});
-            });
-        }
-        else {
-            return $(btn).notify('Пожалуйста подождите..', {position: 'bottom middle', className :'error'});
-        }
-
-    }
-    
-    @endif
-
-</script>
-<script type="text/javascript" src="{{ asset('new/js/lemmon-slider.js') }}"></script>
-<script src="{{ asset('assets/js/firebase.js') }}" ></script>
-<script src="{{ asset('assets/js/newapp.js') }}" ></script>
-<script src="{{ asset('assets/js/chat.js') }}" ></script>
+    </div>
+    <script>!function(e,t,a,n,c,s,o){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,s=t.createElement(a),o=t.getElementsByTagName(a)[0],s.async=1,s.src=n,o.parentNode.insertBefore(s,o)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-64317858-7","auto"),ga("send","pageview");</script>
+    <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+    <script src="{{ asset('assets/js/firebase.js') }}" ></script>
+    <script src="{{ asset('assets/js/newapp.js') }}" ></script>
+    <script src="{{ asset('assets/js/chat.js') }}" ></script>
+@yield('attachments')
 </body>
 </html>

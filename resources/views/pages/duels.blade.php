@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <link rel="stylesheet" href="{{asset('assets/css/jquery-ui.min.css')}}">
+    <script src="{{asset('assets/js/jquery-ui.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/jquery.countdown360.min.js')}}"></script>
     <link rel="stylesheet" href="{{asset('assets/css/duel.css')}}">
     <div class="content_bg">
@@ -83,16 +83,6 @@
     </div>
     <div class="viewRoomBet">
     </div>
-    <script>
-        $(function(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-        });
-    </script>
 @endsection
 @section('modals')
     <div class="box-modal" id="fairplayduel" style="width:800px;">
@@ -141,6 +131,51 @@
                 </ol>
             </div>
             <a href="http://www.free-kassa.ru/"><img src="./JOYSKINS.TOP_files/13.png"></a>
+        </div>
+    </div>
+    <div class="box-modal"  id="deposit">
+        <div class="box-modal-top"><div class="box-modal_close arcticmodal-close"></div>Депозит</div>
+        <div id="duel_create_room">
+            <img src="https://joyskins.top/assets/img/coin-t.png" data-coin="0" class="coin choosen">
+            <img src="https://joyskins.top/assets/img/coin-ct.png" data-coin="1" class="coin">
+            <h5>Минимальный депозит для создания комнаты: 30 рублей.</h5>
+            <h5>Максимальное количество предметов: 15.</h5>
+        </div>
+        <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+            <div class="inventory">
+                <h3 style="color: white;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+        text-align: center;
+        background-color: #5cb776;">Стоимость вашего инвентаря:<span id="inv_price"></span></h3>
+                <div id="inv_loader">
+                    <div style="position: inherit;" class="loader-inner ball-clip-rotate-multiple blue-loader">
+                        <div></div><div></div>
+                    </div>
+                </div>
+                <div id="itemsPlace">
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="pot">
+                <div style="color: white; font-size:9pt;">
+                    <h1>Ставка:</h1>
+                    <h4 id="duel_join_room">Вам нужно поставить: <span id="min_price">3</span>-<span id="max_price">5</span></h4>
+                    <h4>Сумма взноса: <span id="pot_total_price">0</span> Предметы <span id="pot_count_items">0</span> из <span style="color:#29633a;">15</span></h4>
+                </div>
+                <div id="potItems">
+
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <a style="color: white;" class="btnReadyDeposit">Готов к игре.</a>
+    </div>
+    <div id="modal_view_room">
+        <div class="box-modal_close arcticmodal-close"></div>
+        <div class="box-modal" id="duel_view_room">
         </div>
     </div>
     <div id="historyModal" class="duel_games_list history-modal"><table class="coinflip-pots table">

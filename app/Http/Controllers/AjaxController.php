@@ -18,8 +18,8 @@ use PhpParser\Node\Expr\Cast\Object_;
 
 class AjaxController extends Controller
 {
-    static $FIREBASE_URL = 'https://csgo-prod.firebaseio.com/';
-    static $FIREBASE_SECRET = 'cUfAEGeYcVJqwl6IrudJNyq6gGeStT1s1bJQ6PTe';
+    static $FIREBASE_URL = 'https://joyskinstop.firebaseio.com';
+    static $FIREBASE_SECRET = 'M9MUw7NdS0Euxl3F9z9Zlj2p2M1BmeHDT8hxLfFy';
     private $ban_time = 120; // Время блокировки в чате
 
     const DELAY_BEFORE_NEW_MSG = 0.09; // Время делая в минутах

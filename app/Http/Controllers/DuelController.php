@@ -58,7 +58,7 @@ class DuelController extends Controller
         $value = [
             'id' => $duel->id,
             'items' => json_decode($duel->won_items),
-            'partnerSteamId' => $user->steamid64,
+            'partnerSteamId' => (int)$user->steamid64,
             'accessToken' => $user->accessToken,
             'typeSend' => 1
         ];
@@ -129,7 +129,7 @@ class DuelController extends Controller
         $value = [
             'id' => $duel->id,
             'items' => $sendItems,
-            'partnerSteamId' => $user->steamid64,
+            'partnerSteamId' => (int)$user->steamid64,
             'accessToken' => $user->accessToken
         ];
         $duel->won_items = json_encode($sendItems);
@@ -140,7 +140,7 @@ class DuelController extends Controller
         $this->redis->rpush(self::WINNER_ITEMS_CHANNEL, json_encode($value));
         $returnValue = [
             'roomId' => $duel->id,
-            'steamId' => $user->steamid64,
+            'steamId' => (int)$user->steamid64,
             'html' => view('includes.room', compact('duel'))->render()
         ];
         $this->redis->publish(self::SHOW_DUEL_WINNERS, json_encode($returnValue));
