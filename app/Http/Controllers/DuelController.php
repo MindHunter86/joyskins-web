@@ -76,7 +76,8 @@ class DuelController extends Controller
                 'id' => $duel->id,
                 'items' => json_decode($duel->won_items),
                 'partnerSteamId' => $user->steamid64,
-                'accessToken' => $user->accessToken
+                'accessToken' => $user->accessToken,
+                'typeSend' => 0
             ];
             $this->redis->rpush(self::WINNER_ITEMS_CHANNEL, json_encode($value));
         }
