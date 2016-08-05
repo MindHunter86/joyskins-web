@@ -710,7 +710,7 @@ $(document).on('click','.btnReadyDeposit',function(){
         totalPrice += parseFloat($(this).data('price'));
         items.push($(this).data('id'));
     });
-    if(items.length > 15) {
+    if(items.length >= 15) {
         $(this).notify('Вы выбрали больше 15 предметов!', {position: 'bottom middle', className :"error"});
 
     } else
@@ -760,7 +760,7 @@ $(document).on('click','.btnReadyDeposit',function(){
     }
 });
 $(document).on('click','.inventory .item',function(){
-    if(parseInt($('#pot_count_items').html())>15){
+    if(parseInt($('#pot_count_items').html())>=15){
         $(this).notify('Вы выбрали 15 предметов, больше нельзя!!', {position: 'bottom middle', className :"error"});
         return;
     }

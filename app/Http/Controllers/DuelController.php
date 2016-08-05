@@ -32,7 +32,7 @@ class DuelController extends Controller
     const PRE_FINISH_CHANNEL = 'pre.finish.duel';
 
     const DUEL_MAX_ITEMS_COUNT = 15;
-    const DUEL_MIN_PRICE = 1;
+    const DUEL_MIN_PRICE = 30;
 
     public function __construct(SteamAuth $auth)
     {
@@ -103,7 +103,7 @@ class DuelController extends Controller
         $duel = duel::where('id',$roomId)->first();
         if(is_null($duel))
             return;
-        $user = User::where('id', $duel->winner_id)->first();
+        $user = User::where('id', $duel->winner_id)->select(['accessToken','steamid64'])->first();
         if($duel->status != duel::STATUS_PRE_FINISH)
             return;
         $items = json_decode($duel->won_items,true);
@@ -149,7 +149,7 @@ class DuelController extends Controller
     {
         $id = \Request::get('id');
         $status = \Request::get('status');
-        $bet = duel_bet::where('id',$id)->first();
+        $bet = duel_bet::where('id',$id)->select(['id','game_id','user_id','status'])->first();
         if($status == $bet->status)
             return;
         $bet->status = $status;
@@ -160,7 +160,7 @@ class DuelController extends Controller
             if($status == duel_bet::STATUS_ACCEPTED) {
                 duel::where('id', $bet->game_id)->update(['status' => duel::STATUS_PLAYING, 'won_items' => $items]);
                 $duel = duel::where('id',$bet->game_id)->first();
-                $user = User::where('id',$bet->user_id)->first();
+                $user = User::where('id',$bet->user_id)->select(['steamid64'])->first();
                 $returnValue = [
                     'betId' => $bet->id,
                     'roomId' => $bet->game_id,
@@ -172,9 +172,9 @@ class DuelController extends Controller
                 duel::where('id',$bet->game_id)->update(['status'=>duel::STATUS_ERROR]);
             }
         } else {
-            if($status == duel_bet::STATUS_WAIT_TO_ACCEPT) {
+            if($status === duel_bet::STATUS_WAIT_TO_ACCEPT) {
                 $duel = duel::where('id',$bet->game_id)->first();
-                $user = User::where('id',$bet->user_id)->first();
+                $user = User::where('id',$bet->user_id)->select(['steamid64'])->first();
                 $returnValue = [
                     'betId' => $bet->id,
                     'roomId' => $bet->game_id,
@@ -185,7 +185,7 @@ class DuelController extends Controller
                 return;
             } else if($status == duel_bet::STATUS_SENT_ERROR || $status == duel_bet::STATUS_DECLINED) {
                 $duel = duel::where('id',$bet->game_id)->first();
-                $user = User::where('id',$bet->user_id)->first();
+                $user = User::where('id',$bet->user_id)->select(['steamid64'])->first();
                 $returnValue = [
                     'betId' => $bet->id,
                     'roomId' => $bet->game_id,
@@ -244,15 +244,13 @@ class DuelController extends Controller
             })->count();
             if($count != 1)
                 return response()->json(['success'=>false,'error'=>'Данная комната уже занята!']);
-        } else if($type == 'createRoom') {
-
-        } else
+        } else if($type != 'createRoom')
             return response()->json(['success'=>false,'error'=>'Ошибка типа запроса!']);
         $items = \Request::get('items');
         $items = json_decode($items,true);
         if (!$items)
             return response()->json(['success'=>false,'error'=>'Ошибка предметов.']);
-        $userInv = file_get_contents('https://steamcommunity.com/profiles/'.\Auth::user()->steamid64.'/inventory/json/730/2');
+        $userInv = file_get_contents('https://steamcommunity.com/profiles/'.$this->user->steamid64.'/inventory/json/730/2');
         $userInv = json_decode($userInv,true);
         if(!$userInv['success'])
             return response()->json(['success'=>false,'error'=>'Ошибка загрузки инвентаря.']);
