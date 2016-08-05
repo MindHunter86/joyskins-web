@@ -75,11 +75,21 @@ class PagesController extends Controller
 
     public function history()
     {
+        $key = 'classic_history';
+        $key_id = 'classic_history_id';
+        if(\Cache::has($key)&&\Cache::has($key_id)) {
+            $last_id = Game::select(['id'])->first();
+            if($last_id == \Cache::get($key_id)) {
+                $games = \Cache::get($key);
+                return view('pages.history', compact('games'));
+            }
+        }
         $gamesId = Game::select(['id'])
             ->where('status', Game::STATUS_FINISHED)
             ->orderBy('created_at', 'desc')
             ->limit(50)
             ->get();
+        \Cache::put($key_id,$gamesId[0]->id,60);
         $games = [];
         foreach ($gamesId as $id)
             $games[] = Game::get_cache_game($id->id);
@@ -95,7 +105,7 @@ class PagesController extends Controller
             array_multisort($price, SORT_DESC, $items);
             $games[$key]->game_items = json_encode(array_slice($items, 0, 7));
         }
-
+        \Cache::put($key,$games,60);
         return view('pages.history', compact('games'));
     }
     public function profile()

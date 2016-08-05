@@ -1,5 +1,8 @@
 @extends('layout')
 @section('content')
+    <script>
+        var DUEL_MIN_PRICE = {{\App\Http\Controllers\DuelController::DUEL_MIN_PRICE}}
+    </script>
     <link rel="stylesheet" href="{{asset('assets/css/jquery-ui.min.css')}}">
     <script src="{{asset('assets/js/jquery-ui.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/jquery.countdown360.min.js')}}"></script>

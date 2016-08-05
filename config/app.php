@@ -30,6 +30,10 @@ return [
     */
 
     'url' => 'https://joyskins.top',
+    /*
+     *  SOCKET URL
+     */
+    'socket_url' => 'https://joyskins.top',
 
     /*
     |--------------------------------------------------------------------------
