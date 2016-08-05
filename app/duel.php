@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class duel extends Model
 {
@@ -31,5 +32,27 @@ class duel extends Model
             \Cache::put($key,json_encode($duel),60);
         }
         return json_decode(\Cache::get($key));
+    }
+    public static function gamesToday()
+    {
+        return self::where('status', self::STATUS_FINISHED)->where('created_at', '>=', Carbon::today())->count();
+    }
+    public static function maxPriceToday()
+    {
+        return ($price = self::where('created_at', '>=', Carbon::today())->max('price')) ? $price : 0;
+    }
+
+    public static function maxPrice()
+    {
+        return self::max('price');
+    }
+    public static function usersToday()
+    {
+        return count(\DB::table('duels')
+            ->join('duel_bets', 'duels.id', '=', 'duel_bets.game_id')
+            ->join('users', 'duel_bets.user_id', '=', 'users.id')
+            ->where('duels.created_at', '>=', Carbon::today())
+            ->groupBy('users.username')
+            ->select('users.username')->get());
     }
 }

@@ -5,9 +5,15 @@ if(count($duel_bets)>1)
     $join_user = \App\User::get_user_cache($duel_bets[1]->user_id);
 $total_bet = 0;
 $items = json_decode($duel_bets[0]->items);
-if(isset($join_user))
+usort($items,function($a,$b){
+    return $b->price-$a->price;
+});
+if(isset($join_user)){
     $j_items = json_decode($duel_bets[1]->items);
-
+    usort($j_items,function($a,$b){
+        return $b->price-$a->price;
+    });
+}
 if($duel->status == \App\duel::STATUS_PRE_FINISH || $duel->status == \App\duel::STATUS_FINISHED){
     foreach ($duel_bets as $bet)
         $total_bet += $bet->price;
@@ -87,8 +93,9 @@ else{
         <span id="d_game">Хэш: {{md5($duel->secret.':'.$duel->rand_number)}}
             @if($duel->status == \App\duel::STATUS_FINISHED)
                 <script>setTimeout(function(){$('#duel_hide_info').show();},3000);</script>
-                <span id="duel_hide_info">
-                <br>Процент: {{$duel->rand_number}}<br>Секретка: {{$duel->secret}}
+                <span style="display: none;" id="duel_hide_info">
+                <br>Процент: {{$duel->rand_number}}<br>Секретка: {{$duel->secret}}<br>
+                    Банк: {{$total_bet}}
                     </span>
             @endif
                 </span>

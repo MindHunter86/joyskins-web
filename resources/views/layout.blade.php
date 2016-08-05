@@ -20,6 +20,7 @@
     <script type="text/javascript" src="{{ asset('new/js/bootstrap-tooltip.js') }}"></script>
     <script>
         var CHAT_CONNECT = '/chat/4';
+        var SOCKET_URL = '{{\Config::get('app.socket_url')}}'
     </script>
     <script>
         $(document).ready(function(){
@@ -86,9 +87,9 @@
         </div>
         <div class="stats full">
             <div><b class="stats-onlineNow">0</b>Сейчас онлайн</div>
-            <div><b class="stats-gamesToday">{{ \App\Game::gamesToday() }}</b>Игр сегодня</div>
-            <div><b class="stats-uniqueUsers">{{ \App\Game::usersToday() }}</b>Игроков сегодня</div>
-            <div><b class="stats-wintoday">{{ \App\Game::maxPriceToday() }}<span>руб.</span></b>Макс.выигрыш сегодня</div>
+            <div><b class="stats-gamesToday">{{\App\duel::gamesToday() }}</b>Игр сегодня</div>
+            <div><b class="stats-uniqueUsers">{{ \App\Game::usersToday()+\App\duel::usersToday() }}</b>Игроков сегодня</div>
+            <div><b class="stats-wintoday">@if(\App\Game::maxPriceToday() > \App\duel::maxPriceToday()){{ \App\Game::maxPriceToday()}}@else{{ \App\duel::maxPriceToday()}}@endif<span>руб.</span></b>Макс.выигрыш сегодня</div>
             <div><b>{{ \App\Game::maxPrice() }}<span>руб.</span></b>Макс.выигрыш</div>
         </div>
         @yield('content')
