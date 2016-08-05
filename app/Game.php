@@ -54,27 +54,35 @@ class Game extends Model
     }
     public static function gamesToday()
     {
-        return self::where('status', self::STATUS_FINISHED)->where('created_at', '>=', Carbon::today())->count();
+        return \Cache::remember('classicGamesToday',2,function(){
+            return self::where('status', self::STATUS_FINISHED)->where('created_at', '>=', Carbon::today())->count();
+        });
     }
 
     public static function usersToday()
     {
-        return count(\DB::table('games')
-            ->join('bets', 'games.id', '=', 'bets.game_id')
-            ->join('users', 'bets.user_id', '=', 'users.id')
-            ->where('games.created_at', '>=', Carbon::today())
-            ->groupBy('users.username')
-            ->select('users.username')->get());
+        return \Cache::remember('classicUsersToday',2,function(){
+            return count(\DB::table('games')
+                ->join('bets', 'games.id', '=', 'bets.game_id')
+                ->join('users', 'bets.user_id', '=', 'users.id')
+                ->where('games.created_at', '>=', Carbon::today())
+                ->groupBy('users.username')
+                ->select('users.username')->get());
+        });
     }
 
     public static function maxPriceToday()
     {
-        return ($price = self::where('created_at', '>=', Carbon::today())->max('price')) ? $price : 0;
+        return \Cache::remember('classicMaxPriceToday',2,function(){
+            return ($price = self::where('created_at', '>=', Carbon::today())->max('price')) ? $price : 0;
+        });
     }
 
     public static function maxPrice()
     {
-        return self::max('price');
+        return \Cache::remember('classicMaxPrice',2,function(){
+            return self::max('price');
+        });
     }
 
     public function bets()
