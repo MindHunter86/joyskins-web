@@ -45,10 +45,6 @@ $(document).ready(function() {
     });
 
     ITEMUP.init();
-    if(GAME_MODE == 'duel'){
-        //load active games
-        loadActiveDuels();
-    }
     $('[data-modal]').click(function() {
         $($(this).data('modal')).arcticmodal();
         return false;
@@ -252,6 +248,180 @@ $(document).ready(function() {
             $(this).notify('Хэш Раунда и Число Раунда не совпадают.', {position: 'left middle', className :"error"});
         }
     });
+
+    if(GAME_MODE == 'duel'){
+        loadActiveDuels();
+        $(document).on('click','.coin',function () {
+            $('.coin.choosen').removeClass('choosen');
+            $(this).addClass('choosen');
+        });
+        $(document).on({
+            mouseenter: function () {
+                $(this).siblings('.btn.right span.left.prices').css('background-color','#236235');
+                $(this).siblings('.btn.right span.left.icon .slant-left').css('border-color','#236235');
+                $(this).addClass("hover-item");
+            },
+            mouseleave: function () {
+                $(this).siblings('.btn.right span.left.prices').css('background-color','#3faa5d');
+                $(this).siblings('.btn.right span.left.icon .slant-left').css('border-color','#3faa5d');
+                $(this).removeClass("hover-item");
+            }
+        }, ".item");
+        $(document).on('click','.btnReadyDeposit',function(){
+            var items = [];
+            var totalPrice = 0;
+            $('.pot .item').each(function(){
+                totalPrice += parseFloat($(this).data('price'));
+                items.push($(this).data('id'));
+            });
+            if(items.length >= 15) {
+                $(this).notify('Вы выбрали больше 15 предметов!', {position: 'bottom middle', className :"error"});
+
+            } else
+            if(duel_deposit_state == 'join_room' && (totalPrice > parseFloat($('#max_price').html()) || totalPrice < parseFloat($('#min_price').html()))) {
+                $(this).notify('Вы выбрали не верную сумму!', {position: 'bottom middle', className :"error"});
+            } else if(duel_deposit_state == 'join_room') {
+                var id = $('#duel_join_room').data('roomId');
+                $('#potItems').html('<div style="left: 20px; top:20px;" class="loader-inner ball-clip-rotate-multiple blue-loader"> <div></div><div></div></div>');
+                $.ajax({
+                    url: '/duel/receiveOffer',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { type: 'joinRoom', items: JSON.stringify(items), id: id },
+                    success:function (data) {
+                        if(data.success) {
+                        }else{
+                            $('#potItems').html('<h1 style="color: red;">'+data.error+'</h1>');
+                            // $('<div title="Ошибка входа"><p>'+data.error+'</p></div>').dialog();
+                        }
+                    },
+                    error:function () {
+                        $('<div title="Ошибка"><p>Ошибка аякс!</p></div>').dialog();
+                    }
+                });
+                //$('#deposit').arcticmodal('close');
+            } else if(totalPrice < DUEL_MIN_PRICE) {
+                $(this).notify('Минимальная сумма для создания комнаты '+DUEL_MIN_PRICE+' рублей.', {position: 'bottom middle', className :"error"});
+            } else {
+                var coin = $('.coin.choosen').data('coin');
+                $('#potItems').html('<div style="left: 20px; top:20px;" class="loader-inner ball-clip-rotate-multiple blue-loader"> <div></div><div></div></div>');
+                $.ajax({
+                    url: '/duel/receiveOffer',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { type: 'createRoom', items: JSON.stringify(items), coin: coin },
+                    success:function (data) {
+                        if(data.success) {
+                        }else{
+                            $('#potItems').html('<h1 style="color: red;">'+data.error+'</h1>');
+                        }
+                    },
+                    error:function () {
+                        $('<div title="Комната"><p>Ошибка аякс!</p></div>').dialog();
+                    }
+                });
+                // $('#deposit').arcticmodal('close');
+            }
+        });
+        $(document).on('click','.inventory .item',function(){
+            if(parseInt($('#pot_count_items').html())>=15){
+                $(this).notify('Вы выбрали 15 предметов, больше нельзя!!', {position: 'bottom middle', className :"error"});
+                return;
+            }
+            $('#pot_count_items').html(parseInt($('#pot_count_items').html()) + 1);
+            $(this).appendTo('#potItems');
+            $('#pot_total_price').html((parseFloat($('#pot_total_price').html()) + parseFloat($(this).data('price'))).toFixed(2));
+
+            if (duel_deposit_state == 'join_room') {
+                if (parseFloat($('#pot_total_price').html()) > parseFloat($('#max_price').html()) || parseFloat($('#pot_total_price').html()) < parseFloat($('#min_price').html())) {
+                    $('#pot_total_price').css('color', 'red');
+                    $('.btnReadyDeposit').css('background-color','red');
+                } else {
+                    $('#pot_total_price').css('color', 'green');
+                    $('.btnReadyDeposit').css('background-color','#5cb775');
+                }
+            } else {
+                if (parseFloat($('#pot_total_price').html()) <DUEL_MIN_PRICE) {
+                    $('#pot_total_price').css('color', 'red');
+                    $('.btnReadyDeposit').css('background-color','red');
+                } else {
+                    $('#pot_total_price').css('color', 'green');
+                    $('.btnReadyDeposit').css('background-color','#5cb775');
+                }
+            }
+
+        });
+        $(document).on('click','.pot .item',function(){
+            $(this).appendTo('#itemsPlace');
+            $('#pot_count_items').html(parseInt($('#pot_count_items').html()) - 1);
+            $('#pot_total_price').html((parseFloat($('#pot_total_price').html()) - parseFloat($(this).data('price'))).toFixed(2));
+            if (duel_deposit_state == 'join_room') {
+                if (parseFloat($('#pot_total_price').html()) > parseFloat($('#max_price').html()) || parseFloat($('#pot_total_price').html()) < parseFloat($('#min_price').html())) {
+                    $('#pot_total_price').css('color', 'red');
+                    $('.btnReadyDeposit').css('background-color','red');
+                } else {
+                    $('#pot_total_price').css('color', 'green');
+                    $('.btnReadyDeposit').css('background-color','#5cb775');
+                }
+            } else {
+                if (parseFloat($('#pot_total_price').html()) < DUEL_MIN_PRICE) {
+                    $('#pot_total_price').css('color', 'red');
+                    $('.btnReadyDeposit').css('background-color','red');
+                } else {
+                    $('#pot_total_price').css('color', 'green');
+                    $('.btnReadyDeposit').css('background-color','#5cb775');
+                }
+            }
+        });
+        $(document).on('click','.btnShowInv',function () {
+            $('#deposit').arcticmodal();
+            $('#potItems').html('');
+            $('#inv_loader').show();
+            $('#pot_count_items').html(0);
+            $('#duel_create_room').show();
+            $('#duel_join_room').hide();
+            $('#pot_total_price').html(0);
+            duel_deposit_state = 'create_room';
+            loadMyDuelInventory();
+            /*
+             $('#joinRoom').hide();
+             $('#createRoom').show();
+             $('.inv_table_duel').html('');
+             loadMyDuelInventory();
+             $('.inv_count').html(0);
+             $('.inv_price').html(0);
+             $('.window').show();*/
+        });
+        $(document).on('click','.cfRoundJoin',function () {
+            $('#deposit').arcticmodal();
+            $('#potItems').html('');
+            $('#inv_loader').show();
+            $('#pot_count_items').html(0);
+            $('#pot_total_price').html(0);
+            $('#duel_create_room').hide();
+            $('#duel_join_room').show();
+            duel_deposit_state = 'join_room';
+            $('#duel_join_room').data('roomId',$(this).data('id'));
+            $('#min_price').html(parseFloat(($(this).data('price'))*0.9).toFixed(2));
+            $('#max_price').html(parseFloat(($(this).data('price'))*1.1).toFixed(2));
+            loadMyDuelInventory();
+            /*
+             $('#joinRoom').show();
+             $('#joinRoom').data('roomId',$(this).data('id'));
+             $('#room_start').html(parseFloat(($(this).data('price'))*0.9).toFixed(2));
+             $('#room_end').html(parseFloat(($(this).data('price'))*1.1).toFixed(2));
+             $('#createRoom').hide();
+             $('.inv_table_duel').html('');
+             loadMyDuelInventory();
+             $('.inv_count').html(0);
+             $('.inv_price').html(0);
+             $('.window').show();*/
+        });
+        $(document).on('click','.cfRoundView',function () {
+            var id = $(this).data('id');
+            loadViewRoom(id);
+        });
+    }
 });
 
 function getRarity(type) {
@@ -638,54 +808,6 @@ function loadMyInventory() {
     });
 }
 var duel_deposit_state = 'create_room';
-$(document).on('click','.btnShowInv',function () {
-    $('#deposit').arcticmodal();
-    $('#potItems').html('');
-    $('#inv_loader').show();
-    $('#pot_count_items').html(0);
-    $('#duel_create_room').show();
-    $('#duel_join_room').hide();
-    $('#pot_total_price').html(0);
-    duel_deposit_state = 'create_room';
-    loadMyDuelInventory();
-    /*
-    $('#joinRoom').hide();
-    $('#createRoom').show();
-    $('.inv_table_duel').html('');
-    loadMyDuelInventory();
-    $('.inv_count').html(0);
-    $('.inv_price').html(0);
-    $('.window').show();*/
-});
-$(document).on('click','.cfRoundJoin',function () {
-    $('#deposit').arcticmodal();
-    $('#potItems').html('');
-    $('#inv_loader').show();
-    $('#pot_count_items').html(0);
-    $('#pot_total_price').html(0);
-    $('#duel_create_room').hide();
-    $('#duel_join_room').show();
-    duel_deposit_state = 'join_room';
-    $('#duel_join_room').data('roomId',$(this).data('id'));
-    $('#min_price').html(parseFloat(($(this).data('price'))*0.9).toFixed(2));
-    $('#max_price').html(parseFloat(($(this).data('price'))*1.1).toFixed(2));
-    loadMyDuelInventory();
-/*
-    $('#joinRoom').show();
-    $('#joinRoom').data('roomId',$(this).data('id'));
-    $('#room_start').html(parseFloat(($(this).data('price'))*0.9).toFixed(2));
-    $('#room_end').html(parseFloat(($(this).data('price'))*1.1).toFixed(2));
-    $('#createRoom').hide();
-    $('.inv_table_duel').html('');
-    loadMyDuelInventory();
-    $('.inv_count').html(0);
-    $('.inv_price').html(0);
-    $('.window').show();*/
-});
-$(document).on('click','.cfRoundView',function () {
-    var id = $(this).data('id');
-    loadViewRoom(id);
-});
 function loadViewRoom(id){
     $.ajax({
         url: '/duel/viewRound',
@@ -706,128 +828,6 @@ function loadViewRoom(id){
         }
     });
 }
-$(document).on('click','.coin',function () {
-   $('.coin.choosen').removeClass('choosen');
-    $(this).addClass('choosen');
-});
-$(document).on({
-    mouseenter: function () {
-        $(this).siblings('.btn.right span.left.prices').css('background-color','#236235');
-        $(this).siblings('.btn.right span.left.icon .slant-left').css('border-color','#236235');
-        $(this).addClass("hover-item");
-    },
-    mouseleave: function () {
-        $(this).siblings('.btn.right span.left.prices').css('background-color','#3faa5d');
-        $(this).siblings('.btn.right span.left.icon .slant-left').css('border-color','#3faa5d');
-        $(this).removeClass("hover-item");
-    }
-}, ".item");
-$(document).on('click','.btnReadyDeposit',function(){
-    var items = [];
-    var totalPrice = 0;
-    $('.pot .item').each(function(){
-        totalPrice += parseFloat($(this).data('price'));
-        items.push($(this).data('id'));
-    });
-    if(items.length >= 15) {
-        $(this).notify('Вы выбрали больше 15 предметов!', {position: 'bottom middle', className :"error"});
-
-    } else
-    if(duel_deposit_state == 'join_room' && (totalPrice > parseFloat($('#max_price').html()) || totalPrice < parseFloat($('#min_price').html()))) {
-       $(this).notify('Вы выбрали не верную сумму!', {position: 'bottom middle', className :"error"});
-    } else if(duel_deposit_state == 'join_room') {
-        var id = $('#duel_join_room').data('roomId');
-        $('#potItems').html('<div style="left: 20px; top:20px;" class="loader-inner ball-clip-rotate-multiple blue-loader"> <div></div><div></div></div>');
-        $.ajax({
-            url: '/duel/receiveOffer',
-            type: 'POST',
-            dataType: 'json',
-            data: { type: 'joinRoom', items: JSON.stringify(items), id: id },
-            success:function (data) {
-                if(data.success) {
-                      }else{
-                    $('#potItems').html('<h1 style="color: red;">'+data.error+'</h1>');
-                   // $('<div title="Ошибка входа"><p>'+data.error+'</p></div>').dialog();
-                }
-            },
-            error:function () {
-                $('<div title="Ошибка"><p>Ошибка аякс!</p></div>').dialog();
-            }
-        });
-        //$('#deposit').arcticmodal('close');
-    } else if(totalPrice < DUEL_MIN_PRICE) {
-        $(this).notify('Минимальная сумма для создания комнаты '+DUEL_MIN_PRICE+' рублей.', {position: 'bottom middle', className :"error"});
-    } else {
-        var coin = $('.coin.choosen').data('coin');
-        $('#potItems').html('<div style="left: 20px; top:20px;" class="loader-inner ball-clip-rotate-multiple blue-loader"> <div></div><div></div></div>');
-        $.ajax({
-            url: '/duel/receiveOffer',
-            type: 'POST',
-            dataType: 'json',
-            data: { type: 'createRoom', items: JSON.stringify(items), coin: coin },
-            success:function (data) {
-                if(data.success) {
-                }else{
-                    $('#potItems').html('<h1 style="color: red;">'+data.error+'</h1>');
-                }
-            },
-            error:function () {
-                $('<div title="Комната"><p>Ошибка аякс!</p></div>').dialog();
-            }
-        });
-       // $('#deposit').arcticmodal('close');
-    }
-});
-$(document).on('click','.inventory .item',function(){
-    if(parseInt($('#pot_count_items').html())>=15){
-        $(this).notify('Вы выбрали 15 предметов, больше нельзя!!', {position: 'bottom middle', className :"error"});
-        return;
-    }
-    $('#pot_count_items').html(parseInt($('#pot_count_items').html()) + 1);
-    $(this).appendTo('#potItems');
-    $('#pot_total_price').html((parseFloat($('#pot_total_price').html()) + parseFloat($(this).data('price'))).toFixed(2));
-
-    if (duel_deposit_state == 'join_room') {
-         if (parseFloat($('#pot_total_price').html()) > parseFloat($('#max_price').html()) || parseFloat($('#pot_total_price').html()) < parseFloat($('#min_price').html())) {
-             $('#pot_total_price').css('color', 'red');
-             $('.btnReadyDeposit').css('background-color','red');
-        } else {
-             $('#pot_total_price').css('color', 'green');
-             $('.btnReadyDeposit').css('background-color','#5cb775');
-        }
-    } else {
-        if (parseFloat($('#pot_total_price').html()) <DUEL_MIN_PRICE) {
-            $('#pot_total_price').css('color', 'red');
-            $('.btnReadyDeposit').css('background-color','red');
-        } else {
-            $('#pot_total_price').css('color', 'green');
-            $('.btnReadyDeposit').css('background-color','#5cb775');
-        }
-    }
-
-});
-$(document).on('click','.pot .item',function(){
-    $(this).appendTo('#itemsPlace');
-    $('#pot_count_items').html(parseInt($('#pot_count_items').html()) - 1);
-    $('#pot_total_price').html((parseFloat($('#pot_total_price').html()) - parseFloat($(this).data('price'))).toFixed(2));
-    if (duel_deposit_state == 'join_room') {
-        if (parseFloat($('#pot_total_price').html()) > parseFloat($('#max_price').html()) || parseFloat($('#pot_total_price').html()) < parseFloat($('#min_price').html())) {
-            $('#pot_total_price').css('color', 'red');
-            $('.btnReadyDeposit').css('background-color','red');
-        } else {
-            $('#pot_total_price').css('color', 'green');
-            $('.btnReadyDeposit').css('background-color','#5cb775');
-        }
-    } else {
-        if (parseFloat($('#pot_total_price').html()) < DUEL_MIN_PRICE) {
-            $('#pot_total_price').css('color', 'red');
-            $('.btnReadyDeposit').css('background-color','red');
-        } else {
-            $('#pot_total_price').css('color', 'green');
-            $('.btnReadyDeposit').css('background-color','#5cb775');
-        }
-    }
-});
 function loadDuelHistory(){
     $.ajax({
         url: '/ajax/getDuelHistory',
