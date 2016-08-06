@@ -274,7 +274,7 @@ $(document).ready(function() {
                 totalPrice += parseFloat($(this).data('price'));
                 items.push($(this).data('id'));
             });
-            if(items.length >= 15) {
+            if(items.length > 15) {
                 $(this).notify('Вы выбрали больше 15 предметов!', {position: 'bottom middle', className :"error"});
 
             } else
