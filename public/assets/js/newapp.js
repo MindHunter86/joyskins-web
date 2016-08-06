@@ -422,7 +422,25 @@ $(document).ready(function() {
             loadViewRoom(id);
         });
     }
+    setInterval(function () {
+        updateGameStats();
+    },5000);
 });
+/*
+ Reload site stats
+ */
+function updateGameStats(){
+    $.ajax({
+        url: '/getGameStats',
+        type: 'POST',
+        dataType: 'json',
+        success: function (data) {
+            $('.stats-gamesToday').html(data.gamesToday);
+            $('.stats-uniqueUsers').html(data.usersToday);
+            $('.stats-wintoday').html(data.maxwinToday+' руб.');
+        }
+    });
+}
 
 function getRarity(type) {
     var rarity = '';
