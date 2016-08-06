@@ -51,6 +51,13 @@ class AjaxController extends Controller
         }
         return response($html);
     }
+    public function getGameStats(){
+        return response()->json([
+            'gamesToday' => Game::gamesToday()+\App\duel::gamesToday(),
+            'usersToday' => Game::usersToday()+\App\duel::usersToday(),
+            'maxwinToday' => (Game::maxPriceToday()>\App\duel::maxPriceToday()) ? Game::maxPriceToday():\App\duel::maxPriceToday()
+        ]);
+    }
     public function chat(Request $request) {
         $type = $request->get('type');
         if(!$request->has('type')) {

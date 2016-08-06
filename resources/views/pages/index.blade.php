@@ -1,5 +1,8 @@
 @extends('layout')
 @section('content')
+    <script>
+        var GAME_MODE = 'classic';
+    </script>
     @if(!is_null($lottery))
     <div class="none">
         <div class="box-modal" id="modal-6" style="width:450px;">

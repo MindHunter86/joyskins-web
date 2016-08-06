@@ -303,9 +303,9 @@ class GameController extends Controller
         $game = Game::create(['rand_number' => $rand_number]);
         //$game->rand_number = "0.".mt_rand(100000000,999999999).mt_rand(100000000,999999999);
         $game->hash = md5($rand_number);
-        $game->today = Game::gamesToday();
-        $game->userstoday = Game::usersToday();
-        $game->maxwin = Game::maxPriceToday();
+        $game->today = Game::gamesToday()+\App\duel::gamesToday();
+        $game->userstoday = Game::usersToday()+\App\duel::usersToday();
+        $game->maxwin = (Game::maxPriceToday()>\App\duel::maxPriceToday()) ? Game::maxPriceToday():\App\duel::maxPriceToday();
         $this->redis->set('current.game', $game->id);
         return $game;
     }

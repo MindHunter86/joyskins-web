@@ -32,7 +32,7 @@ class DuelController extends Controller
     const PRE_FINISH_CHANNEL = 'pre.finish.duel';
 
     const DUEL_MAX_ITEMS_COUNT = 15;
-    const DUEL_MIN_PRICE = 30;
+    const DUEL_MIN_PRICE = 1;
 
     public function __construct(SteamAuth $auth)
     {
@@ -47,6 +47,16 @@ class DuelController extends Controller
     public function currentDuels()
     {
         return view('pages.duels');
+    }
+    /*
+     * Возвращает активные игры
+     */
+    public function getActiveGame(){
+        $html = '';
+        foreach(\App\duel::where('status',\App\duel::STATUS_PLAYING)->orWhere('status',\App\duel::STATUS_PRE_FINISH)->get() as $duel) {
+            $html .= view('includes.room', compact('duel'))->render();
+        }
+        return response($html);
     }
     public function sendAjaxDuel()
     {
