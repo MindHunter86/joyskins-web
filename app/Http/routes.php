@@ -14,6 +14,8 @@ get('/payment', 'DonateController@payment');
 get('/duel',['as'=>'duels','uses'=>'DuelController@currentDuels']);
 post('/duel/viewRound','DuelController@viewRoom');
 post('/ajax/getDuelHistory','AjaxController@getDuelHistory');
+post('/duel/getActiveGames','DuelController@getActiveGame');
+post('/getGameStats','AjaxController@getGameStats');
 
 Route::group(['middleware' => 'auth'], function () {
     post('/merchant', 'DonateController@merchant');
@@ -81,4 +83,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'secretKey'], function () {
     post('/duel/setReceiveStatus','DuelController@setReceiveStatus');
     post('/duel/setPrizeStatus','DuelController@setPrizeStatus');
     post('/duel/finishRoom','DuelController@finishRoom');
+
+
+
 });

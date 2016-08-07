@@ -1,7 +1,8 @@
 @extends('layout')
 @section('content')
     <script>
-        var DUEL_MIN_PRICE = {{\App\Http\Controllers\DuelController::DUEL_MIN_PRICE}}
+        var DUEL_MIN_PRICE = {{\App\Http\Controllers\DuelController::DUEL_MIN_PRICE}};
+        var GAME_MODE = 'duel';
     </script>
     <link rel="stylesheet" href="{{asset('assets/css/jquery-ui.min.css')}}">
     <script src="{{asset('assets/js/jquery-ui.min.js')}}"></script>
@@ -76,9 +77,7 @@
                     </tr>
                     </thead>
                     <tbody id="roomList">
-                    @foreach(\App\duel::where('status',\App\duel::STATUS_PLAYING)->orWhere('status',\App\duel::STATUS_PRE_FINISH)->get() as $duel)
-                        @include('includes.room',compact('duel'))
-                    @endforeach
+
                     </tbody>
                 </table>
             </div>

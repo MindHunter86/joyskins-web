@@ -48,6 +48,16 @@ class DuelController extends Controller
     {
         return view('pages.duels');
     }
+    /*
+     * Возвращает активные игры
+     */
+    public function getActiveGame(){
+        $html = '';
+        foreach(\App\duel::where('status',\App\duel::STATUS_PLAYING)->orWhere('status',\App\duel::STATUS_PRE_FINISH)->get() as $duel) {
+            $html .= view('includes.room', compact('duel'))->render();
+        }
+        return response($html);
+    }
     public function sendAjaxDuel()
     {
         $id = \Request::get('game');
