@@ -23,6 +23,8 @@ class AjaxController extends Controller
     private $ban_time = 120; // Время блокировки в чате
 
     const DELAY_BEFORE_NEW_MSG = 0.09; // Время делая в минутах
+    const CHAT_MESSAGE = 'chat.message';
+    const DELETE_CHAT_MESSAGE = 'delete.chat.message';
 
     public function getDuelHistory(Request $request){
         $my_history = $request->get('my_history');
@@ -59,6 +61,58 @@ class AjaxController extends Controller
         ]);
     }
     public function chat(Request $request) {
+        $type = $request->get('type');
+        if(!$request->get('type')) {
+            return response()->json(['success' => false, 'text' => 'Тип запроса не указан']);
+        }
+        if($type == 'push') {
+            if(\Cache::has('ban_chat_'.$this->user->steamid64))
+                return response()->json(['success'=>false,'text'=>'Вы заблокированы в чате, попробуйте завтра!']);
+            if(\Cache::has('chat_'.$this->user->steamid64))
+                return response()->json(['success'=>false,'text'=>'Вы пишите слишком часто!']);
+            \Cache::put('chat_'.$this->user->steamid64,'',self::DELAY_BEFORE_NEW_MSG);
+            $censure = array('залупа', '.ru', '.com', '. ru', 'ru', '.in', '. com', 'заходи', 'классный сайт', 'го на');
+            $message = $request->get('message');
+            if(is_null($message)) {
+                return response()->json(['success' => false, 'text' => 'Вы не ввели сообщение']);
+            }
+            if(strlen($message) == 0) {
+                return response()->json(['success' => false, 'text' => 'Вы не ввели сообщение']);
+            }
+            if(strlen($message) > 200) {
+                return response()->json(['success' => false, 'text' => 'Максимум 200 символов']);
+            }
+            $gamesCount = Bet::where('user_id', $this->user->id)->count();
+            if($gamesCount < 5) {
+                return response()->json(['success' => false, 'text' => 'Вы должны сделать хотябы 5 депозитов на сайте!']);
+            }
+            $message = str_replace($censure, '*мат*', $message);
+            $push = array(
+                'username' => $this->user->username,
+                'avatar' => $this->user->avatar,
+                'steamid' => $this->user->steamid64,
+                'is_admin' => $this->user->is_admin,
+                'is_moderator' => $this->user->is_moderator,
+                'is_vip'    => $this->user->is_vip,
+                'message' => $message,
+                'key' => md5(rand(0,10000).time())
+            );
+            $this->redis->publish(self::CHAT_MESSAGE, json_encode($push));
+            return response()->json(['success' => true, 'text' => 'Сообщение добавлено']);
+        }
+        if($type == 'remove') {
+            if(!$this->user->is_moderator && !$this->user->is_admin) {
+                return response()->json(['success' => false, 'text' => 'Вам недоступная данная функция!']);
+            }
+            $steamid = $request->get('steamid');
+            $id = $request->get('id');
+            if(!\Cache::has('ban_chat_'.$steamid))
+                \Cache::put('ban_chat_'.$steamid,'',$this->ban_time);
+            $this->redis->publish(self::DELETE_CHAT_MESSAGE, $id);
+            return response()->json(['success' => true, 'text' => 'Сообщение удалено']);
+        }
+    }
+    public function old_chat(Request $request) {
         $type = $request->get('type');
         if(!$request->has('type')) {
             return response()->json(['success' => false, 'text' => 'Тип запроса не указан']);

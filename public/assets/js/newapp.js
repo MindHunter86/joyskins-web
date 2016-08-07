@@ -248,7 +248,6 @@ $(document).ready(function() {
             $(this).notify('Хэш Раунда и Число Раунда не совпадают.', {position: 'left middle', className :"error"});
         }
     });
-
     if(GAME_MODE == 'duel'){
         loadActiveDuels();
         $(document).on('click','.coin',function () {
@@ -494,6 +493,8 @@ function loadActiveDuels(){
 }
 
 if (START) {
+    var messageList = $('#chat_messages');
+    var messageField = $('#sendie');
     var socket = io.connect(SOCKET_URL);
     socket
         .on('connect', function () {
@@ -501,6 +502,45 @@ if (START) {
         })
         .on('disconnect', function () {
             $('#loader').show();
+        })
+        .on('chat.message',function (data) {
+            data = JSON.parse(data);
+            var a = $("#chatScroll")[0];
+            var isScrollDown = Math.abs((a.offsetHeight + a.scrollTop) - a.scrollHeight) < 5;
+            //GET DATA
+            var username = data.username || "Error";
+            var message = data.message;
+            var avatar = data.avatar;
+            var steamid = data.steamid;
+            console.log(data);
+            if(data.is_moderator == "1") {
+                username = 'Модератор ('+username+')';
+            }
+            //CREATE ELEMENTS MESSAGE & SANITIZE TEXT
+            var messageElement = $("<div class='chatMessage clearfix' data-uuid='"+data.key+"'>");
+            var msg = $('<div class="body"></div>');
+            var nameElement = $("<a href='#' class='login'></a>");
+            var avatarElement = $("<img class='removeMSG' data-ids='"+data.key+"' data-steamids='"+data.steamid+"' style='height: 32px; width: 32px;' />");
+            avatarElement.attr('src', avatar);
+            nameElement.attr('data-profile', steamid);
+            if(data.is_vip == "1") {
+                nameElement.attr('style', 'color:orange;');
+            }
+            if(data.is_moderator == "1") {
+                nameElement.attr('style', 'color:green;');
+            }
+            msg.text(message);
+            nameElement.text(username);
+            messageElement.html(msg).prepend(nameElement).prepend(avatarElement);
+
+
+            messageList.append(messageElement);
+            if (isScrollDown) a.scrollTop = a.scrollHeight;
+            $("#chatScroll").perfectScrollbar('update');
+        })
+        .on('delete.chat.message',function(data){
+            $('.chatMessage[data-uuid='+data+']').remove();
+            $("#chatScroll").perfectScrollbar('update');
         });
     if(GAME_MODE === 'classic') {
         socket
