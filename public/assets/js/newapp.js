@@ -1,4 +1,5 @@
 var BANNED_DOMAINS = '(csgofast|csgolucky|csgocasino|game-luck|g2a|csgostar|hellstore|cs-drop|csgo|csgoshuffle|csgotop|csbets|csgobest|csgolike|fast-jackpot|skins-up|hardluck-shop|csgogamble|csgohot|csgofairplay|csgoluxe|csgo1|csgo-chance|csgofb|ezyskins|ezpzskins|csgokill|csgoway|csgolotter|csgomany|csrandom|csgo-winner|csgoninja|csgopick|csgodraw|csgoeasy|csgojackpot|game-raffle|csgonice|kinguin|realskins|csgofart|csgetto|csgo-rand|csgo-jackpot|timeluck|forgames|csgobig|csgo-lottery|csgovictory|csgotrophy|csgo-farming|ezskinz)\.(ru|com|net|gl|one|c|pro)';
+if(typeof(GAME_MODE) !== 'undefined') var GAME_MODE = 'page';
 $(document).ready(function() {
     $('audio').prop("volume", 0.3);
     var chatHide = getCookie('chat');
@@ -541,6 +542,9 @@ if (START) {
         .on('delete.chat.message',function(data){
             $('.chatMessage[data-uuid='+data+']').remove();
             $("#chatScroll").perfectScrollbar('update');
+        })
+        .on('online', function (data) {
+            $('.stats-onlineNow').text(Math.abs(data));
         });
     if(GAME_MODE === 'classic') {
         socket
@@ -609,9 +613,6 @@ if (START) {
                 $('.lotteryImg').attr('src', 'https://steamcommunity-a.akamaihd.net/economy/image/class/730/' + items.classid + '/200fx200f');
                 $('.list_participant').html('');
                 $('.list-players').html('');
-            })
-            .on('online', function (data) {
-                $('.stats-onlineNow').text(Math.abs(data));
             })
             .on('forceClose', function () {
                 $('.forceClose').removeClass('msgs-not-visible');
