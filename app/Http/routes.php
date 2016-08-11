@@ -60,6 +60,8 @@ Route::group(['prefix' => 'admin','middleware' => 'access' ], function () {
     post('/send/restartBot','GameController@restartBot');
     post('/send/comission','GameController@sendComission');
     get('/newLottery', 'GameController@newLottery');
+    get('/lottery','GameController@lottery');
+    post('/addBonus','AdminController@addBonus');
 });
 
 Route::group(['prefix' => 'api', 'middleware' => 'secretKey'], function () {
