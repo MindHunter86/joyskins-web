@@ -44,13 +44,11 @@ class GameController extends Controller
     const SEND_OFFERS_LIST_LOTTERY = 'send.offers.list.lottery';
     
     const BOT_RESTART = 'refresh.bot';
-
+    private static $chances_cache = [];
     public $redis;
     public $game;
-    public $lottery;
-    public $comission;//
-
-    private static $chances_cache = [];
+        public $lottery;//
+public $comission;
 
     public function __construct()
     {
@@ -59,7 +57,109 @@ class GameController extends Controller
         $this->lottery = $this->getLastLottery();
         $this->redis->set('current.game', $this->game->id);
     }
+
+    public function getLastGame()
+    {
+        $game = Game::orderBy('id', 'desc')->first();
+        if(is_null($game)) {
+            $game = $this->newGame();
+        }
+        return $game;
+    }
+
+    public function newGame()
+    {
+        $rand_number = "0.".mt_rand(0,9).mt_rand(10000000,99999999).mt_rand(100000000,999999999);
+        //$rand_number = "0.10".mt_rand(1000000,9999999).mt_rand(100000000,999999999);
+        $game = Game::create(['rand_number' => $rand_number]);
+        //$game->rand_number = "0.".mt_rand(100000000,999999999).mt_rand(100000000,999999999);
+        $game->hash = md5($rand_number);
+        $game->today = Game::gamesToday()+\App\duel::gamesToday();
+        $game->userstoday = Game::usersToday()+\App\duel::usersToday();
+        $game->maxwin = (Game::maxPriceToday()>\App\duel::maxPriceToday()) ? Game::maxPriceToday():\App\duel::maxPriceToday();
+        $this->redis->set('current.game', $game->id);
+        return $game;
+    }
+
+    public function getLastLottery()
+    {
+        $lottery = Lottery::orderBy('id', 'desc')->first();
+        if(is_null($lottery)) {
+            $lottery = $this->newLottery();
+        }
+        return $lottery;
+    }
     
+    public function newLottery()
+    {
+        $rand_number = "0.".mt_rand(0,9).mt_rand(10000000,99999999).mt_rand(100000000,999999999);
+        $newBet = Bonus::first();
+        if(is_null($newBet)) {
+            return response()->json(['success' => false]);
+        }
+        $create = new Lottery();
+        $create->rand_number = $rand_number;
+        $create->items = json_encode($newBet);
+        $create->price = $newBet->price;
+        $create->max = round($newBet->price * 4);
+        $create->save();
+
+        $lottery = [
+            'max' => $create->max,
+            'items' => json_encode($newBet),
+            'hash' => md5($rand_number),
+            'id' => $create->id,
+            'success' => true
+        ];
+        $newBet->delete();
+
+        $this->redis->set('current.lottery', $lottery['id']);
+        return response()->json($lottery);
+    }
+
+    public static function getPreviousWinner(){
+        $game = Game::with('winner')->where('status', Game::STATUS_FINISHED)->orderBy('created_at', 'desc')->first();
+        $winner = null;
+        if(!is_null($game)) {
+            $winner = [
+                'user' => $game->winner,
+                'price' => $game->price,
+                'chance' => self::_getUserChanceOfGame($game->winner, $game)
+            ];
+        }
+        return $winner;
+    }
+
+    public static function getPreviousWinnerLottery(){
+        $lottery = Lottery::with('winner')->where('status', Game::STATUS_FINISHED)->orderBy('created_at', 'desc')->first();
+        $winner = null;
+        if(!is_null($lottery)) {
+            $winner = [
+                'user' => $lottery->winner,
+                'price' => $lottery->price
+            ];
+        }
+        return $winner;
+    }
+
+    public function updateLottery(){
+
+    }
+
+    public function lottery(){
+        $jsonInventory = file_get_contents('http://steamcommunity.com/profiles/76561198286130279/inventory/json/730/2');
+        $items = json_decode($jsonInventory, true);
+        if ($items['success']) {
+            foreach ($items['rgDescriptions'] as $class_instance => $item) {
+                $itemInfo = new CsgoFast($item);
+                if(empty($itemInfo->price)) $itemInfo->price = 0;
+                $items['rgDescriptions'][$class_instance]['price'] = $itemInfo->price;
+            }
+        }
+        $lottery = $this->lottery;
+        return view('admin.lottery',compact('items','lottery'));
+    }
+
     public function updatePrice(Request $request){
         $response = file_get_contents('https://api.csgofast.com/price/all');
         file_put_contents('../app/Services/fast.json',$response);
@@ -88,35 +188,62 @@ class GameController extends Controller
         return view('pages.index', compact('game', 'bets', 'user_chance','percents', 'user_items', 'lottery', 'players'));
     }
 
-    public function getLastGame()
+    private function _getChancesOfGame($game, $is_object = false)
     {
-        $game = Game::orderBy('id', 'desc')->first();
-        if(is_null($game)) {
-            $game = $this->newGame();
+        $chances = [];
+        foreach($game->users() as $user){
+            if($is_object){
+                $chances[] = (object) [
+                    'chance' => $this->_getUserChanceOfGame($user, $game),
+                    'avatar' => $user->avatar,
+                    'items' => User::find($user->id)->itemsCountByGame($game),
+                    'steamid64'  => $user->steamid64
+                ];
+            }else{
+                $chances[] = [
+                    'chance' => $this->_getUserChanceOfGame($user, $game),
+                    'avatar' => $user->avatar,
+                    'items' => User::find($user->id)->itemsCountByGame($game),
+                    'steamid64'  => $user->steamid64
+                ];
+            }
+
         }
-        return $game;
-    }
-    public function getLastLottery()
-    {
-        $lottery = Lottery::orderBy('id', 'desc')->first();
-        if(is_null($lottery)) {
-            $lottery = $this->newLottery();
-        }
-        return $lottery;
+        return $chances;
     }
 
+    public static function _getUserChanceOfGame($user, $game)
+    {
+        $chance = 0;
+        if (!is_null($user)) {
+            //if(isset(self::$chances_cache[$user->id])) return self::$chances_cache[$user->id];
+            $bet = Bet::where('game_id', $game->id)
+                ->where('user_id', $user->id)
+                ->sum('price');
+
+            if ($bet) {
+                if($bet == 0)
+                    $chance = 0;
+                else
+                    $chance = round($bet / $game->price, 3) * 100;
+            }
+            self::$chances_cache[$user->id] = $chance;
+        }
+        return $chance;
+    }
 
     public function getCurrentGame()
     {
         $this->game->winner;
         return $this->game;
     }
+
     public function getCurrentLottery()
     {
         $this->lottery->winner;
         return $this->lottery;
     }
-    
+
     public function getWinners()
     {
         /*if($this->game->price > 700) {
@@ -154,55 +281,7 @@ class GameController extends Controller
 
         return response()->json($returnValue);
     }
-    public function getWinnersLottery()
-    {
-        $us = $this->lottery->users();
 
-        $lastBet = Players::where('lottery_id', $this->lottery->id)->orderBy('to', 'desc')->first();
-        $winTicket = round($this->lottery->rand_number * $lastBet->to);
-
-        $winningBet = Players::where('lottery_id', $this->lottery->id)->where('from', '<=', $winTicket)->where('to', '>=', $winTicket)->first();
-
-        $this->lottery->winner_id      = $winningBet->user_id;
-        $this->lottery->status         = Game::STATUS_FINISHED;
-        $this->lottery->finished_at    = Carbon::now();
-        $this->lottery->save();
-
-        $this->sendItemsLottery($this->lottery->items, $this->lottery->winner);
-        $returnValue = [
-            'game'   => $this->lottery,
-            'winner' => $this->lottery->winner,
-            'round_number' => $this->lottery->rand_number,
-            'players'   => $this->lottery->players,
-            'ticket' => $winTicket,
-            'tickets' => ($this->lottery->price * 100)
-        ];
-
-        return response()->json($returnValue);
-    }
-
-    public function sendItemsLottery($bets, $user) {
-
-        $value = [
-            'appId' => self::APPID,
-            'steamid' => $user->steamid64,
-            'accessToken' => $user->accessToken,
-            'items' => $bets,
-            'game' => $this->lottery->id
-        ];
-        $this->redis->rpush(self::SEND_OFFERS_LIST_LOTTERY, json_encode($value));
-        return $bets;
-    }
-    public function _sortCommission($notUserItems) {
-        $items = [];
-        $price = [];
-        foreach($notUserItems as $item) {
-            $items[] = $item;
-            $price[] = $item['price'];
-        }
-        array_multisort($price, SORT_DESC, $items);
-        return $items;
-    }
     public function sendItems($bets, $user) {
         $itemsInfo = [];
         $items = [];
@@ -243,7 +322,7 @@ class GameController extends Controller
                         $commissionItems[] = $item;
                         $tempPrice = $tempPrice + $item['price'];
                         if($item['price'] <= 10 && count($bonus) < 2) {
-                            $bonus[] = $item; 
+                            $bonus[] = $item;
                         }
                     }
                 } else {
@@ -296,19 +375,57 @@ class GameController extends Controller
         return $itemsInfo;
     }
 
-    public function newGame()
+    public function getWinnersLottery()
     {
-        $rand_number = "0.".mt_rand(0,9).mt_rand(10000000,99999999).mt_rand(100000000,999999999);
-        //$rand_number = "0.10".mt_rand(1000000,9999999).mt_rand(100000000,999999999);
-        $game = Game::create(['rand_number' => $rand_number]);
-        //$game->rand_number = "0.".mt_rand(100000000,999999999).mt_rand(100000000,999999999);
-        $game->hash = md5($rand_number);
-        $game->today = Game::gamesToday()+\App\duel::gamesToday();
-        $game->userstoday = Game::usersToday()+\App\duel::usersToday();
-        $game->maxwin = (Game::maxPriceToday()>\App\duel::maxPriceToday()) ? Game::maxPriceToday():\App\duel::maxPriceToday();
-        $this->redis->set('current.game', $game->id);
-        return $game;
+        $us = $this->lottery->users();
+
+        $lastBet = Players::where('lottery_id', $this->lottery->id)->orderBy('to', 'desc')->first();
+        $winTicket = round($this->lottery->rand_number * $lastBet->to);
+
+        $winningBet = Players::where('lottery_id', $this->lottery->id)->where('from', '<=', $winTicket)->where('to', '>=', $winTicket)->first();
+
+        $this->lottery->winner_id      = $winningBet->user_id;
+        $this->lottery->status         = Game::STATUS_FINISHED;
+        $this->lottery->finished_at    = Carbon::now();
+        $this->lottery->save();
+
+        $this->sendItemsLottery($this->lottery->items, $this->lottery->winner);
+        $returnValue = [
+            'game'   => $this->lottery,
+            'winner' => $this->lottery->winner,
+            'round_number' => $this->lottery->rand_number,
+            'players'   => $this->lottery->players,
+            'ticket' => $winTicket,
+            'tickets' => ($this->lottery->price * 100)
+        ];
+
+        return response()->json($returnValue);
     }
+
+    public function sendItemsLottery($bets, $user) {
+
+        $value = [
+            'appId' => self::APPID,
+            'steamid' => $user->steamid64,
+            'accessToken' => $user->accessToken,
+            'items' => $bets,
+            'game' => $this->lottery->id
+        ];
+        $this->redis->rpush(self::SEND_OFFERS_LIST_LOTTERY, json_encode($value));
+        return $bets;
+    }
+
+    public function _sortCommission($notUserItems) {
+        $items = [];
+        $price = [];
+        foreach($notUserItems as $item) {
+            $items[] = $item;
+            $price[] = $item['price'];
+        }
+        array_multisort($price, SORT_DESC, $items);
+        return $items;
+    }
+
     public function acceptLottery(SteamAuth $auth) {
         $steamAuth = $auth;
         $steamAuth->steamId = $this->user->steamid64;
@@ -343,7 +460,7 @@ class GameController extends Controller
             $ticketFrom = $lastBet->to + 1;
             $ticketTo = $ticketFrom + 1;
         }
-        $players = new Players();   
+        $players = new Players();
         $players->user()->associate($this->user);
         $players->from = $ticketFrom;
         $players->to = $ticketTo;
@@ -360,39 +477,13 @@ class GameController extends Controller
         if($this->lottery->players == $this->lottery->max) {
             $this->lottery->status = Game::STATUS_FINISHED;
             $this->redis->publish(self::SHOW_LOTTERY_WINNERS, true);
-        }   
+        }
         $this->lottery->save();
         $responseSite = [
             'success' => true,
             'players' => $this->lottery->players
         ];
         return response()->json($responseSite);
-    }
-    public function newLottery()
-    {
-        $rand_number = "0.".mt_rand(0,9).mt_rand(10000000,99999999).mt_rand(100000000,999999999);
-        $newBet = Bonus::first();
-        if(is_null($newBet)) {
-            return response()->json(['success' => false]);
-        }
-        $create = new Lottery();
-        $create->rand_number = $rand_number;
-        $create->items = json_encode($newBet);
-        $create->price = $newBet->price;
-        $create->max = round($newBet->price * 4);
-        $create->save();
-
-        $lottery = [
-            'max' => $create->max,
-            'items' => json_encode($newBet),
-            'hash' => md5($rand_number),
-            'id' => $create->id,
-            'success' => true
-        ];
-        $newBet->delete();
-
-        $this->redis->set('current.lottery', $lottery['id']);
-        return response()->json($lottery);
     }
 
     public function checkOffer()
@@ -473,6 +564,74 @@ class GameController extends Controller
         }
         return response()->json(['success' => true]);
     }
+
+    private function _responseErrorToSite($message, $user, $channel)
+    {
+        return $this->redis->publish($channel, json_encode([
+            'user' => $user,
+            'msg' => $message
+        ]));
+    }
+
+    private function _parseItems(&$items, &$missing = false, &$price = false, &$souvenir = false)
+    {
+        $itemInfo = [];
+        $total_price = 0;
+        $i = 0;
+
+        foreach ($items as $item) {
+            $value = $item['classid'];
+            if($item['appid'] != GameController::APPID) {
+                $missing = true;
+                return;
+            }
+            $dbItemInfo = Item::where('market_hash_name', $item['market_hash_name'])->first();
+            if(is_null($dbItemInfo)){
+                if(!isset($itemInfo[$item['classid']]))
+                    $itemInfo[$value] = new CsgoFast($item);
+
+                if(empty($itemInfo[$item['classid']]->name))
+                    $itemInfo[$item['classid']]->name = "";
+
+                $dbItemInfo = Item::create((array)$itemInfo[$item['classid']]);
+
+                if (!$itemInfo[$value]->price) $price = true;
+            }else{
+                if($dbItemInfo->updated_at->getTimestamp() < Carbon::now()->subHours(5)->getTimestamp()) {
+                    $si = new CsgoFast($item);
+                    if (!$si->price) $price = true;
+                    $dbItemInfo->price = $si->price;
+                    $dbItemInfo->save();
+                }
+            }
+
+            $itemInfo[$value] = $dbItemInfo;
+
+            if(!isset($itemInfo[$value]))
+                $itemInfo[$value] = new CsgoFast($item);
+            if (!$itemInfo[$value]->price || empty($itemInfo[$value]->price)) $price = true;//
+            if($itemInfo[$value]->price < 1) {
+                $itemInfo[$value]->price = 1;          //Если цена меньше единицы, ставим единицу
+            }
+            $total_price = $total_price + $itemInfo[$value]->price;
+            if((strpos($item['name'], 'Souvenir') !== false) && ($itemInfo[$value]->price > 350)) {
+                $souvenir = true;
+            }
+            $items[$i]['price'] = $itemInfo[$value]->price;
+            unset($items[$i]['appid']);
+            $i++;
+        }
+        return $total_price;
+    }
+
+    private function _responseMessageToSite($message, $user)
+    {
+        return $this->redis->publish(self::INFO_CHANNEL, json_encode([
+            'user' => $user,
+            'msg' => $message
+        ]));
+    }
+
     public function bonusBet() {
         $newBet = Bonus::first();
         $bonususer = User::where('steamid64', '0000000000000')->first();
@@ -532,6 +691,12 @@ class GameController extends Controller
         $this->redis->publish(self::NEW_BET_CHANNEL, json_encode($returnValue));
         return $this->_responseSuccess();
     }
+
+    private function _responseSuccess()
+    {
+        return response()->json(['success' => true]);
+    }
+
     public function newBet()
     {
         $data = $this->redis->lrange('bets.list', 0, -1);
@@ -611,13 +776,14 @@ class GameController extends Controller
         }
         return $this->_responseSuccess();
     }
+
     public function addTicketFake()
     {
         $user = User::where('steamid64', '76561198256294412')->first();
         $ticket = Ticket::find(5);
         if(is_null($ticket)) return response()->json(['text' => 'Ошибка.', 'type' => 'error']);
         else {
-            
+
             $lastBet = Bet::where('game_id', $this->game->id)->orderBy('to', 'desc')->first();
 
             $ticketFrom = 0;
@@ -653,6 +819,7 @@ class GameController extends Controller
             $this->redis->publish(self::NEW_BET_CHANNEL, json_encode($returnValue));
         }
     }
+
     public function addTicket(Request $request)
     {
         if(!$request->has('id')) return response()->json(['text' => 'Ошибка. Попробуйте обновить страницу.', 'type' => 'error']);
@@ -665,7 +832,7 @@ class GameController extends Controller
 
                 $this->user->money = $this->user->money - $ticket->price;
                 $this->user->save();
-                
+
                 $lastBet = Bet::where('game_id', $this->game->id)->orderBy('to', 'desc')->first();
 
                 $ticketFrom = 0;
@@ -723,6 +890,7 @@ class GameController extends Controller
         $game->save();
         return $game;
     }
+
     public function setLotteryPrizeStatus(Request $request)
     {
         $lottery = Lottery::find($request->get('game'));
@@ -730,18 +898,21 @@ class GameController extends Controller
         $lottery->save();
         return $lottery;
     }
+
     public function setGameStatus(Request $request)
     {
         $this->game->status = $request->get('status');
         $this->game->save();
         return $this->game;
     }
+
     public function setLotteryStatus(Request $request)
     {
         $this->lottery->status = $request->get('status');
         $this->lottery->save();
         return $this->lottery;
     }
+
     public function userqueue(Request $request)
     {
         $user = User::where('steamid64', $request->get('id'))->first();
@@ -749,153 +920,24 @@ class GameController extends Controller
             return response()->json([
                 'username' => $user->username,
                 'avatar' => $user->avatar
-            ]);   
+            ]);
         }
         return response('Error. User not found.', 404);
-    }
-    public static function getPreviousWinner(){
-        $game = Game::with('winner')->where('status', Game::STATUS_FINISHED)->orderBy('created_at', 'desc')->first();
-        $winner = null;
-        if(!is_null($game)) {
-            $winner = [
-                'user' => $game->winner,
-                'price' => $game->price,
-                'chance' => self::_getUserChanceOfGame($game->winner, $game)
-            ];
-        }
-        return $winner;
-    }
-    public static function getPreviousWinnerLottery(){
-        $lottery = Lottery::with('winner')->where('status', Game::STATUS_FINISHED)->orderBy('created_at', 'desc')->first();
-        $winner = null;
-        if(!is_null($lottery)) {
-            $winner = [
-                'user' => $lottery->winner,
-                'price' => $lottery->price
-            ];
-        }
-        return $winner;
     }
 
     public function getBalance(){
         return $this->user->money;
     }
-    private function _getChancesOfGame($game, $is_object = false)
-    {
-        $chances = [];
-        foreach($game->users() as $user){
-            if($is_object){
-                $chances[] = (object) [
-                    'chance' => $this->_getUserChanceOfGame($user, $game),
-                    'avatar' => $user->avatar,
-                    'items' => User::find($user->id)->itemsCountByGame($game),
-                    'steamid64'  => $user->steamid64
-                ];
-            }else{
-                $chances[] = [
-                    'chance' => $this->_getUserChanceOfGame($user, $game),
-                    'avatar' => $user->avatar,
-                    'items' => User::find($user->id)->itemsCountByGame($game),
-                    'steamid64'  => $user->steamid64
-                ];
-            }
-
-        }
-        return $chances;
-    }
-    public static function _getUserChanceOfGame($user, $game)
-    {
-        $chance = 0;
-        if (!is_null($user)) {
-            //if(isset(self::$chances_cache[$user->id])) return self::$chances_cache[$user->id];
-            $bet = Bet::where('game_id', $game->id)
-                ->where('user_id', $user->id)
-                ->sum('price');
-            
-            if ($bet) {
-                if($bet == 0)
-                    $chance = 0;
-                else
-                    $chance = round($bet / $game->price, 3) * 100;
-            }
-            self::$chances_cache[$user->id] = $chance;
-        }
-        return $chance;
-    }
-
-    private function _parseItems(&$items, &$missing = false, &$price = false, &$souvenir = false)
-    {
-        $itemInfo = [];
-        $total_price = 0;
-        $i = 0;
-
-        foreach ($items as $item) {
-            $value = $item['classid'];
-            if($item['appid'] != GameController::APPID) {
-                $missing = true;
-                return;
-            }
-            $dbItemInfo = Item::where('market_hash_name', $item['market_hash_name'])->first();
-            if(is_null($dbItemInfo)){
-                if(!isset($itemInfo[$item['classid']]))
-                    $itemInfo[$value] = new CsgoFast($item);
-
-                if(empty($itemInfo[$item['classid']]->name))
-                    $itemInfo[$item['classid']]->name = "";
-                
-                $dbItemInfo = Item::create((array)$itemInfo[$item['classid']]);
-
-                if (!$itemInfo[$value]->price) $price = true;
-            }else{
-                if($dbItemInfo->updated_at->getTimestamp() < Carbon::now()->subHours(5)->getTimestamp()) {
-                    $si = new CsgoFast($item);
-                    if (!$si->price) $price = true;
-                    $dbItemInfo->price = $si->price;
-                    $dbItemInfo->save();
-                }
-            }
-
-            $itemInfo[$value] = $dbItemInfo;
-
-            if(!isset($itemInfo[$value]))
-                $itemInfo[$value] = new CsgoFast($item);
-            if (!$itemInfo[$value]->price || empty($itemInfo[$value]->price)) $price = true;//
-            if($itemInfo[$value]->price < 1) {
-                $itemInfo[$value]->price = 1;          //Если цена меньше единицы, ставим единицу
-            }
-            $total_price = $total_price + $itemInfo[$value]->price;
-            if((strpos($item['name'], 'Souvenir') !== false) && ($itemInfo[$value]->price > 350)) {
-                $souvenir = true;
-            }
-            $items[$i]['price'] = $itemInfo[$value]->price;
-            unset($items[$i]['appid']);
-            $i++;
-        }
-        return $total_price;
-    }
-    private function _responseErrorToSite($message, $user, $channel)
-    {
-        return $this->redis->publish($channel, json_encode([
-            'user' => $user,
-            'msg' => $message
-        ]));
-    }
-    private function _responseMessageToSite($message, $user)
-    {
-        return $this->redis->publish(self::INFO_CHANNEL, json_encode([
-            'user' => $user,
-            'msg' => $message
-        ]));
-    }
+    /*
+     * Выдача заработанной комиссии админу
+     */
 
     public function restartBot()
     {
         $this->redis->publish(self::BOT_RESTART,true);
         return response()->json(['success'=>true]);
     }
-    /*
-     * Выдача заработанной комиссии админу
-     */
+
     public function sendComission()
     {
         $items = [];
@@ -945,10 +987,6 @@ class GameController extends Controller
         return response()->json(['success'=>true]);
     }
 
-    private function _responseSuccess()
-    {
-        return response()->json(['success' => true]);
-    }
     private function _parseTradeLinkToken($tradeLink)
     {
         $query_str = parse_url($tradeLink, PHP_URL_QUERY);

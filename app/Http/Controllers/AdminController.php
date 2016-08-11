@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bet;
+use App\Bonus;
 use App\Game;
 use App\Order;
 use App\Shop;
@@ -80,7 +81,13 @@ class AdminController extends Controller {
     public function send() {
     	return view('admin.send');
     }
-    
+    public function addBonus(){
+        $items = \Request::get('items');
+        foreach ($items as $item)
+        {
+            Bonus::create($item);
+        }
+    }
     public function refreshPrice()
     {
                 $data = \App\Shop::where('status',\App\Shop::ITEM_STATUS_FOR_SALE)->get();
@@ -113,29 +120,6 @@ class AdminController extends Controller {
     	}
     	$this->sendItems($game, $game->bets, $game->winner);
     	return response()->json(['type' => 'success']);
-    }
-    public function reSendAjaxWeek() {
-        $lastWeek = new Carbon('last week');
-        $games = Game::where('finished_at','>=',$lastWeek)->where('status_prize',Game::STATUS_PRIZE_SEND_ERROR)->get();
-        foreach($games as $game)
-            $this->sendItems($game,$game->bets,$game->winner);
-        return response()->json(['success'=>true,'tradeoffer_count'=>count($games)]);
-    }
-    public function sendshopAjax(Request $request) {
-    	$shop = Shop::find($request->get('buy'));
-    	if(!is_null($shop) && isset($shop->buyer_id)) {
-	    	$user = User::find($shop->buyer_id);
-	    	$value = [
-	            'id' => $shop->id,
-	            'itemId' => $shop->inventoryId,
-	            'partnerSteamId' => $user->steamid64,
-	            'accessToken' => $user->accessToken,
-	        ];
-
-	        $this->redis->rpush(self::GIVE_ITEMS_CHANNEL, json_encode($value));
-	        return response()->json(['type' => 'success']);
-    	}
-    	return response()->json(['text' => 'Товар еще не продан или отсутствует', 'type' => 'error']);
     }
 
     public function sendItems($game, $bets, $user) {
@@ -194,5 +178,30 @@ class AdminController extends Controller {
 
         $this->redis->rpush(self::SEND_OFFERS_LIST, json_encode($value));
         return $itemsInfo;
+    }
+
+    public function reSendAjaxWeek() {
+        $lastWeek = new Carbon('last week');
+        $games = Game::where('finished_at','>=',$lastWeek)->where('status_prize',Game::STATUS_PRIZE_SEND_ERROR)->get();
+        foreach($games as $game)
+            $this->sendItems($game,$game->bets,$game->winner);
+        return response()->json(['success'=>true,'tradeoffer_count'=>count($games)]);
+    }
+
+    public function sendshopAjax(Request $request) {
+    	$shop = Shop::find($request->get('buy'));
+    	if(!is_null($shop) && isset($shop->buyer_id)) {
+	    	$user = User::find($shop->buyer_id);
+	    	$value = [
+	            'id' => $shop->id,
+	            'itemId' => $shop->inventoryId,
+	            'partnerSteamId' => $user->steamid64,
+	            'accessToken' => $user->accessToken,
+	        ];
+
+	        $this->redis->rpush(self::GIVE_ITEMS_CHANNEL, json_encode($value));
+	        return response()->json(['type' => 'success']);
+    	}
+    	return response()->json(['text' => 'Товар еще не продан или отсутствует', 'type' => 'error']);
     }
 }
