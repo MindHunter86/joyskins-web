@@ -431,7 +431,7 @@ $(document).ready(function() {
  */
 function updateGameStats(){
     $.ajax({
-        url: '/getGameStats',
+        url: '/api/getGameStats',
         type: 'POST',
         dataType: 'json',
         success: function (data) {
