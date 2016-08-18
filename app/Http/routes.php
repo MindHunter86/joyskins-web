@@ -15,7 +15,7 @@ get('/duel',['as'=>'duels','uses'=>'DuelController@currentDuels']);
 post('/duel/viewRound','DuelController@viewRoom');
 post('/ajax/getDuelHistory','AjaxController@getDuelHistory');
 post('/duel/getActiveGames','DuelController@getActiveGame');
-post('/getGameStats','AjaxController@getGameStats');
+post('/api/getGameStats','AjaxController@getGameStats');
 
 Route::group(['middleware' => 'auth'], function () {
     post('/merchant', 'DonateController@merchant');
