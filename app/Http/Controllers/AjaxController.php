@@ -172,6 +172,8 @@ class AjaxController extends Controller
     {
         switch($request->get('action')){
             case 'myinventory':
+                if(is_null($this->user))
+                    return response()->json(['success'=>false,'text'=>'Вы не авторизованы!']);
                 $jsonInventory = file_get_contents('http://steamcommunity.com/profiles/' . $this->user->steamid64 . '/inventory/json/730/2');
                 $items = json_decode($jsonInventory, true);
                 if ($items['success']) {

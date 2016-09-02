@@ -168,7 +168,7 @@ $(document).ready(function() {
             }
         });
     });
-    $('.create-promo').click(function() {
+    /*$('.create-promo').click(function() {
         var that = $(this).prev();
         $.ajax({
             url: '/promo/create',
@@ -209,7 +209,7 @@ $(document).ready(function() {
             }
         });
         return false;
-    });
+    });*/
     $('.save-link, .save-link2').click(function () {
         var that = $(this).prev();
         $.ajax({
@@ -564,6 +564,7 @@ if (START) {
                     $('#myItems').text(info.items + n2w(info.items, [' предмет', ' предмета', ' предметов']));
                     $('#myChance').text(info.chance);
                     $('.myDepositButton').addClass('big').text('Внести еще предметов');
+                    $('.queueMsg').addClass('msgs-not-visible');
                 }
                 $('.chance_' + info.steamid64).text('(' + info.chance + ' %)');
                 html_chances += '<div class="block"><ul><li><span class="queue-ava"><span class="queue-col">' + info.chance + '%</span><img src="' + info.avatar + '" alt="" /></span></li></ul></div>';

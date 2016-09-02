@@ -29,11 +29,11 @@ return [
     |
     */
 
-    'url' => 'https://joyskins.top',
+    'url' => 'http://b0q.ru',
     /*
      *  SOCKET URL
      */
-    'socket_url' => 'https://joyskins.top',
+    'socket_url' => 'http://b0q.ru:8080',
 
     /*
     |--------------------------------------------------------------------------
