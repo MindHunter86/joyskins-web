@@ -17,10 +17,6 @@ use App\Services\CsgoFast;
 
 class DuelController extends Controller
 {
-
-
-    private $steamAuth;
-
     const INFO_CHANNEL = 'msgChannel';
     const RECEIVE_ITEMS_CHANNEL = 'receiveBetItems.list';
     const WINNER_ITEMS_CHANNEL = 'sendWinnerPrizeDuel.list';
@@ -34,10 +30,9 @@ class DuelController extends Controller
     const DUEL_MAX_ITEMS_COUNT = 15;
     const DUEL_MIN_PRICE = 1;
 
-    public function __construct(SteamAuth $auth)
+    public function __construct()
     {
         parent::__construct();
-        $this->steamAuth = $auth;
     }
     /**
      * Display a listing of the resource.
