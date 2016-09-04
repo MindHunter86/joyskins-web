@@ -28,7 +28,7 @@ class DuelController extends Controller
     const PRE_FINISH_CHANNEL = 'pre.finish.duel';
 
     const DUEL_MAX_ITEMS_COUNT = 15;
-    const DUEL_MIN_PRICE = 1;
+    const DUEL_MIN_PRICE = 30;
 
     public function __construct()
     {

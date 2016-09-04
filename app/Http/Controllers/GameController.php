@@ -18,9 +18,9 @@ use Invisnik\LaravelSteamAuth\SteamAuth;
 class GameController extends Controller
 {
     const SECRET_KEY    = 'oDWx4GYTr4Acbdms';
-    const BOT_TRADE_LINK    = 'https://steamcommunity.com/tradeoffer/new/?partner=344219342&token=aa6nnsrb';
+    const BOT_TRADE_LINK    = 'https://steamcommunity.com/tradeoffer/new/?partner=325864551&token=zco-sm1t';
 
-    const MIN_PRICE     = 1;                    # Минимальная ставка
+    const MIN_PRICE     = 20;                    # Минимальная ставка
     const MAX_ITEMS     = 16;                   # Максимальное кол-во предметов в ставке
     const COMMISSION    = 10;                   # Комиссия
     const COMMISSION_FOR_FIRST_PLAYER    = 7;   # Комиссия для первого игрока сделавшего ставку.
