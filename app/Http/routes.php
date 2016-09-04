@@ -36,9 +36,9 @@ Route::group(['middleware' => 'auth'], function () {
     post('/getBalance', ['as' => 'get.balance', 'uses' => 'GameController@getBalance']);
 
     //рефералка
-    post('/promo/create', 'ReferalController@create');
-    post('/promo/accept', 'ReferalController@accept');
-    get('/promo', ['as' => 'promo', 'uses' => 'PagesController@promo']);
+  //  post('/promo/create', 'ReferalController@create');
+ //   post('/promo/accept', 'ReferalController@accept');
+ //   get('/promo', ['as' => 'promo', 'uses' => 'PagesController@promo']);
 
     post('/giveaway/accept', 'GameController@acceptLottery');
     get('/giveaway', ['as' => 'giveaway', 'uses' => 'PagesController@giveaway']);

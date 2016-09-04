@@ -291,7 +291,6 @@
                 <ul class="tabs_button">
                     <li class="active">Профиль</li>
                     <li class="settingskey">Настройки</li>
-                    <li class="settingskey">Партнерка</li>
                 </ul>
                 <ul class="tabs_link">
                     <li><a href="/profile/history">Мои игры</a></li>
@@ -331,35 +330,6 @@
                         <div class="clear"></div>
                     </form>
                 </div>
-                <div class="tabs_info">
-                    <form class="mysettings">
-                        <b>Активация реферального кода</b>
-                        <div>
-                        @if(!Auth::guest())
-                        <input type="text" class='promo-accept-text' placeholder="Введите реферальный код" value="{{ $u->promo }}"/>
-                        @endif
-                        <button class="mysettings_button accept-promo" type="submit"></button>
-                        </div>
-                        <b>Создайте свой реферальный код</b>
-                        <div>
-                        @if(!Auth::guest())
-                        <input type="text" class='promo-create-text' placeholder="Введите реферальный код" value="{{ $code }}"/>
-                        @endif
-                        <button class="mysettings_button create-promo" type="submit"></button>
-                        </div>
-                        <div class="mysettings_trade">
-                            <a href="/promo">Мои партнерские начисления</a>
-                            <br><br>
-                            <center><p>ИНФОРМАЦИЯ</p></center>
-                            <p>1. После активации кода вы получаете 15 руб. на свой счет, Вы можете потратить их в магазине или использовать как карточку.</p>
-                            <p>2. Активация кода возможна только один раз!</p><br><br>
-                            <center><p>Как получить реферала</p></center>
-                            <p>Попросите своего друга или знакомого активировать Ваш личный код у себя в реферальной системе.</p>
-                            <p>Вы будете получать 1% себе на баланс с каждой его ставки</p>
-                        </div>
-                        <div class="clear"></div>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
@@ -367,7 +337,6 @@
     <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
     <script src="{{ asset('assets/js/firebase.js') }}" ></script>
     <script src="{{ asset('assets/js/newapp.js') }}" ></script>
-    <script src="{{ asset('assets/js/chat.js') }}" ></script>
 @yield('attachments')
 </body>
 </html>

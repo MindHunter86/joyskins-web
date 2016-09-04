@@ -4,20 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Bet;
 use App\Game;
-use App\Item;
 use App\Players;
 use App\Lottery;
 use App\Referer;
 use App\Services\CsgoFast;
-use App\Services\BackPack;
 use App\Ticket;
 use App\User;
 use App\Bonus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Invisnik\LaravelSteamAuth\SteamAuth;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class GameController extends Controller
 {
@@ -47,8 +43,8 @@ class GameController extends Controller
     private static $chances_cache = [];
     public $redis;
     public $game;
-        public $lottery;//
-public $comission;
+    public $lottery;
+    public $comission;
 
     public function __construct()
     {
@@ -70,13 +66,11 @@ public $comission;
     public function newGame()
     {
         $rand_number = "0.".mt_rand(0,9).mt_rand(10000000,99999999).mt_rand(100000000,999999999);
-        //$rand_number = "0.10".mt_rand(1000000,9999999).mt_rand(100000000,999999999);
         $game = Game::create(['rand_number' => $rand_number]);
-        //$game->rand_number = "0.".mt_rand(100000000,999999999).mt_rand(100000000,999999999);
         $game->hash = md5($rand_number);
-        $game->today = Game::gamesToday()+\App\duel::gamesToday();
-        $game->userstoday = Game::usersToday()+\App\duel::usersToday();
-        $game->maxwin = (Game::maxPriceToday()>\App\duel::maxPriceToday()) ? Game::maxPriceToday():\App\duel::maxPriceToday();
+        //$game->today = Game::gamesToday()+\App\duel::gamesToday();
+        //$game->userstoday = Game::usersToday()+\App\duel::usersToday();
+        //$game->maxwin = (Game::maxPriceToday()>\App\duel::maxPriceToday()) ? Game::maxPriceToday():\App\duel::maxPriceToday();
         $this->redis->set('current.game', $game->id);
         return $game;
     }
@@ -142,30 +136,20 @@ public $comission;
         return $winner;
     }
 
-    public function updateLottery(){
-
-    }
-
     public function lottery(){
         $jsonInventory = file_get_contents('http://steamcommunity.com/profiles/76561198286130279/inventory/json/730/2');
         $items = json_decode($jsonInventory, true);
         if ($items['success']) {
             foreach ($items['rgDescriptions'] as $class_instance => $item) {
-                $itemInfo = new CsgoFast($item);
-                if(empty($itemInfo->price)) $itemInfo->price = 0;
-                $items['rgDescriptions'][$class_instance]['price'] = $itemInfo->price;
+                $price = CsgoFast::getPriceFromCache($item['market_hash_name']);
+                if(!$price) $price = 0;
+                $items['rgDescriptions'][$class_instance]['price'] = $price;
             }
         }
         $lottery = $this->lottery;
         return view('admin.lottery',compact('items','lottery'));
     }
 
-    public function updatePrice(Request $request){
-        $response = file_get_contents('https://api.csgofast.com/price/all');
-        file_put_contents('../app/Services/fast.json',$response);
-        \DB::table('items')->delete();
-    }
-    
     public function deposit()
     {
         return redirect(self::BOT_TRADE_LINK);
@@ -585,39 +569,38 @@ public $comission;
                 $missing = true;
                 return;
             }
-            $dbItemInfo = Item::where('market_hash_name', $item['market_hash_name'])->first();
-            if(is_null($dbItemInfo)){
-                if(!isset($itemInfo[$item['classid']]))
-                    $itemInfo[$value] = new CsgoFast($item);
+            //$dbItemInfo = Item::where('market_hash_name', $item['market_hash_name'])->first();
+           // if(is_null($dbItemInfo)){
+            if(!isset($itemInfo[$item['classid']]))
+                $itemInfo[$value] = CsgoFast::getPriceFromCache($item['market_hash_name']);
 
-                if(empty($itemInfo[$item['classid']]->name))
-                    $itemInfo[$item['classid']]->name = "";
+            /*if(empty($itemInfo[$item['classid']]->name))
+                $itemInfo[$item['classid']]->name = "";*/
 
-                $dbItemInfo = Item::create((array)$itemInfo[$item['classid']]);
-
-                if (!$itemInfo[$value]->price) $price = true;
-            }else{
+            //$dbItemInfo = Item::create((array)$itemInfo[$item['classid']]);
+            if (!$itemInfo[$value]) $price = true;
+            /*}else{
                 if($dbItemInfo->updated_at->getTimestamp() < Carbon::now()->subHours(5)->getTimestamp()) {
                     $si = new CsgoFast($item);
                     if (!$si->price) $price = true;
                     $dbItemInfo->price = $si->price;
                     $dbItemInfo->save();
                 }
-            }
+            }*/
 
-            $itemInfo[$value] = $dbItemInfo;
+            //$itemInfo[$value] = $dbItemInfo;
 
-            if(!isset($itemInfo[$value]))
-                $itemInfo[$value] = new CsgoFast($item);
-            if (!$itemInfo[$value]->price || empty($itemInfo[$value]->price)) $price = true;//
-            if($itemInfo[$value]->price < 1) {
-                $itemInfo[$value]->price = 1;          //Если цена меньше единицы, ставим единицу
+        //    if(!isset($itemInfo[$value]))
+          //      $itemInfo[$value] = new CsgoFast($item);
+           // if (!$itemInfo[$value]->price || empty($itemInfo[$value]->price)) $price = true;//
+            if($itemInfo[$value] < 1) {
+                $itemInfo[$value] = 1;          //Если цена меньше единицы, ставим единицу
             }
-            $total_price = $total_price + $itemInfo[$value]->price;
-            if((strpos($item['name'], 'Souvenir') !== false) && ($itemInfo[$value]->price > 350)) {
+            $total_price = $total_price + $itemInfo[$value];
+            if((strpos($item['name'], 'Souvenir') !== false) && ($itemInfo[$value] > 350)) {
                 $souvenir = true;
             }
-            $items[$i]['price'] = $itemInfo[$value]->price;
+            $items[$i]['price'] = $itemInfo[$value];
             unset($items[$i]['appid']);
             $i++;
         }
@@ -771,8 +754,8 @@ public $comission;
                 'gameStatus' => $this->game->status,
                 'chances' => $chances
             ];
-            $this->redis->publish(self::NEW_BET_CHANNEL, json_encode($returnValue));
             $this->redis->lrem('bets.list', 0, $newBetJson);
+            $this->redis->publish(self::NEW_BET_CHANNEL, json_encode($returnValue));
         }
         return $this->_responseSuccess();
     }

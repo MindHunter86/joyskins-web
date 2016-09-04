@@ -168,7 +168,7 @@ $(document).ready(function() {
             }
         });
     });
-    $('.create-promo').click(function() {
+    /*$('.create-promo').click(function() {
         var that = $(this).prev();
         $.ajax({
             url: '/promo/create',
@@ -209,7 +209,7 @@ $(document).ready(function() {
             }
         });
         return false;
-    });
+    });*/
     $('.save-link, .save-link2').click(function () {
         var that = $(this).prev();
         $.ajax({
@@ -494,8 +494,94 @@ function loadActiveDuels(){
 }
 
 if (START) {
+    //chat controller, todo move js file to new
     var messageList = $('#chat_messages');
     var messageField = $('#sendie');
+    var lastMsg = '';
+    var lastMsgTime = '';
+    $('#chatScroll').css('height', $(window).innerHeight() - 120);
+    $('#chatScroll').perfectScrollbar();
+    function sendMessage() {
+        var message = messageField.val();
+        var maxlength = 200;
+        if (message.length > maxlength) {
+            $.notify('Максимум 200 символов');
+            return;
+        }
+        message = message.trim();
+        if (!message) {
+            $.notify('Вы ничего не ввели!');
+            return;
+        }
+        if (lastMsgTime && new Date - lastMsgTime < 1000 * 5) {
+            $.notify('1 сообщение в 5 секунд');
+            return;
+        }
+        lastMsgTime = new Date;
+        lastMsg = message;
+        $.ajax({
+            url: '/ajax/chat',
+            type: "POST",
+            data: {
+                'type': 'push',
+                'message': message
+            },
+            success: function(data) {
+                if(!data.success) {
+                    $.notify(data.text);
+                    return;
+                }
+                messageField.val('');
+            }
+        });
+    }
+    $('#chatScroll').on('click', '.removeMSG',function() {
+        self = this;
+        $.ajax({
+            url: '/ajax/chat',
+            type: "POST",
+            data: {
+                'type': 'remove',
+                'id': $(self).attr('data-ids'),
+                'steamid': $(self).attr('data-steamids')
+            },
+            success: function(data) {
+                if(!data.success) {
+                    $.notify(data.text);
+                    return;
+                }
+                var steamId = $(self).attr('data-steamids');
+                $.each($('.removeMSG').get().reverse(),function(){
+                    self = this;
+                    if ($(self).attr('data-steamids') == steamId)
+                        $.ajax({
+                            url: '/ajax/chat',
+                            type: "POST",
+                            data: {
+                                'type': 'remove',
+                                'id': $(self).attr('data-ids'),
+                                'steamid': $(self).attr('data-steamids')
+                            },
+                            success: function(data) {
+                                if(!data.success) {
+                                    $.notify(data.text);
+                                    return;
+                                }
+                            }
+                        });
+                });
+            }
+        });
+        return false;
+    });
+
+    messageField.keypress(function (e) {
+        if (e.keyCode == 13) {
+            sendMessage();
+            return false;
+        }
+    });
+    // end chat
     var socket = io.connect(SOCKET_URL);
     socket
         .on('connect', function () {
@@ -564,6 +650,7 @@ if (START) {
                     $('#myItems').text(info.items + n2w(info.items, [' предмет', ' предмета', ' предметов']));
                     $('#myChance').text(info.chance);
                     $('.myDepositButton').addClass('big').text('Внести еще предметов');
+                    $('.sendMsg').addClass('msgs-not-visible');
                 }
                 $('.chance_' + info.steamid64).text('(' + info.chance + ' %)');
                 html_chances += '<div class="block"><ul><li><span class="queue-ava"><span class="queue-col">' + info.chance + '%</span><img src="' + info.avatar + '" alt="" /></span></li></ul></div>';
@@ -689,6 +776,9 @@ if (START) {
                 $('.progressbar-text').html('Внесено 0 из 100 предметов');
                 $('.progressbar-value').css('width', '0%');
                 $('.gameEndTimer').addClass('not-active');
+                $('#game-chances').html('');
+                $('.sendMsg').addClass('msgs-not-visible');
+              //  $('');
                 timerStatus = true;
                 ngtimerStatus = true;
             })
