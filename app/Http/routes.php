@@ -59,6 +59,7 @@ Route::group(['prefix' => 'admin','middleware' => 'access' ], function () {
     post('/send/refershPrice','AdminController@refreshPrice');
     post('/send/restartBot','GameController@restartBot');
     post('/send/comission','GameController@sendComission');
+    post('/send/fixDuel','AdminController@fixDuel');
     get('/newLottery', 'GameController@newLottery');
     get('/lottery','GameController@lottery');
     post('/addBonus','AdminController@addBonus');
@@ -84,8 +85,6 @@ Route::group(['prefix' => 'api', 'middleware' => 'secretKey'], function () {
 
     post('/duel/setReceiveStatus','DuelController@setReceiveStatus');
     post('/duel/setPrizeStatus','DuelController@setPrizeStatus');
-    post('/duel/finishRoom','DuelController@finishRoom');
-
-
+    post('/duel/finishRoom','DuelController@finishRoomRequest');
 
 });

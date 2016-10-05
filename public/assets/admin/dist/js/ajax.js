@@ -24,6 +24,26 @@ $(document).ready(function() {
             }
         });
     });
+    $('.fixDuelButton').click(function(){
+        $.ajax({
+            url: '/admin/send/fixDuel',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id: $('#fixDuelId').val()
+            },
+            success: function(data) {
+                if(data.success==true) {
+                    alert('Запрос на фикс комнаты успешен!');
+                } else {
+                    alert('Ошибка фикса : '+data.error);
+                }
+            },
+            error: function(){
+                alert('Ошибка AJAX. Попробуйте позже');
+            }
+        });
+    });
     $('.refreshPrice').click(function(){
             $.ajax({
                 url: '/admin/send/refershPrice',

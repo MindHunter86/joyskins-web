@@ -28,7 +28,7 @@ class DuelController extends Controller
     const PRE_FINISH_CHANNEL = 'pre.finish.duel';
 
     const DUEL_MAX_ITEMS_COUNT = 15;
-    const DUEL_MIN_PRICE = 30;
+    const DUEL_MIN_PRICE = 1;
 
     public function __construct()
     {
@@ -124,8 +124,10 @@ class DuelController extends Controller
         $status = $request->get('status');
         duel::where('id',$id)->update(['status_prize'=>$status]);
     }
-    public function finishRoom(Request $request){
-        $roomId = $request->get('id');
+    public function finishRoomRequest(Request $request) {
+        $this->finishRoom($request->get('id'));
+    }
+    public function finishRoom($roomId){
         $duel = duel::where('id',$roomId)->first();
         if(is_null($duel))
             return;
