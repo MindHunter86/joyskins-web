@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Bet;
 use App\Bonus;
+use App\duel;
+use App\duel_bet;
 use App\Game;
 use App\Order;
 use App\Shop;
@@ -102,7 +104,26 @@ class AdminController extends Controller {
                 }
                 return response()->json(['success'=>true]);
     }
-    
+    public function fixDuel(Request $request){
+        if ($request->has('id')) {
+            $id = $request->get('id');
+            $duel = duel::where('id',$id)->first();
+            if(is_null($duel)) return response()->json(['success'=>false,'error'=>'Такой комнаты не существует!']);
+            if ($duel->status == duel::STATUS_PRE_FINISH) {
+                $duelCo = new DuelController();
+                $duelCo->finishRoom($id);
+            } else if($duel->status == duel::STATUS_PLAYING){
+                $duels = duel_bet::where('game_id',$id)->where('status',duel_bet::STATUS_WAIT_TO_ACCEPT)->get();
+                if (count($duels)===1){
+                    $tradeId = $this->redis->get('duel_bet_to_'.$duels[0]->id);
+                    $value = ['tradeId'=>$tradeId,'betId'=>$duels[0]->id];
+                    $this->redis->rpush('checkOfferState.list',json_encode($value));
+                }
+            }
+            return response()->json(['success'=>true]);
+        }
+        return response()->json(['succes'=>false,'error'=>'Не указан ID комнаты']);
+    }
     public function shop() {
         $shop = DB::table('shop')
             ->select('shop.*', 'users.username', 'users.trade_link')
